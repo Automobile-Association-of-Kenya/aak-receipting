@@ -27,4 +27,14 @@ class members extends Model
     {
         return $this->hasMany(Invoice::class, 'members_id', 'id');
     }
+
+    /**
+     * Get all of the payments for the members
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'members_id', 'id');
+    }
 }

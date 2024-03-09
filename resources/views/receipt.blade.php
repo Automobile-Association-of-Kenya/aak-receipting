@@ -119,10 +119,19 @@ function clean($var)
             <table style="width: 98%; margin-bottom: .8em;">
                 <tr>
                     <td style="text-align: left">
-                    <span><b>Customer NO:</b></span><br>
+                        <span><b>Customer NO:</b></span><br>
                         <span><b>Customer:</b>
-                            {{ $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName }}</span><br>
-                        <span><b>Posting Date:</b> {{ date('j M Y', strtotime($payment->date)) }}</span><br>
+                            @if ($payment !== null && $payment->member !== null)
+                                {{ $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName }}
+                            @else
+                                {{ $member_id }}
+                            @endif
+                        </span><br>
+                        @if ($payment !== null && $payment->member !== null)
+                            <span><b>Posting Date:</b> {{ date('j M Y', strtotime($payment->date)) }}</span><br>
+                        @else
+                            <span><b>Posting Date:</b> </span><br>
+                        @endif
                     </td>
 
                     <td style="text-align: right;">
@@ -145,8 +154,8 @@ function clean($var)
 
             <tbody>
                 <tr>
-                    <td>{{ $payment->description }}</td>
-                    <td>{{ asMoney((float) $payment->amount) }}</td>
+                    <td>{{ $description }}</td>
+                    <td>{{ asMoney((float) $amount) }}</td>
                 </tr>
             </tbody>
 

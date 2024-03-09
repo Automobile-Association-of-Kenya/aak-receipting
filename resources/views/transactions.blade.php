@@ -173,9 +173,7 @@
 
                         <div class="col-md-12">
                             <div class="form-group" id="membersDIv">
-                                <label for="paymentMemberID">Enter phone number in the field below and click on
-                                    initiate to proceed. <br> A pop up will appear on your phone, enter your Mpesa
-                                    pin and finish the transaction. </label>
+                                <label for="paymentMemberID">Enter phone number to pay </label>
                                 <input type="number" class="form-control form-control-sm" id="mpesaPaymentPhone"
                                     name="payment_phone">
                             </div>

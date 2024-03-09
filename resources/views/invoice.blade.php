@@ -134,7 +134,7 @@ function clean($var)
             </table>
         </div>
         @php
-            $tax = $invoice->product->amount * 0.16;
+            $tax = $invoice->product->amount/1.16 * 0.16;
             $total = $tax + $invoice->product->amount;
         @endphp
         <table class="table table-bordered"cellspacing="0" cellpadding="0" style="text-align: center;">
@@ -184,7 +184,7 @@ function clean($var)
                     <td style="border: none" colspan="1"></td>
                     <td colspan="1" style="text-align: right;"><strong>Total</strong></td>
                     <td colspan="1" style="text-align: right;padding-right:1em;">
-                        <strong>{{ asMoney($total) }}</strong>
+                        <strong>{{ asMoney($invoice->product->amount) }}</strong>
                     </td>
                 </tr>
         </table>

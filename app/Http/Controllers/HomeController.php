@@ -81,8 +81,14 @@ class HomeController extends Controller
         return json_encode($product);
     }
 
-    function getdepartments() {
+    function getdepartments()
+    {
         $departments = Departments::get();
         return json_encode($departments);
+    }
+
+    function settings()
+    {
+        return view('settings');
     }
 }

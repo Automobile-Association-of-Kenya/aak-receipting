@@ -53,19 +53,26 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-users"></i>
-                    <span>Products</span></a>
-            </li>
-
-            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('transactions') }}">
                     <i class="fa fa-credit-card" aria-hidden="true"></i>
                     <span>Transactions</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('members.index') }}">
+                <a class="nav-link" href="{{ route('products.index') }}">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                    <span>Products</span></a>
+            </li>
+
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('settings') }}">
+                    <i class="far fa-folder-open" aria-hidden="true"></i>
+                    <span>Reports</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('settings') }}">
                     <i class="fas fa-cogs" aria-hidden="true"></i>
                     <span>Settings</span></a>
             </li>

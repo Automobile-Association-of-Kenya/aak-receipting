@@ -20,7 +20,7 @@ function showError(message, target) {
 
 function membersOption(target) {
     $.getJSON("/members-data", function (members) {
-        let option = `<option value="NULL">Select Client</option>`;
+        let option = `<option value="NULL">Select Member</option>`;
         $.each(members, function (key, value) {
             option += `<option value="${value.id}">${value.idNo+" "+
                 value.firstName +
@@ -46,7 +46,6 @@ function productOptions(target) {
 
 function departmentOptions(target) {
     $.getJSON("/departments-data", function (departments) {
-        console.log(departments);
         let option = `<option value="NULL">Select Department</option>`;
         $.each(departments, function (key, value) {
             option += `<option value="${value.id}">${value.name}</option>`;
