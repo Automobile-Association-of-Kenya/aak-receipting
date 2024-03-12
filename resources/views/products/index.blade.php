@@ -54,9 +54,7 @@
         </div>
 
     </div>
-@endsection
-
-<div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="createProductModal"
+    <div class="modal fade" id="createProductModal" tabindex="-1" role="dialog" aria-labelledby="createProductModal"
     aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -107,6 +105,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+
 @section('footer_scripts')
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>

@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\MembersController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\FlightsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Models\members;
 use Illuminate\Support\Facades\Route;
 
@@ -77,5 +79,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('settings', [HomeController::class, 'settings'])->name('settings');
+Route::resource('users',UserController::class);
+Route::resource('branches',BranchController::class);
 
 require __DIR__ . '/auth.php';

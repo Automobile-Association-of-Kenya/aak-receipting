@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Departments_products;
-use App\Models\members;
-use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(members::class);
-            $table->foreignIdFor(Departments_products::class);
-            $table->string('amount');
-            $table->string('date');
+            $table->string('name');
+            $table->bigInteger('created_by_id');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('branches');
     }
 };

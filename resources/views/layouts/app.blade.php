@@ -70,11 +70,15 @@
                     <i class="far fa-folder-open" aria-hidden="true"></i>
                     <span>Reports</span></a>
             </li>
-
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('settings') }}">
-                    <i class="fas fa-cogs" aria-hidden="true"></i>
-                    <span>Settings</span></a>
+                <a class="nav-link" href="{{ route('branches.index') }}">
+                    <i class="fas fa-building" aria-hidden="true"></i>
+                    <span>Branches</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('users.index') }}">
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <span>User Management</span></a>
             </li>
 
             <hr class="sidebar-divider d-none d-md-block">

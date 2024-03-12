@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('payments', function (Blueprint $table) {
             $table->string('ref_no')->after('invoice_id')->unique();
             $table->string('method')->after('date');
-            $table->string('description')->after('method');
+           // $table->string('description')->after('method');
         });
     }
 
