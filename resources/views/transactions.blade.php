@@ -151,7 +151,7 @@
 
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100" data-toggle="tab" data-target="#manualTab" type="button"
-                            role="tab" aria-controls="profile" aria-selected="false">Manual</button>
+                            role="tab" aria-controls="profile" aria-selected="false">Mpesa And Other</button>
                     </li>
 
                 </ul>
@@ -162,7 +162,7 @@
                         <form action="{{ route('payment.mpesa') }}" method="post" id="createMpesaPaymentForm">
 
                             <div class="col-md-12">
-                                <div class="form-group" id="mpesaMembersDIv">
+                                <div class="form-group" id="mpesaMembersDIv" style="font-size:14px">
                                     <label for="mpesaPaymentMemberID">Client</label>
                                     <select name="mpesa_payment_member_id" id="mpesaPaymentMemberID"
                                         class="form-control form-control-sm" data-control="select2"
@@ -188,7 +188,7 @@
 
                             <div class="mt-2" id="mpesaPaymentAction">
                                 <button type="button" class="btn btn-primary btn-sm"
-                                    id="initiatePayment">Initiate</button>
+                                    id="initiatePayment">Send STK</button>
                                 <button type="submit" class="btn btn-warning btn-sm"
                                     id="confirmPayment">Confirm</button>
                             </div>
@@ -201,7 +201,7 @@
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <div class="form-group" id="jjjjhjhjj">
+                                    <div class="form-group" id="jjjjhjhjj" style="font-size:14px">
                                         <label for="paymentMemberID">Client</label>
                                         <select name="payment_member_id" id="paymentMemberID"
                                             class="form-control form-control-sm" data-control="select2"
@@ -210,7 +210,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group" style="font-size:14px">
                                         <label for="paymentMethod">Method</label>
                                         <select name="payment_method" id="paymentMethod"
                                             class="form-control form-control-sm">

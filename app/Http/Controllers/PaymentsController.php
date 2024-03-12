@@ -16,12 +16,12 @@ class PaymentsController extends Controller
         $this->middleware('auth');
     }
 
-    function index()
-    {
-        // $collection = Http::get('http://185.209.228.155:3000/api/payments/getAllPayments');
-        // return json_encode($collection);
-        return view('payments');
-    }
+    // function index()
+    // {
+    //     // $collection = Http::get('http://185.209.228.155:3000/api/payments/getAllPayments');
+    //     // return json_encode($collection);
+    //     return view('payments');
+    // }
 
     function payments()
     {
