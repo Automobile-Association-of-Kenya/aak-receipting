@@ -73,14 +73,14 @@ aria-hidden="true">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" style="font-size:14px">
                             <input type="number" class="form-control form-control-user" id="clientIDNumber"
                                 placeholder="Enter ID Number" name="id_number" value="{{ old('id_number') }}">
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" style="font-size:14px" >
                             <input type="text" class="form-control form-control-user" id="clientFirstName"
                                 placeholder="First Name" name="first_name" value="{{ old('first_name') }}">
                         </div>

@@ -79,7 +79,7 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <div class="form-group" id="membersInvoiceDiv">
+                                <div class="form-group" id="membersInvoiceDiv" style="font-size:14px">
                                     <label for="memberID">Client</label>
                                     <select name="member_id" id="memberID" class="form-control  form-control-sm"
                                         data-control="select2" data-dropdown-parent="#membersInvoiceDiv" required
@@ -88,14 +88,14 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="departmentInvoiceId">Departments</label>
                                     <select name="department_id" id="departmentInvoiceId"
                                         class="form-control  form-control-sm"></select>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="departmentProductID">Product</label>
                                     <select name="product_id" id="departmentProductID"
                                         class="form-control  form-control-sm"></select>
@@ -103,7 +103,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="invoiceAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="invoiceAmount"
                                         name="invoice_amount" value="{{ old('invoice_amount') }}">
@@ -111,7 +111,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="invoiceDate">Date</label>
                                     <input type="date" class="form-control form-control-sm" id="invoiceDate"
                                         name="invoice_date" value="{{ date('Y-m-d') }}">

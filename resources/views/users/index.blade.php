@@ -39,6 +39,7 @@
                             <th>Department</th>
                             <th>Name</th>
                             <th>Role</th>
+                            <th>Action</th>
                         </thead>
 
                         <tbody>

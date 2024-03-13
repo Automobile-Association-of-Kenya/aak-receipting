@@ -28,7 +28,7 @@
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");
-                    // showSuccess(result.message, "#memberFeedback");
+                    showSuccess(result.message, "#memberFeedback");
                 } else {
                     showError(
                         "Error occured during processing",
