@@ -42,7 +42,7 @@
                                     <td> <small>{{ $item->department->name }}</small>
                                     <td> <small>{{ $item->name }}</small>
                                     <td> <small>{{ $item->amount }}</small>
-                                    <td>
+                                    <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -75,7 +75,10 @@
                             <div class="form-group">
                                 <label for="department_id">Department</label>
                                 <select name="department_id" id="departmentID" class="form-control">
-
+                                    <option value="" disabled selected>Select department</option>
+                                        @foreach ($departments as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>

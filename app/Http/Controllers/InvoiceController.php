@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Dompdf\Dompdf;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
@@ -16,7 +18,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = Invoice::with('product')->get();
+        return $invoices;
     }
 
     /**
@@ -37,15 +40,27 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+    Log::critical($request->all());
         $validated = $request->validate([
             'members_id' => ['required', 'exists:members,id'],
-            'product_id' => ['required', 'exists:products,id'],
+            'product_id' => ['required', 'exists:departments_products,id'],
             'amount' => ['required'],
             'date' => ['nullable'],
         ]);
-        $invoice = Invoice::create($validated + ['status' => 'pending']);
+        try {
+            $invoice = Invoice::create([
+                'members_id' => $request->members_id,
+                'departments_products_id' => $request->product_id,
+                'amount' => $request->amount,
+                'status' => 'pending',
+                'date' => $request->date?? now()
+            ]);
 
-        return json_encode(['status' => 'success', 'message' => 'Invoice created successfully']);
+            return json_encode(['status' => 'success', 'message' => 'Invoice created successfully']);
+        } catch (Exception $e) {
+            Log::critical($e);
+            return json_encode(['status' => 'error', 'message' => 'An expected error occurred.']);
+        }
     }
 
     function invoices()

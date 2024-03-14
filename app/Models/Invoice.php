@@ -10,7 +10,7 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['members_id', 'product_id', 'amount', 'date'];
+    protected $fillable = ['members_id', 'departments_products_id', 'amount', 'date'];
     /**
      * Get the product that owns the Invoice
      *
@@ -18,7 +18,7 @@ class Invoice extends Model
      */
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Departments_products::class, 'departments_products_id ');
     }
 
     /**

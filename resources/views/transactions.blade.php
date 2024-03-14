@@ -18,6 +18,16 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3 bg-white">
+                @if (session('stkSuccess'))
+                    <div class="alert alert-success">
+                        {{ session('stkSuccess') }}
+                    </div>
+                @endif
+                @if (session('stkError'))
+                    <div class="alert alert-danger">
+                        {{ session('stkError') }}
+                    </div>
+                @endif
                 <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100 active" data-toggle="tab" data-target="#invoicesTab" type="button"
@@ -159,14 +169,14 @@
                 <div class="modal-body tab-content">
                     @csrf
                     <div class="tab-pane fade show active" id="mpesaTab" role="tabpanel" aria-labelledby="mpesa-tab">
-                        <form action="{{ route('payment.mpesa') }}" method="post" id="createMpesaPaymentForm">
-
+                        <form action="{{ route('payment.mpesa') }}" method="post" >
+                            @csrf
                             <div class="col-md-12">
                                 <div class="form-group" id="mpesaMembersDIv" style="font-size:14px">
                                     <label for="mpesaPaymentMemberID">Client</label>
                                     <select name="mpesa_payment_member_id" id="mpesaPaymentMemberID"
                                         class="form-control form-control-sm" data-control="select2"
-                                        data-dropdown-parent="#mpesaMembersDIv" required style="width: 100%;"></select>
+                                        data-dropdown-parent="#mpesaMembersDIv" required style="width: 100%;" required></select>
                                 </div>
                             </div>
 
@@ -174,7 +184,7 @@
                                 <div class="form-group" id="membersDIv">
                                     <label for="paymentMemberID">Enter phone number to pay </label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentPhone"
-                                        name="payment_phone">
+                                        name="payment_phone" required>
                                 </div>
                             </div>
 
@@ -182,13 +192,13 @@
                                 <div class="form-group">
                                     <label for="paymentAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentAmount"
-                                        name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}">
+                                        name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}" required>
                                 </div>
                             </div>
 
                             <div class="mt-2" id="mpesaPaymentAction">
-                                <button type="button" class="btn btn-primary btn-sm"
-                                    id="initiatePayment">Send STK</button>
+                                <button type="submit" class="btn btn-primary btn-sm" id="initiatePayment">Send
+                                    STK</button>
                                 <button type="submit" class="btn btn-warning btn-sm"
                                     id="confirmPayment">Confirm</button>
                             </div>

@@ -25,7 +25,7 @@
 
 
 
-                <div class="table-responsive">
+                <div class="table-responsive" style="font-size:16px">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
                         <thead>
@@ -39,12 +39,11 @@
                             @foreach ($members as $item)
                                 <tr>
                                     <td>
-                                        <i class="fas fa-user-circle fa-1x float-left mr-3"></i>
+                                        <i class="fas fa-user-circle fa-1x float-left mr-3" ></i>
                                         <small>{{ $item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
                                     <td> <small>{{ $item->idNo }}</small>
                                     <td> <small>{{ $item->mobilePhoneNumber }}</small>
                                     <td> <small>{{ $item->emailAddress }}</small>
-                                
                                 </tr>
                             @endforeach
                         </tbody>
