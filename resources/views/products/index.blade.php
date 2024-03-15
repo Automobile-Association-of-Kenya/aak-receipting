@@ -42,7 +42,7 @@
                                     <td> <small>{{ $item->department->name }}</small>
                                     <td> <small>{{ $item->name }}</small>
                                     <td> <small>{{ $item->amount }}</small>
-                                    <td>
+                                    <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach

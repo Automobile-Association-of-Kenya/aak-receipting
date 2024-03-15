@@ -169,7 +169,7 @@
                         tr +
                         "</tbody></table>";
                     $("#paymentTableSection").html(table);
-                    if ($.fn.DataTable.isDataTable("#paymentsDataTable")) {
+                      if ($.fn.DataTable.isDataTable("#paymentsDataTable")) {
                         $("#paymentsDataTable").destroy();
                         $("#paymentsDataTable").DataTable({});
                     } else {

@@ -71,10 +71,6 @@ class BranchController extends Controller
      * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function edit(Branch $branch)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

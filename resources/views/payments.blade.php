@@ -37,8 +37,6 @@
                         <thead>
                             <th>#</th>
                             <th>ID Number </th>
-                            <th>Source</th>
-                            <th>Phone</th>
                             <th>Amount</th>
                             <th>Description</th>
                             <th>Date paid </th>
