@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\members;
+use App\Models\Member;
+
 
 class MembersController extends Controller
 {
@@ -74,6 +75,17 @@ class MembersController extends Controller
 
     function getmembers()
     {
-        return json_encode(members::lastest()->get());
+        return json_encode(members::latest()->get());
     }
+
+    public function filterByDate(Request $request)
+{
+    $startDate = $request->input('startDate');
+    $endDate = $request->input('endDate');
+
+    $members = Member::whereBetween('created_at', [$startDate, $endDate])->get();
+
+    return view('members.index', compact('members'));
+}
+
 }

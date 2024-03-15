@@ -43,6 +43,8 @@ Route::get('products/{id}', [HomeController::class, 'getproductbyid']);
 Route::get('departments-data', [HomeController::class, 'getdepartments']);
 
 Route::get('member-invoices/{id}', [MembersController::class,'getMemberinvoices']);
+Route::post('members/filterByDate', [App\Http\Controllers\Admin\MembersController::class, 'filterByDate'])->name('members.filterByDate');
+
 
 Route::resource('products', ProductController::class);
 

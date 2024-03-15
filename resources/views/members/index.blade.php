@@ -33,8 +33,25 @@
                             <th>Id No</th>
                             <th>Phone Number</th>
                             <th>Email Address</th>
+                            <th>Date Created</th>
                         </thead>
-
+                        <form id="dateFilterForm" method="POST" action="{{ route('members.filterByDate') }}">
+                            @csrf
+                            <div class="form-row align-items-center">
+                                <div class="col-auto">
+                                    <label class="sr-only" for="startDate">Start Date</label>
+                                    <input type="date" class="form-control mb-2" id="startDate" name="startDate">
+                                </div>
+                                <div class="col-auto">
+                                    <label class="sr-only" for="endDate">End Date</label>
+                                    <input type="date" class="form-control mb-2" id="endDate" name="endDate">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-success mb-2">Filter</button>
+                                    <button type="button" class="btn btn-success mb-2" id="clearFilter">Clear</button>
+                                </div>
+                            </div>
+                        </form>
                         <tbody>
                             @foreach ($members as $item)
                                 <tr>
@@ -44,6 +61,7 @@
                                     <td> <small>{{ $item->idNo }}</small>
                                     <td> <small>{{ $item->mobilePhoneNumber }}</small>
                                     <td> <small>{{ $item->emailAddress }}</small>
+                                    <td> <small>{{ $item->created_at }}</small>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -131,6 +149,31 @@ aria-hidden="true">
 <script>
     (function() {
         $('#dataTable').DataTable();
-    })()
+    })
+    $(document).ready(function() {
+    $('#dateFilterForm').submit(function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            success: function(response) {
+                $('#membersTableBody').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+
+    $('#clearFilter').click(function() {
+        $('#startDate').val('');
+        $('#endDate').val('');
+        $('#dateFilterForm').submit();
+    });
+});
+
 </script>
 @endsection

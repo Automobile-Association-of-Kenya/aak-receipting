@@ -16,6 +16,7 @@ class members extends Model
         'secondName',
         'emailAddress',
         'mobilePhoneNumber',
+        'createdDate',
     ];
 
     /**
