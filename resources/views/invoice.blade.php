@@ -119,6 +119,7 @@ function clean($var)
             <table style="width: 98%; margin-bottom: .8em;">
                 <tr>
                     <td style="text-align: left">
+                    <span><b>Invoice NO:</b> <b>{{ $invoice->invoice_no }}</b></span><br>
                     <span><b>Customer NO:</b></span><br>
                         <span><b>Customer:</b>
                             {{ $invoice->member->firstName . ' ' . $invoice->member->secondName . ' ' . $invoice->member->surNameName }}</span><br>
@@ -134,8 +135,8 @@ function clean($var)
             </table>
         </div>
         @php
-            $tax = $invoice->product->amount/1.16 * 0.16;
-            $total = $tax + $invoice->product->amount;
+            $tax = $invoice->amount/1.16 * 0.16;
+            $total = $tax + $invoice->amount;
         @endphp
         <table class="table table-bordered"cellspacing="0" cellpadding="0" style="text-align: center;">
             <thead style="border-bottom: 2px solid #333;">
@@ -149,11 +150,11 @@ function clean($var)
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $invoice->product->name }}</td>
+                    <td>{{ $invoice->product?->name }}</td>
                     <td></td>
                     <td>1</td>
-                    <td>{{ asMoney((float) $invoice->product->amount) }}</td>
-                    <td>{{ asMoney((float) $invoice->product->amount) }}</td>
+                    <td>{{ asMoney((float) $invoice->amount) }}</td>
+                    <td>{{ asMoney((float) $invoice->amount) }}</td>
                 </tr>
 
             </tbody>
@@ -165,7 +166,7 @@ function clean($var)
                     <td style="border: none" colspan="1"></td>
                     <td colspan="1" style="text-align: right;"><strong>Amount Excluding Tax</strong></td>
                     <td colspan="1" style="text-align: right;padding-right:1em;">
-                        <strong>{{ asMoney((float) $invoice->product->amount) }}</strong>
+                        <strong>{{ asMoney((float) $invoice->amount) }}</strong>
                     </td>
                 </tr>
                 <tr>
@@ -178,13 +179,13 @@ function clean($var)
                     </td>
                 </tr>
                 <tr>
-                    <td style="border: none" colspan="1">NO: &nbsp;&nbsp;<strong
+                    <td style="border: none" colspan="1">NO: &nbsp;&nbsp; <span style="color: #006524;">{{ $invoice->invoice_no }}</span><strong
                             style="font-size: 16px; font-weight: 200;">{{ $invoice->invoice_no }}</strong></td>
                     <td style="border: none" colspan="1"></td>
                     <td style="border: none" colspan="1"></td>
                     <td colspan="1" style="text-align: right;"><strong>Total</strong></td>
                     <td colspan="1" style="text-align: right;padding-right:1em;">
-                        <strong>{{ asMoney($invoice->product->amount) }}</strong>
+                        <strong>{{ asMoney($invoice->amount) }}</strong>
                     </td>
                 </tr>
         </table>

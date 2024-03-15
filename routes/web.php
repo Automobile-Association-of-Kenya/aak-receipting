@@ -42,10 +42,13 @@ Route::get('products-data', [HomeController::class, 'getproducts']);
 Route::get('products/{id}', [HomeController::class, 'getproductbyid']);
 Route::get('departments-data', [HomeController::class, 'getdepartments']);
 
+Route::get('member-invoices/{id}', [MembersController::class,'getMemberinvoices']);
+
 Route::resource('products', ProductController::class);
 
 
 Route::resource('invoices', InvoiceController::class);
+// Route::get('invoices/{id}', [InvoiceController::class,'edit']);
 Route::get('invoices-data', [InvoiceController::class, 'invoices']);
 Route::get('invoice-print/{id}', [InvoiceController::class, 'print']);
 
@@ -61,7 +64,7 @@ Route::resource('payments', PaymentsController::class);
 Route::get('/payments-data', [PaymentsController::class, 'payments']);
 Route::get('/payments-local', [PaymentsController::class, 'getlocalpayments']);
 Route::post('/payments/mpesa', [PaymentsController::class, 'mpesa']);
-Route::get('/payment-print/{id}/{amount}/{description}/{member_id}', [PaymentsController::class, 'print']);
+Route::get('/payment-print/{id}', [PaymentsController::class, 'print']);
 Route::post('/payment-mpesa', [PaymentsController::class, 'mpesa'])->name('payment.mpesa');
 
 Route::get('/flights', [FlightsController::class, 'getAllFlights']);

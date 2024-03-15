@@ -20,7 +20,7 @@ class Departments_products extends Model
      */
     public function invoices(): HasMany
     {
-        return $this->hasMany(Invoice::class, 'department_product_id', 'departments_products');
+        return $this->hasMany(Invoice::class, 'departments_products_id', 'id');
     }
 
     /**

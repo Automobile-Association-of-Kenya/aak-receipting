@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PaymentsController extends Controller
@@ -28,18 +29,19 @@ class PaymentsController extends Controller
 
     function payments()
     {
-        $transactions = Payment::with('member:id,idNo,mobilePhoneNumber')->latest()->get();
+        $transactions = Payment::with('member:id,idNo,mobilePhoneNumber,firstName,secondName,surNameName')->latest()->get();
         return $transactions;
     }
 
     function getlocalpayments()
     {
-        $transactions = Payment::with('member:id,idNo,mobilePhoneNumber')->latest()->get();
+        $transactions = Payment::with('member:id,idNo,mobilePhoneNumber,firstName,secondName,surNameName')->latest()->get();
         return json_encode($transactions);
     }
 
     function store(Request $request)
     {
+        $receiptno = DB::select(DB::raw('SELECT fn_generateReceiptNumber() AS result'));
         $validated = $request->validate([
             'members_id' => ['required', 'exists:members,id'],
             'amount' => ['required'],
@@ -48,16 +50,15 @@ class PaymentsController extends Controller
             'description' => ['nullable', 'max:255'],
         ]);
 
-        Payment::create($validated + ['ref_no' => $request->transact_no]);
+        Payment::create($validated + ['invoice_id' => $request->invoice_id,'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no]);
 
         return json_encode(['status' => 'success', 'message' => 'Payment saved successfully']);
     }
 
-    function print($id, $amount, $description, $member_id)
+    function print($id)
     {
-        $member = members::where('idNo', $member_id)->first();
-        $payment = Payment::with('member')->find($id);
-        $pdf = PDF::loadView('receipt', ['payment' => $payment, 'member_id' => $member_id, 'amount' => $amount, 'description' => $description]);
+        $payment = Payment::with('member','invoice')->find($id);
+        $pdf = PDF::loadView('receipt', ['payment' => $payment]);
         return $pdf->stream('document.pdf');
     }
 

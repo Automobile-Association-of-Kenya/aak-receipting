@@ -87,26 +87,26 @@
                                             <i class="fas fa-address-book"></i>
                                         </div>
                                         <div class="pl-3" id="customerSummary1">
-                                            <h6 id="totalCustomersCount1">{{$total_customers}}</h6>
+                                            <h6 id="customersCount1"></h6>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        
+
                         <div class="col-xxl-4 col-md-4">
                             <div class="card info-card customers-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Invoices | <span class="text-warning"
-                                            id="todaysCustomerCount"style="font-size: 12px;"></span></h5>
+                                            id="todaysInvoicesCount"style="font-size: 12px;"></span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="fas fa-file-invoice-dollar"></i>
                                         </div>
-                                        <div class="pl-3" id="customerSummary1">
-                                            <h6 id="totalCustomersCount11">{{$total_invoices}}</h6>
+                                        <div class="pl-3" id="invoicesSummary">
+
                                         </div>
                                     </div>
                                 </div>
@@ -123,8 +123,8 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center pr-2">
                                             <i class="fas fa-money-bill"></i>
                                         </div>
-                                        <div class="pl-3" id="paymentSummary1">
-                                            <h6 id="totalPayments1">{{$total_payments}}</h6>
+                                        <div class="pl-3" id="paymentSummary">
+                                            <h6 id="totalPayments"></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -135,21 +135,19 @@
                             <div class="card info-card customers-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Users | <span class="text-warning"
-                                            id="todaysCustomerCount"style="font-size: 12px;"></span></h5>
+                                            id="todayUsersCount"style="font-size: 12px;"></span></h5>
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="fas fa-users"></i>
                                         </div>
-                                        <div class="pl-3" id="customerSummary1">
-                                            <h6 id="totalCustomersCount1">{{$total_users}}</h6>
+                                        <div class="pl-3" id="usersSummary1">
+                                            {{-- <h6 id="totalCustomersCount1">{{$total_users}}</h6> --}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                      
 
                     </div>
                 </div>

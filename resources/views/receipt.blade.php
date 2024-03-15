@@ -119,6 +119,7 @@ function clean($var)
             <table style="width: 98%; margin-bottom: .8em;">
                 <tr>
                     <td style="text-align: left">
+                            <span><b>Receipt NO:</b> <b>{{$payment->receipt_no}}</b> </span><br>
                         <span><b>Customer NO:</b></span><br>
                         <span><b>Customer:</b>
                             @if ($payment !== null && $payment->member !== null)
@@ -147,6 +148,7 @@ function clean($var)
 
             <thead style="border-bottom: 2px solid #333;">
                 <tr>
+                    <th><b>Invoice NO</b></th>
                     <th><strong>Narration</strong></th>
                     <th><strong>Amount</strong></th>
                 </tr>
@@ -154,8 +156,9 @@ function clean($var)
 
             <tbody>
                 <tr>
-                    <td>{{ $description }}</td>
-                    <td>{{ asMoney((float) $amount) }}</td>
+                    <td>{{ $payment->invoice?->invoice_no }}</td>
+                    <td>{{ $payment->description }}</td>
+                    <td>{{ asMoney((float) $payment->amount) }}</td>
                 </tr>
             </tbody>
 

@@ -181,6 +181,14 @@
                             </div>
 
                             <div class="col-md-12">
+                                <div class="form-group" style="font-size:14px">
+                                    <label for="mpesaPaymentInvoiceID">Invoice</label>
+                                    <select name="mpesaPaymentInvoiceID" id="mpesaPaymentInvoiceID" class="form-control form-control-sm">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
                                 <div class="form-group" id="membersDIv">
                                     <label for="paymentMemberID">Enter phone number to pay </label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentPhone"
@@ -216,6 +224,14 @@
                                         <select name="payment_member_id" id="paymentMemberID"
                                             class="form-control form-control-sm" data-control="select2"
                                             data-dropdown-parent="#jjjjhjhjj" required style="width: 100%;"></select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group" style="font-size:14px">
+                                        <label for="paymentInvoiceID">Invoice</label>
+                                        <select name="paymentInvoiceID" id="paymentInvoiceID" class="form-control form-control-sm">
+                                        </select>
                                     </div>
                                 </div>
 

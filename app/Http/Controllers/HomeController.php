@@ -67,7 +67,12 @@ class HomeController extends Controller
         $members = members::count();
         $todaymembers = members::whereDate('created_at', date('Y-m-d'))->count();
         $expiredmembers = members::whereDate('expiryDate', '<', date('Y-m-d'))->count();
-        return ['todaypaymentscount' => $todaypaymentscount, 'todaypaymentstotal' => $todaypaymentstotal, 'totalpayments' => $totalpayments, 'members' => $members, 'todaymembers' => $todaymembers, 'expiredmembers' => $expiredmembers];
+        $invoicestotal = Invoice::sum('amount');
+        $invoicetoday = Invoice::whereDate('date',date('Y-m-d'))->sum('amount');
+        $todayivoicescount = Invoice::whereDate('date', date('Y-m-d'))->count();
+        $usercount = User::count();
+        $userscounttoday = User::whereDate('created_at', date('Y-m-d'))->count();
+        return ['todaypaymentscount' => $todaypaymentscount, 'usercount'=>$usercount, 'userscounttoday'=>$userscounttoday,'todayivoicescount'=> $todayivoicescount, 'invoicestotal'=>$invoicestotal , 'invoicetoday'=>$invoicetoday, 'todaypaymentstotal' => $todaypaymentstotal, 'totalpayments' => $totalpayments, 'members' => $members, 'todaymembers' => $todaymembers, 'expiredmembers' => $expiredmembers];
     }
 
     function getdepartmentservices($department_id)

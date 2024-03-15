@@ -7,6 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Dompdf\Dompdf;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
@@ -20,6 +21,11 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::with('product')->get();
         return $invoices;
+    }
+
+    function show($id) {
+        $invoice = Invoice::find($id);
+        return json_encode($invoice);
     }
 
     /**
@@ -47,15 +53,17 @@ class InvoiceController extends Controller
             'amount' => ['required'],
             'date' => ['nullable'],
         ]);
+        // Example using raw SQL query
+        $invoiceno = DB::select(DB::raw('SELECT fn_generateInvoiceNumber() AS result'));
         try {
             $invoice = Invoice::create([
+                'invoice_no' => $invoiceno[0]->result,
                 'members_id' => $request->members_id,
                 'departments_products_id' => $request->product_id,
                 'amount' => $request->amount,
                 'status' => 'pending',
                 'date' => $request->date?? now()
             ]);
-
             return json_encode(['status' => 'success', 'message' => 'Invoice created successfully']);
         } catch (Exception $e) {
             Log::critical($e);
@@ -73,6 +81,7 @@ class InvoiceController extends Controller
     function print($id)
     {
         $invoice = Invoice::with(['member', 'product'])->find($id);
+        // return $invoice;
         // return $invoice;
         $pdf = PDF::loadView('invoice', ['invoice'=>$invoice]);
 
