@@ -91,21 +91,13 @@
                 i = 1;
             if (invoices.length > 0) {
                 $.each(invoices, function (key, value) {
-                    tr += `<tr><td>${i++}</td><td>${value.member.idNo
-                        }</td><td>${value.member.firstName +
-                        " " +
-                        value.member.secondName +
-                        " " +
-                        value.member.surNameName
-                        }</td><td>${value.product.name}</td><td>${value.amount
-                        }</td><td>${value.date}</td><td><a href="/invoice-print/${value.id
-                        }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>`;
+                    tr += `<tr><td>${i++}</td><td>${value.member.idNo}</td><td>${value.member.firstName} ${value.member.secondName} ${value.member.surname}</td><td>${value.product !== null ? value.product.name : 'N/A'}</td><td>${value.amount}</td><td>${value.date}</td><td><a href="/invoice-print/${value.id}" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>`;
                 });
                 let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>Member ID</th><th>Member</th><th>Product</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
-                invoicesTableSection.html(table);
+                $("#invoicesTableSection").html(table);
 
                 if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
-                    $("#invoicesDataTable").destroy();
+                    $("#invoicesDataTable").DataTable().destroy();
                     $("#invoicesDataTable").DataTable({
                         // dom: "Bfrtip",
                         // buttons: [
@@ -127,12 +119,11 @@
                     });
                 }
             } else {
-                invoicesTableSection.html(
-                    '<div class="text-center"><h3 class="text-danger">No data available to display</h3></div>'
-                );
+                $("#invoicesTableSection").html('<div class="text-center"><h3 class="text-danger">No data available to display</h3></div>');
             }
         });
     }
 
     getInvoices();
+
 })();

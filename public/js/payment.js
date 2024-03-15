@@ -94,7 +94,7 @@
             phone: mpesaPaymentPhone.val(),
         };
         console.log(data);
-        $.post("/payments", data)
+        $.post("/payments/mpesa", data)
             .done(function (params) {
                 console.log(params);
                 let result = JSON.parse(params);
@@ -126,31 +126,31 @@
             });
     });
 
-    initiatePayment.on("click", function (event) {
-        event.preventDefault();
-    });
+    // initiatePayment.on("click", function (event) {
+    //     event.preventDefault();
+    // });
 
     confirmPayment.on('submit', function (event) {
         event.preventDefault();
     });
 
     function getPayments() {
-        $.get("/payments-data", function (values) {
-            let payments = JSON.parse(values);
-
-            if (payments.data.length > 0) {
+        $.getJSON("/payments-data", function (payments) {
+            //let payments = JSON.parse(values);
+            console.log('Payments',payments);
+            if (payments.length > 0) {
                 let tr = "",
                     i = 1;
-                $.each(payments.data, function (key, value) {
-                    let { id, phone, amount, source, owner, description } =
+                $.each(payments, function (key, value) {
+                    let { id, phone, amount, invoice_id,member_id, description } =
                         value;
                     tr +=
                         "<tr><td>" +
                         i++ +
                         "</td><td>" +
-                        owner +
+                        member_id +
                         "</td><td>" +
-                        source +
+                        invoice_id +
                         "</td><td>" +
                         phone +
                         "</td><td>" +

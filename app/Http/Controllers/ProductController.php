@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departments;
 use App\Models\Departments_products;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = Departments_products::with('department')->get();
-        return view('products.index',compact('products'));
+        $departments = Departments::all();
+        return view('products.index',compact('products','departments'));
     }
 
     /**

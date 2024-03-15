@@ -75,7 +75,10 @@
                             <div class="form-group">
                                 <label for="department_id">Department</label>
                                 <select name="department_id" id="departmentID" class="form-control">
-
+                                    <option value="" disabled selected>Select department</option>
+                                        @foreach ($departments as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>

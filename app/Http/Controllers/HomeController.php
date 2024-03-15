@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Departments;
 use App\Models\Departments_products;
+use App\Models\Invoice;
 use App\Models\members;
+use App\Models\Payment;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Http;
 
@@ -30,7 +33,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+       $total_customers = members::count();
+       $total_invoices = Invoice::count();
+       $total_payments = Payment::sum('amount');
+       $total_users = User::count();
+        return view('home',compact('total_customers','total_invoices','total_payments','total_users'));
     }
 
     function overview()

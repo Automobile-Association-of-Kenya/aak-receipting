@@ -60,9 +60,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::resource('payments', PaymentsController::class);
 Route::get('/payments-data', [PaymentsController::class, 'payments']);
 Route::get('/payments-local', [PaymentsController::class, 'getlocalpayments']);
-Route::get('/payments-data', [PaymentsController::class, 'payments']);
+Route::post('/payments/mpesa', [PaymentsController::class, 'mpesa']);
 Route::get('/payment-print/{id}/{amount}/{description}/{member_id}', [PaymentsController::class, 'print']);
-Route::get('/payment-mpesa', [PaymentsController::class, 'mpesa'])->name('payment.mpesa');
+Route::post('/payment-mpesa', [PaymentsController::class, 'mpesa'])->name('payment.mpesa');
 
 Route::get('/flights', [FlightsController::class, 'getAllFlights']);
 Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions');

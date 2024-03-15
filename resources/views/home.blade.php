@@ -86,8 +86,8 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="fas fa-address-book"></i>
                                         </div>
-                                        <div class="pl-3" id="customerSummary">
-                                            <h6 id="totalCustomersCount"></h6>
+                                        <div class="pl-3" id="customerSummary1">
+                                            <h6 id="totalCustomersCount1">{{$total_customers}}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -105,8 +105,8 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="fas fa-file-invoice-dollar"></i>
                                         </div>
-                                        <div class="pl-3" id="customerSummary">
-                                            <h6 id="totalCustomersCount"></h6>
+                                        <div class="pl-3" id="customerSummary1">
+                                            <h6 id="totalCustomersCount11">{{$total_invoices}}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -123,8 +123,8 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center pr-2">
                                             <i class="fas fa-money-bill"></i>
                                         </div>
-                                        <div class="pl-3" id="paymentSummary">
-                                            <h6 id="totalPayments"></h6>
+                                        <div class="pl-3" id="paymentSummary1">
+                                            <h6 id="totalPayments1">{{$total_payments}}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -141,8 +141,8 @@
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="fas fa-users"></i>
                                         </div>
-                                        <div class="pl-3" id="customerSummary">
-                                            <h6 id="totalCustomersCount"></h6>
+                                        <div class="pl-3" id="customerSummary1">
+                                            <h6 id="totalCustomersCount1">{{$total_users}}</h6>
                                         </div>
                                     </div>
                                 </div>
