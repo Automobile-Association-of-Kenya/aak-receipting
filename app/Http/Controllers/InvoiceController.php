@@ -55,7 +55,7 @@ class InvoiceController extends Controller
         ]);
         // Example using raw SQL query
         $invoiceno = DB::select(DB::raw('SELECT fn_generateInvoiceNumber() AS result'));
-        try {
+        // try {
             $invoice = Invoice::create([
                 'invoice_no' => $invoiceno[0]->result,
                 'members_id' => $request->members_id,
@@ -65,10 +65,10 @@ class InvoiceController extends Controller
                 'date' => $request->date?? now()
             ]);
             return json_encode(['status' => 'success', 'message' => 'Invoice created successfully']);
-        } catch (Exception $e) {
-            Log::critical($e);
-            return json_encode(['status' => 'error', 'message' => 'An expected error occurred.']);
-        }
+        // } catch (Exception $e) {
+        //     Log::critical($e);
+        //     return json_encode(['status' => 'error', 'message' => 'An expected error occurred.']);
+        // }
     }
 
     function invoices()
