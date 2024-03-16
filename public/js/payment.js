@@ -142,7 +142,7 @@
                 let tr = "",
                     i = 1;
                 $.each(payments, function (key, value) {
-                    let { id, phone, amount, invoice_id,member_id, description } =
+                    let { id, member_id, invoice_id, phone, amount,  description } =
                         value;
                     tr +=
                         "<tr><td>" +
@@ -162,7 +162,7 @@
                         '" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>';
                 });
                 let table =
-                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>ID Number </th><th>Source</th><th>Phone</th><th>Amount</th><th>Description</th><th>Action</th></thead><tbody>' +
+                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>Member ID</th><th>Invoice No</th><th>Phone</th><th>Amount</th><th>Description</th><th>Action</th></thead><tbody>' +
                     tr +
                     "</tbody></table>";
 

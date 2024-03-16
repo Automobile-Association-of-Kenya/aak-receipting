@@ -50,7 +50,7 @@ mpesaPaymentInvoiceID = $('#mpesaPaymentInvoiceID');
             paymentInvoiceID.html(option);
         });
     });
-
+ 
     mpesaPaymentMemberID.on('change', function() {
         let member_id = $(this).val();
         $.getJSON("/member-invoices/" + member_id, function (invoices) {
