@@ -93,7 +93,7 @@
                 $.each(invoices, function (key, value) {
                     tr += `<tr><td>${i++}</td><td>${value.member.idNo}</td><td>${value.member.firstName} ${value.member.secondName} ${value.member.surname}</td><td>${value.product !== null ? value.product.name : 'N/A'}</td><td>${value.amount}</td><td>${value.date}</td><td><a href="/invoice-print/${value.id}" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>`;
                 });
-                let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>Client ID</th><th>Member</th><th>Product</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
+                let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>Client ID Number</th><th>Client Name</th><th>Product</th><th>Amount</th><th>Date Created</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
                 $("#invoicesTableSection").html(table);
 
                 if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
