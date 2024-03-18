@@ -11,6 +11,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\members;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +49,8 @@ Route::get('departments-data', [HomeController::class, 'getdepartments']);
 
 Route::get('member-invoices/{id}', [MembersController::class,'getMemberinvoices']);
 Route::post('members/filterByDate', [App\Http\Controllers\Admin\MembersController::class, 'filterByDate'])->name('members.filterByDate');
+Route::post('/members/checkIdNumber', 'Admin\MembersController@checkIdNumber')->name('members.checkIdNumber');
+Route::post('/members/checkEmailAddress', 'Admin\MembersController@checkEmailAddress')->name('members.checkEmailAddress');
 
 
 Route::resource('products', ProductController::class);

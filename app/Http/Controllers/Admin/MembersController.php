@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
+
 
 class MembersController extends Controller
 {
@@ -22,6 +25,44 @@ class MembersController extends Controller
         return view('members.index',compact('members'));
     }
 
+    public function filterByDate(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'startDate' => 'required|date',
+        'endDate' => 'nullable|date|after_or_equal:startDate',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()->first()], 422);
+    }
+
+    $startDate = $request->input('startDate');
+    $endDate = $request->input('endDate');
+
+    // If endDate is null, set it to a date far in the future
+    if (is_null($endDate)) {
+        $endDate = date('Y-m-d', strtotime('+100 years'));
+    }
+
+    $members = members::whereDate('created_at', '>=', $startDate)
+                      ->whereDate('created_at', '<=', $endDate)
+                      ->get();
+
+    if ($members->isEmpty()) {
+        return response()->json(['error' => 'No members found within the selected date range.'], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Members filtered successfully.',
+        'startDate' => $startDate,
+        'endDate' => $endDate,
+        'members' => $members,
+        'token' => csrf_token(),
+    ]);
+}
+
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -41,17 +82,29 @@ class MembersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_number' => 'required|unique:members,idNo|numeric',
+            'id_number' => 'required|numeric|unique:members,idNo',
             'first_name' => 'required|string',
             'second_name' => 'nullable|string',
             'last_name' => 'nullable|string',
             'phone_number' => 'required|numeric|min:9',
             'status' => 'nullable|string',
             'member_number' => 'nullable|numeric',
-            'email' => 'required|email'
+            'email' => 'required|email|unique:members,emailAddress'
         ]);
-
+    
         try {
+            // Check if the idNo already exists
+            $existingIdNo = members::where('idNo', $request->id_number)->first();
+            if ($existingIdNo) {
+                return response()->json(['status' => 'error', 'message' => 'ID Number already exists.'], 422);
+            }
+    
+            // Check if the emailAddress already exists
+            $existingEmail = members::where('emailAddress', $request->email)->first();
+            if ($existingEmail) {
+                return response()->json(['status' => 'error', 'message' => 'Email Address already exists.'], 422);
+            }
+    
             members::create([
                 'MembershipNumber' => $request->member_number,
                 'idNo' => $request->id_number,
@@ -63,11 +116,12 @@ class MembersController extends Controller
                 'mobilePhoneNumber' => $request->phone_number,
                 'expiryDate' => $request->member_expiry_date
             ]);
-            return json_encode(['status'=>'success','message'=>'Member created successfully']);
+            return response()->json(['status'=>'success','message'=>'Member created successfully']);
         } catch (Exception $e) {
-            return json_encode(['status'=>'error','message'=>$e->getMessage()]);
+            return response()->json(['status'=>'error','message'=>$e->getMessage()], 500);
         }
     }
+    
 
     function getMemberinvoices($member_id) {
         $invoices = Invoice::where('members_id',$member_id)->get();

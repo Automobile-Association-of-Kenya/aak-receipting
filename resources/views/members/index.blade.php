@@ -70,6 +70,9 @@
             </div>
         </div>
 
+        <div id="errorContainer" class="alert alert-danger" style="display: none;"></div>
+        <div id="successContainer" class="alert alert-success" style="display: none;"></div>
+
     </div>
 
 <div class="modal fade" id="createClientModal" tabindex="-1" role="dialog" aria-labelledby="createClientModal"
@@ -143,16 +146,71 @@ aria-hidden="true">
 @endsection
 
 @section('footer_scripts')
-<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/products.js') }}"></script>
-<script>
-    (function() {
-        $('#dataTable').DataTable();
-    })
-    $(document).ready(function() {
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/products.js') }}"></script>
+    <script>
+ $(document).ready(function() {
+    function showError(message) {
+        $('#errorContainer').html(message).show();
+    }
+    
+    function hideError() {
+        $('#errorContainer').hide();
+    }
+
+    function showSuccess(message) {
+        $('#successContainer').html(message).show();
+        // Hide success message after 3 seconds
+        setTimeout(function() {
+            $('#successContainer').hide();
+        }, 3000);
+    }
+
+
+    function hideSuccess() {
+        $('#successContainer').hide();
+    }
+
+    function updateTableWithData(data) {
+        // Clear existing table rows
+        $('#dataTable tbody').empty();
+
+        // Populate table with new data
+        data.members.forEach(function(member) {
+            var row = '<tr>' +
+                '<td><i class="fas fa-user-circle fa-1x float-left mr-3"></i><small>' + member.firstName + ' ' + member.secondName + ' ' + member.surNameName + '</small></td>' +
+                '<td><small>' + member.idNo + '</small></td>' +
+                '<td><small>' + member.mobilePhoneNumber + '</small></td>' +
+                '<td><small>' + member.emailAddress + '</small></td>' +
+                '<td><small>' + member.created_at + '</small></td>' +
+                '</tr>';
+            $('#dataTable tbody').append(row);
+        });
+    }
+
+    function showNoDataMessage(message) {
+        // Clear existing table rows
+        $('#dataTable tbody').empty();
+        // Show error message
+        showError(message);
+    }
+
+    $('#clearFilter').click(function() {
+        $('#startDate').val('');
+        $('#endDate').val('');
+        hideError();
+        hideSuccess();
+    });
+
     $('#dateFilterForm').submit(function(e) {
         e.preventDefault();
+        var startDate = $('#startDate').val();
+        if (startDate === '') {
+            showNoDataMessage('Kindly choose the start date.');
+            return;
+        }
+
         var formData = $(this).serialize();
 
         $.ajax({
@@ -160,20 +218,32 @@ aria-hidden="true">
             url: $(this).attr('action'),
             data: formData,
             success: function(response) {
-                $('#membersTableBody').html(response);
+                if (response.error) {
+                    showError(response.error);
+                    hideSuccess();
+                } else {
+                    hideError();
+                    showSuccess('The list was filtered successfully.');
+                    if (response.members.length > 0) {
+                        updateTableWithData(response);
+                    } else {
+                        showNoDataMessage('No data found matching your specifications.');
+                    }
+                }
             },
             error: function(xhr, status, error) {
+                if (xhr.status === 404) {
+                    showNoDataMessage('No data found matching your specifications.');
+                } else {
+                    showError('There was an error processing your request. Please try again later.');
+                }
                 console.error(error);
             }
         });
     });
-
-    $('#clearFilter').click(function() {
-        $('#startDate').val('');
-        $('#endDate').val('');
-        $('#dateFilterForm').submit();
-    });
 });
 
-</script>
+
+    </script>
 @endsection
+
