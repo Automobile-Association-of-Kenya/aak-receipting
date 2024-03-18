@@ -142,7 +142,7 @@
                 let tr = "",
                     i = 1;
                 $.each(payments, function (key, value) {
-                    let { id, phone, amount, invoice_id,member_id, description } =
+                    let { id, member_id, ref_no, phone, amount,  description } =
                         value;
                     tr +=
                         "<tr><td>" +
@@ -150,11 +150,13 @@
                         "</td><td>" +
                         member_id +
                         "</td><td>" +
-                        invoice_id +
+                        ref_no +
                         "</td><td>" +
                         phone +
                         "</td><td>" +
                         numberFormat(amount ?? 0) +
+                        "</td><td>" +
+                        value.date +
                         "</td><td>" +
                         description +
                         '</td><td><a href="/payment-print/' +
@@ -162,7 +164,7 @@
                         '" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>';
                 });
                 let table =
-                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>ID Number </th><th>Source</th><th>Phone</th><th>Amount</th><th>Description</th><th>Action</th></thead><tbody>' +
+                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>ID Number</th><th>Ref Number</th><th>Phone</th><th>Amount</th><th>Date Paid</th><th>Description</th><th>Action</th></thead><tbody>' +
                     tr +
                     "</tbody></table>";
 

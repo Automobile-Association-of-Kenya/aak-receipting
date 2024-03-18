@@ -117,6 +117,7 @@ class MembersController extends Controller
                 'expiryDate' => $request->member_expiry_date
             ]);
             return response()->json(['status'=>'success','message'=>'Member created successfully']);
+        return json_encode(['status'=>'success','message'=>'Client saved successfully']);
         } catch (Exception $e) {
             return response()->json(['status'=>'error','message'=>$e->getMessage()], 500);
         }
@@ -141,7 +142,7 @@ class MembersController extends Controller
 
     function getmembers()
     {
-        return json_encode(members::latest()->get());
+        return json_encode(members::orderBy('id', 'desc')->get());
     }
 
     /**

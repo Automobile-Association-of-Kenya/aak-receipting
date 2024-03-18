@@ -189,18 +189,18 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group" id="membersDIv">
-                                    <label for="paymentMemberID">Enter phone number to pay </label>
-                                    <input type="number" class="form-control form-control-sm" id="mpesaPaymentPhone"
-                                        name="payment_phone" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="paymentAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentAmount"
                                         name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group" id="membersDIv">
+                                    <label for="paymentMemberID">Enter phone number to pay </label>
+                                    <input type="number" class="form-control form-control-sm" id="mpesaPaymentPhone"
+                                        name="payment_phone" required>
                                 </div>
                             </div>
 
