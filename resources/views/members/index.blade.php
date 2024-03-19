@@ -50,8 +50,17 @@
                                     <button type="submit" class="btn btn-success mb-2">Filter</button>
                                     <button type="button" class="btn btn-success mb-2" id="clearFilter">Clear</button>
                                 </div>
+                                <!-- Move the search button here -->
+                                <div class="col-auto">
+                                    <label class="sr-only" for="searchIdNo">Search by ID Number</label>
+                                    <input type="text" class="form-control mb-2" id="searchIdNo" placeholder="Search by ID Number">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-success mb-2" id="searchButton">Search</button>
+                                </div>
                             </div>
                         </form>
+                        
                         <tbody>
                             @foreach ($members as $item)
                                 <tr>
@@ -95,42 +104,63 @@ aria-hidden="true">
                     <div class="col-md-6">
                         <div class="form-group" style="font-size:14px">
                             <input type="number" class="form-control form-control-user" id="clientIDNumber"
-                                placeholder="Enter ID Number" name="id_number" value="{{ old('id_number') }}">
+                                placeholder="Enter ID Number" name="id_number" value="{{ old('id_number') }}" required>
+                            @error('id_number')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group" style="font-size:14px" >
                             <input type="text" class="form-control form-control-user" id="clientFirstName"
-                                placeholder="First Name" name="first_name" value="{{ old('first_name') }}">
+                                placeholder="First Name" name="first_name" value="{{ old('first_name') }}" required>
+                                @error('first_name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" id="clientSecondName"
-                                placeholder="Second Name" name="second_name" value="{{ old('second_name') }}">
+                                placeholder="Second Name" name="second_name" value="{{ old('second_name') }}" required>
+                                @error('second_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                    
+                                @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="text" class="form-control form-control-user" id="clientLastName"
-                                placeholder="Last Name" name="last_name" value="{{ old('last_name') }}">
+                                placeholder="Last Name" name="last_name" value="{{ old('last_name') }}" required>
+                                @error('last_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                    
+                                @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="email" class="form-control form-control-user" id="clientEmail"
-                                placeholder="Email" name="email" value="{{ old('email') }}">
+                                placeholder="Email" name="email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="number" class="form-control form-control-user" id="clientPhone"
-                                placeholder="Phone Number" name="phone_number" value="{{ old('phone_number') }}">
+                                placeholder="Phone Number" name="phone_number" value="{{ old('phone_number') }}"required>
+                                @error('phone_number')
+                                <span class="text-danger">{{ $message }}</span>
+                                    
+                                @enderror
                         </div>
                     </div>
                 </div>
@@ -138,6 +168,7 @@ aria-hidden="true">
             <div id="memberFeedback"></div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-md btn-success">Submit</button>
+                 <button type="button" class="btn btn-" data-dismiss="modal">Close</button>
             </div>
         </form>
     </div>
@@ -150,6 +181,59 @@ aria-hidden="true">
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/products.js') }}"></script>
     <script>
+$('#searchButton').click(function() {
+    var searchIdNo = $('#searchIdNo').val().trim();
+    if (searchIdNo === '') {
+        showError('Please enter an ID Number to search.');
+        return;
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: '/members/searchByIdNo/' + searchIdNo,
+        success: function(response) {
+            if (response.error) {
+                showNoDataMessage(response.error);
+                hideSuccess();
+            } else {
+                hideError();
+                if (response.members.length > 0) {
+                    updateTableWithData(response);
+                    showSuccess('Search results for ID Number: ' + searchIdNo);
+                } else {
+                    showNoDataMessage('No member found with ID Number: ' + searchIdNo);
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            var errorMessage = 'There was an error processing your request. Please try again later.';
+            showError(errorMessage);
+            console.error(error);
+
+            var errorBackgroundColor = $('.feedback-message.error').css('background-color');
+            setTimeout(function() {
+                $('#searchIdNo').val(''); 
+                var feedbackMessage = $('<div>').addClass('feedback-message').text('Search field cleared').css({
+                    'background-color': errorBackgroundColor, 
+                    'color': 'white', 
+                    'padding': '10px',
+                    'border-radius': '5px',
+                    'position': 'absolute',
+                    'top': $('#searchIdNo').position().top + $('#searchIdNo').outerHeight() + 5,
+                    'left': $('#searchIdNo').position().left,
+                    'opacity': '1',
+                    'transition': 'opacity 2s ease-in-out'
+                });
+                $('#searchIdNo').parent().append(feedbackMessage);
+                setTimeout(function() {
+                    feedbackMessage.css('opacity', '0');
+                }, 4000);
+            }, 5000);
+        }
+    });
+});
+
+ 
  $(document).ready(function() {
     function showError(message) {
         $('#errorContainer').html(message).show();
@@ -161,7 +245,6 @@ aria-hidden="true">
 
     function showSuccess(message) {
         $('#successContainer').html(message).show();
-        // Hide success message after 3 seconds
         setTimeout(function() {
             $('#successContainer').hide();
         }, 3000);
@@ -173,10 +256,7 @@ aria-hidden="true">
     }
 
     function updateTableWithData(data) {
-        // Clear existing table rows
         $('#dataTable tbody').empty();
-
-        // Populate table with new data
         data.members.forEach(function(member) {
             var row = '<tr>' +
                 '<td><i class="fas fa-user-circle fa-1x float-left mr-3"></i><small>' + member.firstName + ' ' + member.secondName + ' ' + member.surNameName + '</small></td>' +
@@ -190,9 +270,7 @@ aria-hidden="true">
     }
 
     function showNoDataMessage(message) {
-        // Clear existing table rows
         $('#dataTable tbody').empty();
-        // Show error message
         showError(message);
     }
 
@@ -242,7 +320,30 @@ aria-hidden="true">
         });
     });
 });
+$('#createMemberForm').submit(function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
 
+    $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: formData,
+        success: function(response) {
+            if (response.status === 'success') {
+                showSuccess(response.message);
+                $('#createMemberForm')[0].reset();
+            } else {
+                showError(response.message);
+                $('#createClientModal').modal('show');
+            }
+        },
+        error: function(xhr, status, error) {
+            showError('There was an error processing your request. Please try again later.');
+            console.error(error);
+            $('#createClientModal').modal('show');
+        }
+    });
+});
 
     </script>
 @endsection

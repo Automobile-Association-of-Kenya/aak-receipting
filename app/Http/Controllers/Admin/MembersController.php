@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class MembersController extends Controller
@@ -25,6 +26,21 @@ class MembersController extends Controller
         return view('members.index',compact('members'));
     }
 
+    public function searchByIdNo($idNo)
+    {
+        $member = members::where('idNo', $idNo)->first();
+        if (!$member) {
+            return response()->json(['error' => 'No member found with the provided ID Number.'], 404);
+        }
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Member found successfully.',
+            'member' => $member,
+        ]);
+    }
+    
+
     public function filterByDate(Request $request)
 {
     $validator = Validator::make($request->all(), [
@@ -39,7 +55,6 @@ class MembersController extends Controller
     $startDate = $request->input('startDate');
     $endDate = $request->input('endDate');
 
-    // If endDate is null, set it to a date far in the future
     if (is_null($endDate)) {
         $endDate = date('Y-m-d', strtotime('+100 years'));
     }
@@ -117,7 +132,6 @@ class MembersController extends Controller
                 'expiryDate' => $request->member_expiry_date
             ]);
             return response()->json(['status'=>'success','message'=>'Member created successfully']);
-        return json_encode(['status'=>'success','message'=>'Client saved successfully']);
         } catch (Exception $e) {
             return response()->json(['status'=>'error','message'=>$e->getMessage()], 500);
         }

@@ -51,6 +51,8 @@ Route::get('member-invoices/{id}', [MembersController::class,'getMemberinvoices'
 Route::post('members/filterByDate', [App\Http\Controllers\Admin\MembersController::class, 'filterByDate'])->name('members.filterByDate');
 Route::post('/members/checkIdNumber', 'Admin\MembersController@checkIdNumber')->name('members.checkIdNumber');
 Route::post('/members/checkEmailAddress', 'Admin\MembersController@checkEmailAddress')->name('members.checkEmailAddress');
+Route::get('/members/searchByIdNo/{idNo}', [Admin\MembersController::class, 'searchByIdNo'])->name('members.searchByIdNo');
+Route::get('/members/{idNo}', 'MembersController@member');
 
 
 Route::resource('products', ProductController::class);

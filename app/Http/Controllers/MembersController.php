@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Member;
-
+use App\Models\Member; // Assuming the model is named Member and not members
 
 class MembersController extends Controller
 {
@@ -15,12 +14,12 @@ class MembersController extends Controller
 
     function member($idNo)
     {
-        return members::where("idNo", $idNo)->get();
+        return Member::where("idNo", $idNo)->get(); // Correcting the case of Member
     }
 
     function AddMember(Request $req)
     {
-        $member = new members;
+        $member = new Member; // Correcting the case of Member
         $member->MembershipNumber = $req->MembershipNumber;
         $member->idNo = $req->idNo;
         $member->surNameName = $req->surNameName;
@@ -36,13 +35,13 @@ class MembersController extends Controller
         if ($result) {
             return ["Result" => "Data has been saved"];
         } else {
-            return ["Result" => "Data has  not been saved"];
+            return ["Result" => "Data has not been saved"]; // Correcting the typo
         }
     }
 
     function memberUpdate(Request $req)
     {
-        $member = members::find($req->id);
+        $member = Member::find($req->id); // Correcting the case of Member
         $member->MembershipNumber = $req->MembershipNumber;
         $member->idNo = $req->idNo;
         $member->surNameName = $req->surNameName;
@@ -58,14 +57,14 @@ class MembersController extends Controller
         if ($result) {
             return ["Result" => "Data has been Updated"];
         } else {
-            return ["Result" => "Data has  not been "];
+            return ["Result" => "Data has not been saved"]; // Correcting the typo
         }
     }
 
     public function getMemberInfo(Request $request)
     {
         $idNo = $request->input('idNo');
-        $member = members::where("idNo", $idNo)->first();
+        $member = Member::where("idNo", $idNo)->first(); // Correcting the case of Member
         if ($member) {
             return response()->json($member);
         } else {
@@ -75,17 +74,17 @@ class MembersController extends Controller
 
     function getmembers()
     {
-        return json_encode(members::latest()->get());
+        return json_encode(Member::latest()->get()); // Correcting the case of Member
     }
 
     public function filterByDate(Request $request)
-{
-    $startDate = $request->input('startDate');
-    $endDate = $request->input('endDate');
+    {
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
 
-    $members = Member::whereBetween('created_at', [$startDate, $endDate])->get();
+        $members = Member::whereBetween('created_at', [$startDate, $endDate])->get(); // Correcting the case of Member
 
-    return view('members.index', compact('members'));
-}
+        return view('members.index', compact('members'));
+    }
 
 }
