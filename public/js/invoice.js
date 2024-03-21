@@ -86,7 +86,6 @@
         $.getJSON("/invoices-data", function (invoices) {
             let tr = "",
                 i = 1;
-            console.log(invoices);
             if (invoices.length > 0) {
                 $.each(invoices, function (key, value) {
                     tr += `<tr><td><small>${i++}</small></td><td><small>${
@@ -143,5 +142,5 @@
 
     getInvoices();
 
-    
+
 })();

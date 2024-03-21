@@ -54,7 +54,6 @@
     mpesaPaymentMemberID.on("change", function () {
         let member_id = $(this).val();
         $.getJSON("/member-invoices/" + member_id, function (invoices) {
-            console.log(invoices);
             let option = `<option value="">Select Invoice</option>`;
             $.each(invoices, function (key, value) {
                 option += `<option value="${value.id}">${value.invoice_no}</option>`;
@@ -92,7 +91,6 @@
         console.log(data);
         $.post("/payments", data)
             .done(function (params) {
-                console.log(params);
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");
@@ -106,7 +104,6 @@
                 }
             })
             .fail(function (error) {
-                console.error(error);
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
@@ -127,38 +124,35 @@
         const $this = $(this);
         const data = {
             _token: $this.find("input[name='_token']").val(),
-            member_id: mpesaPaymentMemberID.val(),
+            members_id: mpesaPaymentMemberID.val(),
             amount: mpesaPaymentAmount.val(),
             phone: mpesaPaymentPhone.val(),
         };
-        console.log(data);
         $.post("/payments/mpesa", data)
             .done(function (params) {
-                console.log(params);
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");
-                    showSuccess(result.message, "#paymentFeedback");
+                    showSuccess(result.message, "#mpesaPaymentFeedback");
                     getPayments();
                 } else {
                     showError(
                         "Error occured during processing",
-                        "#paymentFeedback"
+                        "#mpesaPaymentFeedback"
                     );
                 }
             })
             .fail(function (error) {
-                console.error(error);
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
                         errors += value;
                     });
-                    showError(errors, "#paymentFeedback");
+                    showError(errors, "#mpesaPaymentFeedback");
                 } else {
                     showError(
                         "Error occured during processing",
-                        "#paymentFeedback"
+                        "#mpesaPaymentFeedback"
                     );
                 }
             });

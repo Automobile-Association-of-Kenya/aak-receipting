@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\members;
 use App\Models\Payment;
+use App\Models\Tempmpesa;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -17,11 +18,20 @@ class PaymentsController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('callback');
+        $this->payment = new Payment();
     }
+
+    // function index()
+    // {
+    //     // $collection = Http::get('http://185.209.228.155:3000/api/payments/getAllPayments');
+    //     // return json_encode($collection);
+    //     return view('payments');
+    // }
+
     function payments()
     {
-        $transactions = Payment::with(['member:id,idNo,mobilePhoneNumber,firstName,secondName,surNameName','invoice:id,invoice_no'])->latest()->get();
+        $transactions = Payment::with(['member:id,idNo,mobilePhoneNumber,firstName,secondName,surNameName', 'invoice:id,invoice_no'])->latest()->get();
         return $transactions;
     }
 
@@ -36,44 +46,23 @@ class PaymentsController extends Controller
         $receiptno = DB::select(DB::raw('SELECT fn_generateReceiptNumber() AS result'));
         $validated = $request->validate([
             'members_id' => ['required', 'exists:members,id'],
-            'invoice_id'=>['required','exists:invoices,id'],
+            'invoice_id' => ['required', 'exists:invoices,id'],
             'amount' => ['required'],
             'date' => ['nullable', 'max:30'],
             'method' => ['required', 'max:30'],
             'description' => ['nullable', 'max:255'],
         ]);
 
-        Payment::create($validated + ['invoice_id' => $request->invoice_id,'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no]);
+        Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no]);
 
         return json_encode(['status' => 'success', 'message' => 'Payment saved successfully']);
     }
 
     function print($id)
     {
-        $payment = Payment::with('member','invoice')->find($id);
+        $payment = Payment::with('member', 'invoice')->find($id);
         $pdf = PDF::loadView('receipt', ['payment' => $payment]);
         return $pdf->stream('document.pdf');
-    }
-
-    function callurl(Request $req){
-
-         $call=new Payments;
-         $call->members_id=$req->members_id;
-         $call->invoice_id=$req->invoice_id;
-         $call->ref_no=$req->ref_no;
-         $call->amount=$req->amount;
-         $call->date=$req->date;
-         $call->method=$req->method;
-         $call->description=$req->description;
-         $result=$call->save();
-
-         if ($result){
-
-            return ["Result"=>"Data has been saved"];
-         }else{
-            return ["Result"=>"Data has not been saved"];
-         }
-           
     }
 
     function mpesa(Request $request)
@@ -84,37 +73,55 @@ class PaymentsController extends Controller
             'phone' => 'required',
             'amount' => 'required',
         ]);
-        try {
-            // $payment = Payment::create([
-            //     'members_id' => $request->mpesa_payment_member_id,
-            //     'ref_no' => Str::random(5),
-            //     'amount' => $request->mpesa_payment_amount,
-            //     'date' => now(),
-            //     'method' => 'Mpesa',
-            //     'description' => 'Payment for Test App'
-            // ]);
-
-            $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
+        $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
+            'phone' => $validated["phone"],
+            'amount' => 1,
+            'description' => 'Payment for test app.',
+            'callBackUrl' => 'https://d928-102-0-4-72.ngrok-free.app/api/callback'
+        ]);
+        
+        $data = json_decode($paymentRequest);
+        if (isset($data->checkoutID) && !is_null($data->checkoutID)) {
+            Tempmpesa::create([
+                'members_id' => $validated['members_id'],
+                'invoice_id' => $validated["invoice_id"],
                 'phone' => $validated["phone"],
-                'amount' => 1,
+                'amount' => $validated["amount"],
                 'description' => 'Payment for test app.',
-                'callbackUrl'=> ''
+                'checkoutid' => $data->checkoutID,
+                'status' => 'pending',
             ]);
-//             {
-//     "phone":"254715614272",
-//     "amount":"1",
-//     "description":"payment for test app",
-//     "callBackUrl":"https://xyz.com/api/callBack"
-// }
-            return $paymentRequest;
-            if ($paymentRequest->successful()) {
-                return redirect()->back()->with('stkSuccess', 'STK Request sent to the client successfully');
+            return json_encode(['status' => 'success', 'message' => 'Payment initiated successfully']);
+        } else {
+            return json_encode(['status' => 'error', 'message' => 'Payment failed. Please retry']);
+        }
+    }
+
+    function callback(Request $request)
+    {
+        Log::alert($request);
+        $data = json_decode($request);
+        Log::info($data);
+        if (isset($data->mpesaReference) && !is_null($data->mpesaReference)) {
+            $payment = Tempmpesa::where('checkoutid', $data->checkoutID)->first();
+            if ($data->status === "SUCCESSFUL") {
+                $payment = Tempmpesa::where('checkoutid', $data->checkoutID)->first();
+                $payment->update(['mpesareference' => $data->mpesareference, 'status' => $data->status]);
+                $receiptno = DB::select(DB::raw('SELECT fn_generateReceiptNumber() AS result'));
+                $this->payment->create([
+                    'receipt_no' => $receiptno[0]->result,
+                    'members_id' => $payment->members_id,
+                    'ref_no' => $payment->mpesareference,
+                    'invoice_id' => $payment->invoice_id,
+                    'amount' => $payment->amount,
+                    'date' => $payment->date,
+                    'description' => $payment->description,
+                ]);
             } else {
-                return redirect()->back()->with('stkError', 'STK Request failed. Please try again.');
+                Log::alert('here we are');
             }
-        } catch (Exception $e) {
-            Log::critical($e);
-            return redirect()->back()->with('stkError', 'STK Request failed. Please try again.');
+        } else {
+            return $data;
         }
     }
 }

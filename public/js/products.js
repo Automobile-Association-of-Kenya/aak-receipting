@@ -57,7 +57,7 @@
                     value.amount
                 }</td><td></td></tr>`;
             });
-            let table = `<table class="table table-bordered table-hover table-sm"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th></thead><tbody>${tr}</tbody></table>`;
+            let table = `<table class="table table-bordered table-hover table-sm"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
             productsTableSection.html(table);
         });
     }

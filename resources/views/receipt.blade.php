@@ -149,7 +149,7 @@ function clean($var)
             <thead style="border-bottom: 2px solid #333;">
                 <tr>
                     <th><b>Invoice NO</b></th>
-                    <th><strong>Description</strong></th>
+                    <th><strong>Narration</strong></th>
                     <th><strong>Amount</strong></th>
                 </tr>
             </thead>
