@@ -225,7 +225,7 @@ mpesaPaymentInvoiceID = $('#mpesaPaymentInvoiceID');
                 }
             } else {
                 $("#paymentTableSection").html(
-                    '<div class="text-center"><h3 class="text-danger">No data available to display</h3></div>'
+                    '<div class="text-center"><h6 class="text-danger">No data available to display</h3></div>'
                 );
             }
         });

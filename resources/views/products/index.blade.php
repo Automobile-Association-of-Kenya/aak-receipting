@@ -29,7 +29,6 @@
                             <th>Department</th>
                             <th>Name</th>
                             <th>Amount</th>
-                            <td>Action</td>
                         </thead>
 
                         <tbody>

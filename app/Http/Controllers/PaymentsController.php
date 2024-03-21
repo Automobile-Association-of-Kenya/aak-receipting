@@ -55,6 +55,27 @@ class PaymentsController extends Controller
         return $pdf->stream('document.pdf');
     }
 
+    function callurl(Request $req){
+
+         $call=new Payments;
+         $call->members_id=$req->members_id;
+         $call->invoice_id=$req->invoice_id;
+         $call->ref_no=$req->ref_no;
+         $call->amount=$req->amount;
+         $call->date=$req->date;
+         $call->method=$req->method;
+         $call->description=$req->description;
+         $result=$call->save();
+
+         if ($result){
+
+            return ["Result"=>"Data has been saved"];
+         }else{
+            return ["Result"=>"Data has not been saved"];
+         }
+           
+    }
+
     function mpesa(Request $request)
     {
         $validated = $request->validate([
@@ -73,10 +94,11 @@ class PaymentsController extends Controller
             //     'description' => 'Payment for Test App'
             // ]);
 
-            $paymentRequest = Http::post('http://185.209.228.155:4000/api/stk/makePayment', [
+            $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
                 'phone' => $validated["phone"],
                 'amount' => 1,
-                'description' => 'Payment for test app.'
+                'description' => 'Payment for test app.',
+                'callbackUrl'=> ''
             ]);
 //             {
 //     "phone":"254715614272",

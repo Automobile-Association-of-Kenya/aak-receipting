@@ -70,11 +70,11 @@
                     <span>Branches</span></a>
             </li>
 
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a class="nav-link" href="{{ route('settings') }}">
                     <i class="far fa-folder-open" aria-hidden="true"></i>
                     <span>Reports</span></a>
-            </li>
+            </li> -->
             
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('users.index') }}">
