@@ -1,7 +1,7 @@
 (function () {
     productOptions("#departmentProductID");
+
     membersOption("#memberID");
-    branchesOption("#invoiceBranchID");
 
     $("#memberID").select2({
         dropdownParent: "#membersInvoiceDiv",
@@ -12,22 +12,17 @@
         departmentProductID = $("#departmentProductID"),
         invoiceAmount = $("#invoiceAmount"),
         invoiceDate = $("#invoiceDate"),
-        invoicesTableSection = $("#invoicesTableSection"),
-        departmentInvoiceId = $("#departmentInvoiceId"),
-        invoiceBranchID = $("#invoiceBranchID");
+        invoicesTableSection = $("#invoicesTableSection"), departmentInvoiceId = $('#departmentInvoiceId');
 
     departmentInvoiceId.on("change", function (event) {
         let department_id = $(this).val();
-        $.getJSON(
-            "/department-services/" + department_id,
-            function (departments) {
-                let option = `<option value="">Select Product</option>`;
-                $.each(departments, function (key, value) {
-                    option += `<option value="${value.id}">${value.name}</option>`;
-                });
-                departmentProductID.html(option);
-            }
-        );
+        $.getJSON("/department-services/" + department_id, function (departments) {
+            let option = `<option value="">Select Product</option>`;
+            $.each(departments, function (key, value) {
+                option += `<option value="${value.id}">${value.name}</option>`;
+            })
+            departmentProductID.html(option);
+        });
     });
 
     departmentProductID.on("change", function (event) {
@@ -36,6 +31,8 @@
             invoiceAmount.val("");
         } else {
             $.getJSON("/products/" + product_id, function (product) {
+                console.log(product);
+
                 invoiceAmount.val(product.amount);
             });
         }
@@ -46,9 +43,8 @@
         const $this = $(this);
         const data = {
             _token: $this.find("input[name='_token']").val(),
-            branch_id: invoiceBranchID.val(),
             members_id: memberID.val(),
-            departments_products_id: departmentProductID.val(),
+            product_id: departmentProductID.val(),
             amount: invoiceAmount.val(),
             date: invoiceDate.val(),
         };
@@ -88,28 +84,21 @@
                 i = 1;
             if (invoices.length > 0) {
                 $.each(invoices, function (key, value) {
-                    tr += `<tr><td><small>${i++}</small></td><td><small>${
-                        value.invoice_no
-                    }</small></td><td>${value.branch?.name}</td><td><small>${
-                        value.member.idNo +
-                        " " +
-                        value.member.firstName +
-                        " " +
-                        value.member.secondName +
-                        " " +
-                        value.member.surNameName
-                    }</small></td><td><small>${
+                    tr += `<tr><td>${i++}</td><td>${
+                        value.member.idNo
+                    }</td><td>${value.member.firstName} ${
+                        value.member.secondName
+                    } ${value.member.surNameName}</td><td>${
                         value.product !== null ? value.product.name : "N/A"
-                    }</small></td><td><small>${
-                        value.amount
-                    }</small></td><td><small>${
+                    }</td><td>${value.amount}</td><td>${
                         value.date
-                    }</small></td><td><small><a href="/invoice-print/${
+                    }</td><td><a href="/invoice-print/${
                         value.id
-                    }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
+                    }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>`;
                 });
-                let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Member</th><th>Product</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
+                let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>Member ID</th><th>Member</th><th>Product</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
                 invoicesTableSection.html(table);
+
                 if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
                     $("#invoicesDataTable").DataTable().destroy();
                     $("#invoicesDataTable").DataTable({
@@ -141,6 +130,5 @@
     }
 
     getInvoices();
-
 
 })();

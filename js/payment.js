@@ -37,12 +37,12 @@
         paymentMethod = $("#paymentMethod"),
         paymentReference = $("#paymentReference"),
         mpesaPaymentAmount = $("#mpesaPaymentAmount"),
-        mpesaPaymentInvoiceID = $("#mpesaPaymentInvoiceID"),
-        mpesaPaymentForm = $("#mpesaPaymentForm");
+mpesaPaymentInvoiceID = $('#mpesaPaymentInvoiceID');
 
     paymentMemberID.on("change", function () {
         let member_id = $(this).val();
         $.getJSON("/member-invoices/" + member_id, function (invoices) {
+            console.log(invoices);
             let option = `<option value="">Select Invoice</option>`;
             $.each(invoices, function (key, value) {
                 option += `<option value="${value.id}">${value.invoice_no}</option>`;
@@ -50,10 +50,11 @@
             paymentInvoiceID.html(option);
         });
     });
-
-    mpesaPaymentMemberID.on("change", function () {
+ 
+    mpesaPaymentMemberID.on('change', function() {
         let member_id = $(this).val();
         $.getJSON("/member-invoices/" + member_id, function (invoices) {
+            console.log(invoices);
             let option = `<option value="">Select Invoice</option>`;
             $.each(invoices, function (key, value) {
                 option += `<option value="${value.id}">${value.invoice_no}</option>`;
@@ -61,7 +62,7 @@
             mpesaPaymentInvoiceID.html(option);
         });
     });
-    mpesaPaymentInvoiceID.on("change", function () {
+    mpesaPaymentInvoiceID.on('change', function() {
         let invoice_id = $(this).val();
         $.getJSON("/invoices/" + invoice_id, function (invoice) {
             mpesaPaymentAmount.val(invoice.amount);
@@ -80,7 +81,7 @@
         const $this = $(this);
         const data = {
             _token: $this.find("input[name='_token']").val(),
-            invoice_id: paymentInvoiceID.val(),
+            invoice_id:paymentInvoiceID.val(),
             members_id: paymentMemberID.val(),
             transact_no: paymentReference.val(),
             amount: paymentAmount.val(),
@@ -91,6 +92,7 @@
         console.log(data);
         $.post("/payments", data)
             .done(function (params) {
+                console.log(params);
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");
@@ -104,6 +106,7 @@
                 }
             })
             .fail(function (error) {
+                console.error(error);
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
@@ -124,35 +127,38 @@
         const $this = $(this);
         const data = {
             _token: $this.find("input[name='_token']").val(),
-            members_id: mpesaPaymentMemberID.val(),
+            member_id: mpesaPaymentMemberID.val(),
             amount: mpesaPaymentAmount.val(),
             phone: mpesaPaymentPhone.val(),
         };
+        console.log(data);
         $.post("/payments/mpesa", data)
             .done(function (params) {
+                console.log(params);
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");
-                    showSuccess(result.message, "#mpesaPaymentFeedback");
+                    showSuccess(result.message, "#paymentFeedback");
                     getPayments();
                 } else {
                     showError(
                         "Error occured during processing",
-                        "#mpesaPaymentFeedback"
+                        "#paymentFeedback"
                     );
                 }
             })
             .fail(function (error) {
+                console.error(error);
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
                         errors += value;
                     });
-                    showError(errors, "#mpesaPaymentFeedback");
+                    showError(errors, "#paymentFeedback");
                 } else {
                     showError(
                         "Error occured during processing",
-                        "#mpesaPaymentFeedback"
+                        "#paymentFeedback"
                     );
                 }
             });
@@ -169,13 +175,12 @@
     function getPayments() {
         $.getJSON("/payments-data", function (payments) {
             //let payments = JSON.parse(values);
+            console.log(payments);
             if (payments.length > 0) {
                 let tr = "",
                     i = 1;
                 $.each(payments, function (key, value) {
-                    tr += `<tr><td><small>${i++}</small></td><td><small>${
-                        value.receipt_no
-                    }</small></td><td><small>${
+                    tr += `<tr><td>${i++}</td><td>${value.receipt_no}</td><td>${
                         value.member.idNo +
                         " " +
                         value.member.firstName +
@@ -183,20 +188,14 @@
                         value.member.secondName +
                         " " +
                         value.member.surNameName
-                    }</small></td><td><small>${
+                    }</td><td>${
                         value.member.mobilePhoneNumber
-                    }</small></td><td><small>${numberFormat(
-                        value.amount ?? 0
-                    )}</small></td><td><small>${
+                    }</td><td>${numberFormat(value.amount ?? 0)}</td><td>${
                         value.description
-                    }</small></td><td><small>${
-                        value.invoice?.invoice_no
-                    }</small></td><td><small><a href="/payment-print/${
-                        value.id
-                    }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
+                    }</td><td><a href="/payment-print/${value.id}" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>`;
                 });
                 let table =
-                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Description</th><th>Invoice</th><th>Action</th></thead><tbody>' +
+                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>Receipt NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Description</th><th>Action</th></thead><tbody>' +
                     tr +
                     "</tbody></table>";
 
@@ -226,54 +225,10 @@
                 }
             } else {
                 $("#paymentTableSection").html(
-                    '<div class="text-center"><h3 class="text-danger">No data available to display</h3></div>'
+                    '<div class="text-center"><h6 class="text-danger">No data available to display</h3></div>'
                 );
             }
         });
     }
     getPayments();
-
-    mpesaPaymentForm.on("submit", function (event) {
-        event.preventDefault();
-        const $this = $(this),
-            data = {
-                _token: $this.find("input[name='_token']").val(),
-                members_id: mpesaPaymentMemberID.val(),
-                invoice_id: mpesaPaymentInvoiceID.val(),
-                phone: mpesaPaymentPhone.val(),
-                amount: mpesaPaymentAmount.val(),
-            };
-        initiatePayment.prop("disabled", true);
-        $.post("/payment-mpesa", data)
-            .done(function (params) {
-                console.log(params);
-                initiatePayment.prop("disabled", false);
-                // if (result.status == "success") {
-                //     $this.trigger("reset");
-                //     showSuccess(result.message, "#mpesaPaymentFeedback");
-                //     getInvoices();
-                // } else {
-                //     showError(
-                //         "Error occured during processing",
-                //         "#mpesaPaymentFeedback"
-                //     );
-                // }
-            })
-            .fail(function (error) {
-                console.log(error);
-                initiatePayment.prop("disabled", false);
-                // if (error.status == 422) {
-                //     var errors = "";
-                //     $.each(error.responseJSON.errors, function (key, value) {
-                //         errors += value + "!";
-                //     });
-                //     showError(errors, "#mpesaPaymentFeedback");
-                // } else {
-                //     showError(
-                //         "Error occured during processing",
-                //         "#mpesaPaymentFeedback"
-                //     );
-                // }
-            });
-    });
 })();

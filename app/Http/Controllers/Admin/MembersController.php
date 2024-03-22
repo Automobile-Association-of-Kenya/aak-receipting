@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Exception;
 use App\Models\members;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 
 class MembersController extends Controller
 {
@@ -66,6 +66,11 @@ class MembersController extends Controller
         } catch (Exception $e) {
             return json_encode(['status'=>'error','message'=>$e->getMessage()]);
         }
+    }
+
+    function getMemberinvoices($member_id) {
+        $invoices = Invoice::where('members_id',$member_id)->get();
+        return json_encode($invoices);
     }
 
     /**

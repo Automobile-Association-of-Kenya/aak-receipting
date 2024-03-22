@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use App\Models\Departments;
 use App\Models\Departments_products;
+use App\Models\Invoice;
 use App\Models\members;
+use App\Models\Payment;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Http;
 
@@ -30,7 +34,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $total_customers = members::count();
+        $total_invoices = Invoice::count();
+        $total_payments = Payment::sum('amount');
+        $total_users = User::count();
+        return view('home', compact('total_customers', 'total_invoices', 'total_payments', 'total_users'));
     }
 
     function overview()
@@ -52,7 +60,7 @@ class HomeController extends Controller
 
     public function summary()
     {
-        $payments = collect(Http::get('http://185.209.228.155:3000/api/payments/getAllPayments'));
+        $payments = Payment::get();
         $todaypayments = $payments->where('date_created', date('Y-m-d'));
         $todaypaymentscount = $todaypayments->count();
         $todaypaymentstotal = $todaypayments->sum('amount');
@@ -60,7 +68,12 @@ class HomeController extends Controller
         $members = members::count();
         $todaymembers = members::whereDate('created_at', date('Y-m-d'))->count();
         $expiredmembers = members::whereDate('expiryDate', '<', date('Y-m-d'))->count();
-        return ['todaypaymentscount' => $todaypaymentscount, 'todaypaymentstotal' => $todaypaymentstotal, 'totalpayments' => $totalpayments, 'members' => $members, 'todaymembers' => $todaymembers, 'expiredmembers' => $expiredmembers];
+        $invoicestotal = Invoice::sum('amount');
+        $invoicetoday = Invoice::whereDate('date', date('Y-m-d'))->sum('amount');
+        $todayivoicescount = Invoice::whereDate('date', date('Y-m-d'))->count();
+        $usercount = User::count();
+        $userscounttoday = User::whereDate('created_at', date('Y-m-d'))->count();
+        return ['todaypaymentscount' => $todaypaymentscount, 'usercount' => $usercount, 'userscounttoday' => $userscounttoday, 'todayivoicescount' => $todayivoicescount, 'invoicestotal' => $invoicestotal, 'invoicetoday' => $invoicetoday, 'todaypaymentstotal' => $todaypaymentstotal, 'totalpayments' => $totalpayments, 'members' => $members, 'todaymembers' => $todaymembers, 'expiredmembers' => $expiredmembers];
     }
 
     function getdepartmentservices($department_id)
@@ -71,7 +84,7 @@ class HomeController extends Controller
 
     function getproducts()
     {
-        $products = Departments_products::get();
+        $products = Departments_products::with('department:id,name')->get();
         return json_encode($products);
     }
 
@@ -90,5 +103,11 @@ class HomeController extends Controller
     function settings()
     {
         return view('settings');
+    }
+
+    function getBranches()
+    {
+        $branches = Branch::latest()->get();
+        return json_encode($branches);
     }
 }

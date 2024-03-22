@@ -22,9 +22,7 @@ function membersOption(target) {
     $.getJSON("/members-data", function (members) {
         let option = `<option value="NULL">Select Client</option>`;
         $.each(members, function (key, value) {
-            option += `<option value="${value.id}">${
-                value.idNo +
-                " " +
+            option += `<option value="${value.id}">${value.idNo+" "+
                 value.firstName +
                 " " +
                 value.secondName +
@@ -50,16 +48,6 @@ function departmentOptions(target) {
     $.getJSON("/departments-data", function (departments) {
         let option = `<option value="NULL">Select Department</option>`;
         $.each(departments, function (key, value) {
-            option += `<option value="${value.id}">${value.name}</option>`;
-        });
-        $(target).html(option);
-    });
-}
-
-function branchesOption(target) {
-    $.getJSON("/branches-data", function (branches) {
-        let option = `<option value="NULL">Select Department</option>`;
-        $.each(branches, function (key, value) {
             option += `<option value="${value.id}">${value.name}</option>`;
         });
         $(target).html(option);

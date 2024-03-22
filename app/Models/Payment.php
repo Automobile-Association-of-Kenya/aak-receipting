@@ -5,15 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['members_id', 'ref_no', 'amount', 'date', 'method', 'description'];
+    protected $fillable = ['receipt_no','invoice_id','members_id', 'ref_no', 'amount', 'date', 'method', 'description'];
 
     public function member(): BelongsTo
     {
         return $this->belongsTo(members::class, 'members_id');
+    }
+
+    /**
+     * Get all of the invoices for the Payment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
     }
 }

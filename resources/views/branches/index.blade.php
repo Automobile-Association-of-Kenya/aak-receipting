@@ -38,6 +38,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Added By</th>
+                            <th>Action</th>
                         </thead>
 
                         <tbody>
@@ -49,6 +50,7 @@
                                     <td>{{ $i++ }}</td>
                                     <td> <small>{{ $item->name }}</small>
                                     <td> <small>{{$item->user?$item->user->name:'-'}}</small>
+                                    <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,7 +109,7 @@
 @section('footer_scripts')
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/products.js') }}"></script>
+    <script src="{{ asset('') }}"></script>
     <script>
         (function() {
             $('#dataTable').DataTable();

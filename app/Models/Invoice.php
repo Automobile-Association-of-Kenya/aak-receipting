@@ -10,7 +10,7 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['members_id', 'product_id', 'amount', 'date'];
+    protected $fillable = ['invoice_no','branch_id','members_id', 'departments_products_id', 'amount', 'date'];
     /**
      * Get the product that owns the Invoice
      *
@@ -18,7 +18,7 @@ class Invoice extends Model
      */
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Departments_products::class, 'departments_products_id');
     }
 
     /**
@@ -29,5 +29,15 @@ class Invoice extends Model
     public function member(): BelongsTo
     {
         return $this->belongsTo(members::class, 'members_id');
+    }
+
+    /**
+     * Get the branch that owns the Invoice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
     }
 }

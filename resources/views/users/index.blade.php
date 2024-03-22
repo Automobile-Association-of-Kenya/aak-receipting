@@ -39,6 +39,7 @@
                             <th>Department</th>
                             <th>Name</th>
                             <th>Role</th>
+                            <th>Action</th>
                         </thead>
 
                         <tbody>
@@ -51,6 +52,7 @@
                                     <td> <small>{{ $item->name }}</small>
                                     <td> <small>{{ $item->email }}</small>
                                     <td> <small>{{ $item->role_id == 1 ? 'Admin' : 'User' }}</small>
+                                    <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach

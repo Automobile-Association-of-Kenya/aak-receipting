@@ -25,7 +25,7 @@
 
 
 
-                <div class="table-responsive">
+                <div class="table-responsive" style="font-size:16px">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
                         <thead>
@@ -40,6 +40,7 @@
                             @foreach ($members as $item)
                                 <tr>
                                     <td>
+<<<<<<< HEAD
                                      <i class="fas fa-user-circle fa-1x float-left mr-3"></i>
                                      <small>{{ $item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
                                     <td> <small>{{ $item->idNo }}</small></td>
@@ -47,6 +48,13 @@
                                     <td> <small>{{ $item->emailAddress }}</small></td>
                                     <td> <small>{{ $item->created_at }}</small></td>
                                 
+=======
+                                        <i class="fas fa-user-circle fa-1x float-left mr-3" ></i>
+                                        <small>{{ $item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
+                                    <td> <small>{{ $item->idNo }}</small>
+                                    <td> <small>{{ $item->mobilePhoneNumber }}</small>
+                                    <td> <small>{{ $item->emailAddress }}</small>
+>>>>>>> 170a559a38cf8cd1b19a43b206016265b2f40168
                                 </tr>
                             @endforeach
                         </tbody>
@@ -75,14 +83,14 @@ aria-hidden="true">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" style="font-size:14px">
                             <input type="number" class="form-control form-control-user" id="clientIDNumber"
                                 placeholder="Enter ID Number" name="id_number" value="{{ old('id_number') }}">
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" style="font-size:14px" >
                             <input type="text" class="form-control form-control-user" id="clientFirstName"
                                 placeholder="First Name" name="first_name" value="{{ old('first_name') }}">
                         </div>
@@ -130,7 +138,7 @@ aria-hidden="true">
 @section('footer_scripts')
 <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/products.js') }}"></script>
+<script src="{{ asset('js/members.js') }}"></script>
 <script>
     (function() {
         $('#dataTable').DataTable();

@@ -22,8 +22,8 @@
             </div>
 
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <div class="table-responsive" id="productsTableSection">
+                    {{-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <th>#</th>
                             <th>Department</th>
@@ -42,13 +42,13 @@
                                     <td> <small>{{ $item->department->name }}</small>
                                     <td> <small>{{ $item->name }}</small>
                                     <td> <small>{{ $item->amount }}</small>
-                                    <td>
+                                    <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
 
-                    </table>
+                    </table> --}}
                 </div>
             </div>
         </div>
@@ -75,7 +75,10 @@
                             <div class="form-group">
                                 <label for="department_id">Department</label>
                                 <select name="department_id" id="departmentID" class="form-control">
-
+                                    <option value="">Select department</option>
+                                        @foreach ($departments as $item)
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>

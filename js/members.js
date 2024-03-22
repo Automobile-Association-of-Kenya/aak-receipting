@@ -24,6 +24,7 @@
         };
         $.post("/members", data)
             .done(function (params) {
+                console.log(params);
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");

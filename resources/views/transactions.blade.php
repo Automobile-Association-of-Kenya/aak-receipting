@@ -18,6 +18,16 @@
     <div class="container-fluid">
         <div class="card shadow mb-4">
             <div class="card-header py-3 bg-white">
+                @if (session('stkSuccess'))
+                    <div class="alert alert-success">
+                        {{ session('stkSuccess') }}
+                    </div>
+                @endif
+                @if (session('stkError'))
+                    <div class="alert alert-danger">
+                        {{ session('stkError') }}
+                    </div>
+                @endif
                 <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100 active" data-toggle="tab" data-target="#invoicesTab" type="button"
@@ -79,7 +89,16 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <div class="form-group" id="membersInvoiceDiv">
+                                <div class="form-group" id="invoiceBranchDiv" style="font-size:14px">
+                                    <label for="invoiceBranchID">Branch</label>
+                                    <select name="branch_id" id="invoiceBranchID" class="form-control  form-control-sm"
+                                         required
+                                        style="width: 100%;"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group" id="membersInvoiceDiv" style="font-size:14px">
                                     <label for="memberID">Client</label>
                                     <select name="member_id" id="memberID" class="form-control  form-control-sm"
                                         data-control="select2" data-dropdown-parent="#membersInvoiceDiv" required
@@ -88,14 +107,14 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="departmentInvoiceId">Departments</label>
                                     <select name="department_id" id="departmentInvoiceId"
                                         class="form-control  form-control-sm"></select>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="departmentProductID">Product</label>
                                     <select name="product_id" id="departmentProductID"
                                         class="form-control  form-control-sm"></select>
@@ -103,7 +122,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="invoiceAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="invoiceAmount"
                                         name="invoice_amount" value="{{ old('invoice_amount') }}">
@@ -111,7 +130,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group" style="font-size:14px">
                                     <label for="invoiceDate">Date</label>
                                     <input type="date" class="form-control form-control-sm" id="invoiceDate"
                                         name="invoice_date" value="{{ date('Y-m-d') }}">
@@ -151,7 +170,7 @@
 
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100" data-toggle="tab" data-target="#manualTab" type="button"
-                            role="tab" aria-controls="profile" aria-selected="false">Manual</button>
+                            role="tab" aria-controls="profile" aria-selected="false">Mpesa And Other</button>
                     </li>
 
                 </ul>
@@ -159,14 +178,22 @@
                 <div class="modal-body tab-content">
                     @csrf
                     <div class="tab-pane fade show active" id="mpesaTab" role="tabpanel" aria-labelledby="mpesa-tab">
-                        <form action="{{ route('payment.mpesa') }}" method="post" id="createMpesaPaymentForm">
-
+                        <form action="{{ route('payment.mpesa') }}" method="post" id="mpesaPaymentForm">
+                            @csrf
                             <div class="col-md-12">
-                                <div class="form-group" id="mpesaMembersDIv">
+                                <div class="form-group" id="mpesaMembersDIv" style="font-size:14px">
                                     <label for="mpesaPaymentMemberID">Client</label>
                                     <select name="mpesa_payment_member_id" id="mpesaPaymentMemberID"
                                         class="form-control form-control-sm" data-control="select2"
-                                        data-dropdown-parent="#mpesaMembersDIv" required style="width: 100%;"></select>
+                                        data-dropdown-parent="#mpesaMembersDIv" required style="width: 100%;" required></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group" style="font-size:14px">
+                                    <label for="mpesaPaymentInvoiceID">Invoice</label>
+                                    <select name="mpesaPaymentInvoiceID" id="mpesaPaymentInvoiceID" class="form-control form-control-sm">
+                                    </select>
                                 </div>
                             </div>
 
@@ -174,7 +201,7 @@
                                 <div class="form-group" id="membersDIv">
                                     <label for="paymentMemberID">Enter phone number to pay </label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentPhone"
-                                        name="payment_phone">
+                                        name="payment_phone" required>
                                 </div>
                             </div>
 
@@ -182,13 +209,14 @@
                                 <div class="form-group">
                                     <label for="paymentAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentAmount"
-                                        name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}">
+                                        name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}" required>
                                 </div>
                             </div>
+                            <div id="mpesaPaymentFeedback"></div>
 
                             <div class="mt-2" id="mpesaPaymentAction">
-                                <button type="button" class="btn btn-primary btn-sm"
-                                    id="initiatePayment">Initiate</button>
+                                <button type="submit" class="btn btn-primary btn-sm" id="initiatePayment">Send
+                                    STK</button>
                                 <button type="submit" class="btn btn-warning btn-sm"
                                     id="confirmPayment">Confirm</button>
                             </div>
@@ -201,7 +229,7 @@
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <div class="form-group" id="jjjjhjhjj">
+                                    <div class="form-group" id="jjjjhjhjj" style="font-size:14px">
                                         <label for="paymentMemberID">Client</label>
                                         <select name="payment_member_id" id="paymentMemberID"
                                             class="form-control form-control-sm" data-control="select2"
@@ -210,7 +238,15 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group" style="font-size:14px">
+                                        <label for="paymentInvoiceID">Invoice</label>
+                                        <select name="paymentInvoiceID" id="paymentInvoiceID" class="form-control form-control-sm">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group" style="font-size:14px">
                                         <label for="paymentMethod">Method</label>
                                         <select name="payment_method" id="paymentMethod"
                                             class="form-control form-control-sm">
