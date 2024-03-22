@@ -11,7 +11,7 @@
 @section('content')
     <div class="container-fluid">
 
-        {{-- <h1 class="h3 mb-2 text-gray-800">Clients</h1> --}}
+        <h1 class="h3 mb-2 text-gray-800">Clients</h1>
 
         <div class="card shadow mb-3">
 
@@ -33,17 +33,19 @@
                             <th>Id No</th>
                             <th>Phone Number</th>
                             <th>Email Address</th>
+                            <th>Date Created</th>
                         </thead>
 
                         <tbody>
                             @foreach ($members as $item)
                                 <tr>
                                     <td>
-                                        <i class="fas fa-user-circle fa-1x float-left mr-3"></i>
-                                        <small>{{ $item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
-                                    <td> <small>{{ $item->idNo }}</small>
-                                    <td> <small>{{ $item->mobilePhoneNumber }}</small>
-                                    <td> <small>{{ $item->emailAddress }}</small>
+                                     <i class="fas fa-user-circle fa-1x float-left mr-3"></i>
+                                     <small>{{ $item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
+                                    <td> <small>{{ $item->idNo }}</small></td>
+                                    <td> <small>{{ $item->mobilePhoneNumber }}</small></td>
+                                    <td> <small>{{ $item->emailAddress }}</small></td>
+                                    <td> <small>{{ $item->created_at }}</small></td>
                                 
                                 </tr>
                             @endforeach
