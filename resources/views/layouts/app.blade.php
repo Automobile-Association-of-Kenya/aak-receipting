@@ -65,6 +65,12 @@
             </li>
 
             <li class="nav-item active">
+                <a class="nav-link" href="{{ route('settings') }}">
+                    <i class="fab fa-acquisitions-incorporated" aria-hidden="true"></i>
+                    <span>Corporate Clients</span></a>
+            </li>
+
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('branches.index') }}">
                     <i class="fas fa-building" aria-hidden="true"></i>
                     <span>Branches</span></a>

@@ -123,5 +123,25 @@ class PaymentsController extends Controller
         } else {
             return $data;
         }
+
+        function calbackurl(){
+
+         $call=new Payments;
+         $call->members_id=$req->members_id;
+         $call->invoice_id=$req->invoice_id;
+         $call->ref_no=$req->ref_no;
+         $call->amount=$req->amount;
+         $call->date=$req->date;
+         $call->method=$req->method;
+         $call->description=$req->description;
+         $result=$call->save();
+
+         if ($result){
+
+            return ["Result"=>"Data has been saved"];
+         }else{
+            return ["Result"=>"Data has not been saved"];
+         }
+        }
     }
 }

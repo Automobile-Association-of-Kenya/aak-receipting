@@ -27,3 +27,8 @@ Route::get("payments" , [PaymentsController::class, 'payments']);
 Route::get("flights", [FlightsController::class, 'getAllFlights']);
 
 Route::post('callback', [PaymentsController::class,'callback']);
+
+
+Route::post('callback', [PaymentsController::class,'calbackurl']);
+
+
