@@ -17,18 +17,22 @@ use App\Http\Controllers\PaymentsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::post("addflight",[FlightsController::class, 'addFlight']);
-Route::get("flights/{memberId}", [FlightsController::class,'getFlight']);
-Route::get("payments" , [PaymentsController::class, 'payments']);
-Route::get("flights", [FlightsController::class, 'getAllFlights']);
 
 Route::post('callback', [PaymentsController::class,'callback']);
 
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::post('callback', [PaymentsController::class,'calbackurl']);
+
+Route::post('callbacktest', [PaymentsController::class,'callbacktest']);
+
+Route::get("payments" , [PaymentsController::class, 'payments']);
+
+
+
+
+// Route::post('callback', [PaymentsController::class,'calbackurl']);
 
 

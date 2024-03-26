@@ -41,7 +41,6 @@
                                     <td>{{ $i++ }}</td>
                                     <td> <small>{{ $item->department->name }}</small>
                                     <td> <small>{{ $item->name }}</small>
-                                    <td> <small>{{ $item->amount }}</small>
                                     <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
                                 </tr>
@@ -98,8 +97,24 @@
                                     value="{{ old('amount') }}">
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="productVAT">Vatable</label>
+                                <select class="form-control" name="VAT" id="productVAT" name="vatable">
+                                        <option value="0">YES</option>
+                                        <option value="1">NO</option>
+                                    </select>
+                            </div>
                     </div>
+                        <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="productGL">GL NO</label>
+                                  <input type="text" class="form-control" id="productGL" name="name"
+                                    value="{{ old('name') }}">
+                                </div>
+                        </div>     
                 </div>
+             </div>
                 <div id="productFeedback"></div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-md btn-success">Save</button>

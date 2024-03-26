@@ -3,6 +3,8 @@
         departmentID = $("#departmentID"),
         productName = $("#productName"),
         productAmount = $("#productAmount"),
+        productVAT = $("#productVAT"),
+        productGL = $("#productGL"),
         productsTableSection = $("#productsTableSection");
 
     createProductForm.on("submit", function (event) {
@@ -13,6 +15,8 @@
                 departments_id: departmentID.val(),
                 name: productName.val(),
                 amount: productAmount.val(),
+                vatable: productVAT.val(),
+                GlNo: productGL.val(),
             };
         $.post("/products", data)
             .done(function (params) {
@@ -55,9 +59,11 @@
                     value.department?.name
                 }</td><td>${value.name}</td><td>${
                     value.amount
-                }</td><td></td></tr>`;
+                }</td><td>${value.name}</td><td>${
+                    value.GlNo
+                }</td><td></td></tr>`
             });
-            let table = `<table class="table table-bordered table-hover table-sm"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
+            let table = `<table class="table table-bordered table-hover table-sm"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th><th>Vatable</th><th>GL No</th></thead><tbody>${tr}</tbody></table>`;
             productsTableSection.html(table);
         });
     }

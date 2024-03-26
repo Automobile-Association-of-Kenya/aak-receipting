@@ -11,7 +11,7 @@ class Departments_products extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['departments_id', 'name', 'amount'];
+    protected $fillable = ['departments_id', 'name', 'amount','Vatable'];
 
     /**
      * Get all of the invoices for the Departments_products

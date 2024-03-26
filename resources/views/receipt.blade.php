@@ -149,6 +149,7 @@ function clean($var)
             <thead style="border-bottom: 2px solid #333;">
                 <tr>
                     <th><b>Invoice NO</b></th>
+                    <th><b>Ref No</b></th>
                     <th><strong>Description</strong></th>
                     <th><strong>Amount</strong></th>
                 </tr>
@@ -157,6 +158,7 @@ function clean($var)
             <tbody>
                 <tr>
                     <td>{{ $payment->invoice?->invoice_no }}</td>
+                    <td>{{ $payment->ref_no }}</td>
                     <td>{{ $payment->description }}</td>
                     <td>{{ asMoney((float) $payment->amount) }}</td>
                 </tr>

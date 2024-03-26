@@ -37,6 +37,7 @@
                         <thead>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Branch Code</th>
                             <th>Added By</th>
                             <th>Action</th>
                         </thead>
@@ -49,6 +50,7 @@
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td> <small>{{ $item->name }}</small>
+                                    <td> <small>{{ $item->branch_code }}</small>
                                     <td> <small>{{$item->user?$item->user->name:'-'}}</small>
                                     <td> <a href="" class="fa fa-edit"  style="font-size:15px">Edit</a>
                                     </td>
@@ -94,6 +96,17 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="productCode">Branch Code</label>
+                                    <input type="text" class="form-control" id="productCode" name="name"
+                                        value="{{ old('name') }}">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div id="productFeedback"></div>
                     <div class="modal-footer">

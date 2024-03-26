@@ -18,7 +18,7 @@ class PaymentsController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth')->except('callback');
+        // $this->middleware('auth')->except('callback');
         $this->payment = new Payment();
     }
 
@@ -100,48 +100,31 @@ class PaymentsController extends Controller
     function callback(Request $request)
     {
         Log::alert($request);
-        $data = json_decode($request);
+        $data = $request;
         Log::info($data);
-        if (isset($data->mpesaReference) && !is_null($data->mpesaReference)) {
-            $payment = Tempmpesa::where('checkoutid', $data->checkoutID)->first();
+        if (isset($data["mpesaReference"]) && !is_null($data["mpesaReference"])) {
+            $payment = Tempmpesa::where('checkoutid', $data["checkoutID"])->first();
             if ($data->status === "SUCCESSFUL") {
-                $payment = Tempmpesa::where('checkoutid', $data->checkoutID)->first();
-                $payment->update(['mpesareference' => $data->mpesareference, 'status' => $data->status]);
+                $payment = Tempmpesa::where('checkoutid', $data["checkoutID"])->first();
+                $payment->update(['mpesareference' => $data["mpesaReference"], 'status' => $data["status"]]);
                 $receiptno = DB::select(DB::raw('SELECT fn_generateReceiptNumber() AS result'));
-                $this->payment->create([
+                $rpayment = $this->payment->create([
                     'receipt_no' => $receiptno[0]->result,
                     'members_id' => $payment->members_id,
                     'ref_no' => $payment->mpesareference,
+                    'method'=>'Mpesa',
                     'invoice_id' => $payment->invoice_id,
                     'amount' => $payment->amount,
-                    'date' => $payment->date,
+                    'date' => date('Y-m-d'),
                     'description' => $payment->description,
                 ]);
+                Log::alert($rpayment);
             } else {
                 Log::alert('here we are');
             }
         } else {
             return $data;
         }
-
-        function calbackurl(){
-
-         $call=new Payments;
-         $call->members_id=$req->members_id;
-         $call->invoice_id=$req->invoice_id;
-         $call->ref_no=$req->ref_no;
-         $call->amount=$req->amount;
-         $call->date=$req->date;
-         $call->method=$req->method;
-         $call->description=$req->description;
-         $result=$call->save();
-
-         if ($result){
-
-            return ["Result"=>"Data has been saved"];
-         }else{
-            return ["Result"=>"Data has not been saved"];
-         }
-        }
     }
+
 }
