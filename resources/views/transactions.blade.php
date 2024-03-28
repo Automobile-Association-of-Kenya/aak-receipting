@@ -125,7 +125,7 @@
                                 <div class="form-group" style="font-size:14px">
                                     <label for="invoiceAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="invoiceAmount"
-                                        name="invoice_amount" value="{{ old('invoice_amount') }}">
+                                        name="invoice_amount" value="{{ old('invoice_amount') }}"readonly>
                                 </div>
                             </div>
 

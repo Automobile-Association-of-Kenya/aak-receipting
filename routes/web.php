@@ -10,6 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\members;
+use App\Models\Corprates;
+use App\Http\Controllers\CorprateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MembersController::class, 'index']);
 
+Route::resource('corprates', CorprateController::class);
+
+
 // Route::get('/payments', function () {
 //     return view('payments');
 // });
@@ -47,6 +52,7 @@ Route::get('member-invoices/{id}', [MembersController::class,'getMemberinvoices'
 Route::resource('products', ProductController::class);
 
 Route::get('branches-data', [HomeController::class, 'getBranches']);
+Route::get('corprate-data', [HomeController::class, 'getcorprate']);
 
 Route::resource('invoices', InvoiceController::class);
 // Route::get('invoices/{id}', [InvoiceController::class,'edit']);
@@ -83,7 +89,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('settings', [HomeController::class, 'settings'])->name('settings');
+Route::get('/corprate', [HomeController::class, 'getcorprates'])->name('corprates');
 Route::resource('users',UserController::class);
 Route::resource('branches',BranchController::class);
+// Route::get('/corprates', [HomeController::class, 'getcorprates'])->name('corprates');
+// Route::resource('corprates', CorprateController::class); 
+
 
 require __DIR__ . '/auth.php';

@@ -11,9 +11,9 @@ use App\Models\members;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Corprate; // Add this line to import the Corprate model
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Http;
-
 
 class HomeController extends Controller
 {
@@ -103,6 +103,12 @@ class HomeController extends Controller
     function settings()
     {
         return view('settings');
+    }
+
+    function getcorprates() 
+    {
+        $corprates = Corprate::latest()->get();
+        return json_encode($corprates);
     }
 
     function getBranches()

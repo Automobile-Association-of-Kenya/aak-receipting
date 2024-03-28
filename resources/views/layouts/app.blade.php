@@ -65,7 +65,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('settings') }}">
+                <a class="nav-link" href="{{ route('corprates') }}">
                     <i class="fab fa-acquisitions-incorporated" aria-hidden="true"></i>
                     <span>Corporate Clients</span></a>
             </li>
