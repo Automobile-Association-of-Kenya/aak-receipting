@@ -190,12 +190,13 @@ mpesaPaymentInvoiceID = $('#mpesaPaymentInvoiceID');
                         value.member.surNameName
                     }</td><td>${
                         value.member.mobilePhoneNumber
-                    }</td><td>${numberFormat(value.amount ?? 0)}</td><td>${
-                        value.description
+                    }</td><td>${numberFormat(value.amount ?? 0)
+                    }</td><td>${value.ref_no
+                    }</td><td>${value.description
                     }</td><td><a href="/payment-print/${value.id}" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></td></tr>`;
                 });
                 let table =
-                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>Receipt NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Description</th><th>Action</th></thead><tbody>' +
+                    '<table class="table table-bordered" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>Receipt NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>ref_no</th><th>Description</th><th>Action</th></thead><tbody>' +
                     tr +
                     "</tbody></table>";
 

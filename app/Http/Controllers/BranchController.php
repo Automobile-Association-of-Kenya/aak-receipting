@@ -40,11 +40,12 @@ class BranchController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:branches,name'
+            'name' => 'required|unique:branches,name,branch_code'
         ]);
         try {
             Branch::create([
                 'name' => $request->name,
+                'branch_code' => $request->branch_code,
                 'created_by_id' => Auth::user()->id
             ]);
             return redirect()->back()->with('success','Branch created successfully.');

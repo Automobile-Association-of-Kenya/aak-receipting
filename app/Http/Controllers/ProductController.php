@@ -42,6 +42,8 @@ class ProductController extends Controller
             'departments_id' => ['required'],
             'name' => ['required'],
             'amount' => ['required'],
+            'vatable' => ['required'],
+            'GlNo' => ['required'],
         ]);
         Departments_products::create($validated);
         return json_encode(['status'=>'success','message'=>'Product created succesfully']);
