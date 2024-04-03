@@ -17,8 +17,13 @@ class BranchController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         // $branches = Branch::all();
         return view('branches.index');
+=======
+        $branches = Branch::all();
+        return view('branches.index',compact('branches'));
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
     }
 
     /**
@@ -42,12 +47,26 @@ class BranchController extends Controller
         $request->validate([
             'name' => 'required|unique:branches,name,branch_code'
         ]);
+<<<<<<< HEAD
         Branch::create([
             'name' => $request->name,
             'branch_code' => $request->branch_code,
             'created_by_id' => Auth::user()->id
         ]);
         return json_encode(['status' => 'success', 'message' => 'Branch created successfully.']);
+=======
+        try {
+            Branch::create([
+                'name' => $request->name,
+                'branch_code' => $request->branch_code,
+                'created_by_id' => Auth::user()->id
+            ]);
+            return redirect()->back()->with('success','Branch created successfully.');
+        } catch (Exception $e) {
+            Log::critical($e);
+            return redirect()->back()->with('exception','An unexpected error occurred. Please try again.');
+        }
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
     }
 
     /**

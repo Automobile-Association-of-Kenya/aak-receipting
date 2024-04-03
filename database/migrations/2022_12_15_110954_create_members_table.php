@@ -15,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD
             $table->string('MembershipNumber')->nullable();
+=======
+            // $table->string('MembershipNumber')->nullable();
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
             $table->string('idNo')->nullable();
             $table->string('surNameName')->nullable();
             $table->string('firstName')->nullable();

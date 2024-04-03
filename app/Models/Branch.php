@@ -29,6 +29,7 @@ class Branch extends Model
     {
         return $this->hasMany(Invoice::class, 'branch_id', 'id');
     }
+<<<<<<< HEAD
 
     /**
      * Get all of the payments for the Branch
@@ -39,4 +40,6 @@ class Branch extends Model
     {
         return $this->hasMany(Payment::class, 'branch_id', 'id');
     }
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 }

@@ -25,8 +25,13 @@
 
 
 
+<<<<<<< HEAD
                 <div class="table-responsive" style="font-size:16px" id="customersTableSection">
                     {{-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+=======
+                <div class="table-responsive" style="font-size:16px">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 
                         <thead>
                             <th>Name</th>
@@ -40,14 +45,22 @@
                                 <tr>
                                     <td>
                                         <i class="fas fa-user-circle fa-1x float-left mr-3" ></i>
+<<<<<<< HEAD
                                         <small>{{ $item->MembershipNumber.' '.$item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
+=======
+                                        <small>{{ $item->firstName . ' ' . $item->secondName . ' ' . $item->surNameName }}</small></td>
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                     <td> <small>{{ $item->idNo }}</small>
                                     <td> <small>{{ $item->mobilePhoneNumber }}</small>
                                     <td> <small>{{ $item->emailAddress }}</small>
                                 </tr>
                             @endforeach
                         </tbody>
+<<<<<<< HEAD
                     </table> --}}
+=======
+                    </table>
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                 </div>
             </div>
         </div>
@@ -128,5 +141,13 @@ aria-hidden="true">
 <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('js/members.js') }}"></script>
+<<<<<<< HEAD
 
+=======
+<script>
+    (function() {
+        $('#dataTable').DataTable();
+    })()
+</script>
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 @endsection

@@ -14,9 +14,13 @@
         invoiceDate = $("#invoiceDate"),
         invoicesTableSection = $("#invoicesTableSection"),
         departmentInvoiceId = $("#departmentInvoiceId"),
+<<<<<<< HEAD
         invoiceBranchID = $("#invoiceBranchID"),
         invoiceProductsTbody = $("#invoiceProductsTbody"),
         invoiceProductsTfoot = $("#invoiceProductsTfoot");
+=======
+        invoiceBranchID = $("#invoiceBranchID");
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 
     departmentInvoiceId.on("change", function (event) {
         let department_id = $(this).val();
@@ -39,6 +43,7 @@
         } else {
             $.getJSON("/products/" + product_id, function (product) {
                 invoiceAmount.val(product.amount);
+<<<<<<< HEAD
                 let tr = `<tr data-id="${product.id}"><td>${product.name}</td><td><input id="invoiceProductQuantity" value="1" readonly></td><td class="invoiceProductAmount">${product.amount}</td><td><i class="fa fa-trash text-danger" id="removeInvoiceProduct"></i></td></tr>`;
                 if ($("#invoiceProductsTbody > tr").length > 0) {
                     $("#invoiceProductsTbody > tr").each(function (key, value) {
@@ -74,10 +79,13 @@
                     invoiceProductsTbody.prepend(tr);
                     calcuteTotal();
                 }
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
             });
         }
     });
 
+<<<<<<< HEAD
     $("body").on("click", "#removeInvoiceProduct", function () {
         $(this).closest("tr").remove();
         calcuteTotal();
@@ -107,10 +115,16 @@
                 ),
             });
         });
+=======
+    createInvoiceFOrm.on("submit", function (event) {
+        event.preventDefault();
+        const $this = $(this);
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         const data = {
             _token: $this.find("input[name='_token']").val(),
             branch_id: invoiceBranchID.val(),
             members_id: memberID.val(),
+<<<<<<< HEAD
             amount: invoiceAmount.val(),
             date: invoiceDate.val(),
             products: products,
@@ -173,6 +187,40 @@
         } else {
             showError(errors.join(", "), "#invoiceFeedback");
         }
+=======
+            departments_products_id: departmentProductID.val(),
+            amount: invoiceAmount.val(),
+            date: invoiceDate.val(),
+        };
+        $.post("/invoices", data)
+            .done(function (params) {
+                let result = JSON.parse(params);
+                if (result.status == "success") {
+                    $this.trigger("reset");
+                    showSuccess(result.message, "#invoiceFeedback");
+                    getInvoices();
+                } else {
+                    showError(
+                        "Error occured during processing",
+                        "#invoiceFeedback"
+                    );
+                }
+            })
+            .fail(function (error) {
+                if (error.status == 422) {
+                    var errors = "";
+                    $.each(error.responseJSON.errors, function (key, value) {
+                        errors += value + "!";
+                    });
+                    showError(errors, "#invoiceFeedback");
+                } else {
+                    showError(
+                        "Error occured during processing",
+                        "#invoiceFeedback"
+                    );
+                }
+            });
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
     });
 
     function getInvoices() {
@@ -192,6 +240,11 @@
                         " " +
                         value.member.surNameName
                     }</small></td><td><small>${
+<<<<<<< HEAD
+=======
+                        value.product !== null ? value.product.name : "N/A"
+                    }</small></td><td><small>${
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                         value.amount
                     }</small></td><td><small>${
                         value.date
@@ -199,7 +252,11 @@
                         value.id
                     }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
                 });
+<<<<<<< HEAD
                 let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Member</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
+=======
+                let table = `<table class="table table-bordered table-hover" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Member</th><th>Product</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                 invoicesTableSection.html(table);
                 if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
                     $("#invoicesDataTable").DataTable().destroy();
@@ -232,4 +289,9 @@
     }
 
     getInvoices();
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 })();

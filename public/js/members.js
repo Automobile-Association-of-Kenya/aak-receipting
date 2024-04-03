@@ -6,8 +6,12 @@
         clientLastName = $("#clientLastName"),
         clientEmail = $("#clientEmail"),
         clientPhone = $("#clientPhone"),
+<<<<<<< HEAD
         createClientToggle = $("#createClientToggle"),
         customersTableSection = $("#customersTableSection");
+=======
+        createClientToggle = $("#createClientToggle");
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 
     createMemberFOrm.on("submit", function (event) {
         event.preventDefault();
@@ -29,10 +33,13 @@
                 if (result.status == "success") {
                     $this.trigger("reset");
                     showSuccess(result.message, "#memberFeedback");
+<<<<<<< HEAD
                     window.setTimeout(function () {
                         $("#createClientModal").modal("hide");
                     }, 3000);
                     getMembers();
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                 } else {
                     showError(
                         "Error occured during processing",
@@ -55,6 +62,7 @@
             });
     });
 
+<<<<<<< HEAD
     function getMembers() {
         $.getJSON("/members-data", function (customers) {
             let tr = "",
@@ -81,4 +89,6 @@
     }
 
     getMembers();
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 })();

@@ -18,7 +18,10 @@
                 vatable: productVAT.val(),
                 GlNo: productGL.val(),
             };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         $.post("/products", data)
             .done(function (params) {
                 console.log(params);
@@ -26,9 +29,12 @@
                 if (result.status == "success") {
                     $this.trigger("reset");
                     showSuccess(result.message, "#productFeedback");
+<<<<<<< HEAD
                     window.setTimeout(function () {
                         $("#createProductModal").modal("hide");
                     },3000);
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                     getProducts();
                 } else {
                     showError(
@@ -61,6 +67,7 @@
             $.each(products, function (key, value) {
                 tr += `<tr><td>${i++}</td><td>${
                     value.department?.name
+<<<<<<< HEAD
                 }</td><td>${value.name}</td><td>${value.amount}</td><td>${
                     value.name
                 }</td><td>${value.GlNo}</td></tr>`;
@@ -68,6 +75,16 @@
             let table = `<table class="table table-bordered table-hover table-sm" id="productsTable"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th><th>Vatable</th><th>GL No</th></thead><tbody>${tr}</tbody></table>`;
             productsTableSection.html(table);
             $("#productsTable").DataTable();
+=======
+                }</td><td>${value.name}</td><td>${
+                    value.amount
+                }</td><td>${value.name}</td><td>${
+                    value.GlNo
+                }</td><td></td></tr>`
+            });
+            let table = `<table class="table table-bordered table-hover table-sm"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th><th>Vatable</th><th>GL No</th></thead><tbody>${tr}</tbody></table>`;
+            productsTableSection.html(table);
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         });
     }
     getProducts();

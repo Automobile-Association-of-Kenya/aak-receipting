@@ -15,7 +15,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('departments_products', function (Blueprint $table) {
+<<<<<<< HEAD
             $table->string('GlNo')->after('amount');
+=======
+            $table->string('GlNo')->after('vatable');
+            
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         });
     }
 
@@ -28,6 +33,10 @@ return new class extends Migration
     {
         Schema::table('departments_products', function (Blueprint $table) {
             $table->dropColumn('GlNo');
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         });
     }
 };

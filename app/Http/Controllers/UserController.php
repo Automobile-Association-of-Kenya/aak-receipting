@@ -43,6 +43,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'email|required|unique:users,email',
             'role' => 'required',
+<<<<<<< HEAD
             'password' => 'required|min:8'
         ]);
         User::create([
@@ -52,6 +53,22 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
         return json_encode(['status' => 'success', 'message' => 'User added successfully']);
+=======
+            'password' => 'required|confirmed|min:8'
+        ]);
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'role_id' => $request->role,
+                'password' => Hash::make($request->password)
+            ]);
+            return redirect()->back()->with('success','User created successfully.');
+        } catch (Exception $e) {
+            Log::critical($e);
+            return redirect()->back()->with('exception','An unexpected error occurred. Please try again.');
+        }
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
     }
 
     /**

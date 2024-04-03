@@ -7,7 +7,10 @@ use App\Models\members;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 
 class MembersController extends Controller
 {
@@ -18,7 +21,12 @@ class MembersController extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
         return view('members.index');
+=======
+        $members = members::all();
+        return view('members.index',compact('members'));
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
     }
 
     /**
@@ -49,10 +57,17 @@ class MembersController extends Controller
             'member_number' => 'nullable|numeric',
             'email' => 'required|email'
         ]);
+<<<<<<< HEAD
         $memberno = DB::select(DB::raw('SELECT fn_generateCustomerNumber() AS result'));
         try {
             members::create([
                 'MembershipNumber' => $memberno[0]->result,
+=======
+
+        try {
+            members::create([
+                'MembershipNumber' => $request->member_number,
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                 'idNo' => $request->id_number,
                 'surNameName' => $request->last_name,
                 'firstName' => $request->first_name,
@@ -62,6 +77,7 @@ class MembersController extends Controller
                 'mobilePhoneNumber' => $request->phone_number,
                 'expiryDate' => $request->member_expiry_date
             ]);
+<<<<<<< HEAD
             return json_encode(['status' => 'success', 'message' => 'Member created successfully']);
         } catch (Exception $e) {
             return json_encode(['status' => 'error', 'message' => $e->getMessage()]);
@@ -71,6 +87,16 @@ class MembersController extends Controller
     function getMemberinvoices($member_id)
     {
         $invoices = Invoice::where('members_id', $member_id)->get();
+=======
+            return json_encode(['status'=>'success','message'=>'Member created successfully']);
+        } catch (Exception $e) {
+            return json_encode(['status'=>'error','message'=>$e->getMessage()]);
+        }
+    }
+
+    function getMemberinvoices($member_id) {
+        $invoices = Invoice::where('members_id',$member_id)->get();
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         return json_encode($invoices);
     }
 
@@ -96,10 +122,16 @@ class MembersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function get()
     {
         $members = members::latest()->get();
         return json_encode($members);
+=======
+    public function edit($id)
+    {
+        //
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
     }
 
     /**

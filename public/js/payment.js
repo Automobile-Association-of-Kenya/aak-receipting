@@ -88,16 +88,25 @@
             method: paymentMethod.val(),
             description: paymentDescription.val(),
         };
+<<<<<<< HEAD
         $.post("/payments", data)
             .done(function (params) {
                 console.log(params);
+=======
+        console.log(data);
+        $.post("/payments", data)
+            .done(function (params) {
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                 let result = JSON.parse(params);
                 if (result.status == "success") {
                     $this.trigger("reset");
                     showSuccess(result.message, "#paymentFeedback");
+<<<<<<< HEAD
                     window.setTimeout(function () {
                         $("#createPaymentModal").modal("hide");
                     }, 3000);
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                     getPayments();
                 } else {
                     showError(
@@ -107,7 +116,10 @@
                 }
             })
             .fail(function (error) {
+<<<<<<< HEAD
                 console.log(error);
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
@@ -138,9 +150,12 @@
                 if (result.status == "success") {
                     $this.trigger("reset");
                     showSuccess(result.message, "#mpesaPaymentFeedback");
+<<<<<<< HEAD
                     window.setTimeout(function () {
                         $("#createPaymentModal").modal("hide");
                     }, 3000);
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                     getPayments();
                 } else {
                     showError(

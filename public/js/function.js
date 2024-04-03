@@ -60,7 +60,11 @@ function branchesOption(target) {
     $.getJSON("/branches-data", function (branches) {
         let option = `<option value="NULL">Select Department</option>`;
         $.each(branches, function (key, value) {
+<<<<<<< HEAD
             option += `<option value="${value.id}">${value.name}</option>`;
+=======
+            option += `<option value="${value.id}">${value.name},${value.branch_code}</option>`;
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         });
         $(target).html(option);
     });

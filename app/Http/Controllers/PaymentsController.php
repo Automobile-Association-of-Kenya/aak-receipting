@@ -52,7 +52,13 @@ class PaymentsController extends Controller
             'method' => ['required', 'max:30'],
             'description' => ['nullable', 'max:255'],
         ]);
+<<<<<<< HEAD
         Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no, 'user_id'=>auth()->id()]);
+=======
+
+        Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no]);
+
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         return json_encode(['status' => 'success', 'message' => 'Payment saved successfully']);
     }
 
@@ -74,10 +80,17 @@ class PaymentsController extends Controller
         $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
             'phone' => $validated["phone"],
             'amount' => 1,
+<<<<<<< HEAD
             'description' => 'try',
             'callBackUrl' => 'https://246a-41-139-232-226.ngrok-free.app/api/callback'
         ]);
 
+=======
+            'description' => 'Payment for test app.',
+            'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
+        ]);
+        
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         $data = json_decode($paymentRequest);
         if (isset($data->checkoutID) && !is_null($data->checkoutID)) {
             Tempmpesa::create([

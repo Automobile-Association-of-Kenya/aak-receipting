@@ -10,7 +10,10 @@ class members extends Model
 {
     use HasFactory;
     protected $fillable = [
+<<<<<<< HEAD
         'MembershipNumber',
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         'idNo',
         'surNameName',
         'firstName',

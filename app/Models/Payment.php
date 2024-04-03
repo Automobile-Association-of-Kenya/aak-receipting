@@ -11,7 +11,11 @@ class Payment extends Model
 {
     use HasFactory;
 
+<<<<<<< HEAD
     protected $fillable = ['receipt_no','invoice_id','members_id', 'ref_no', 'amount', 'date', 'method', 'description','user_id'];
+=======
+    protected $fillable = ['receipt_no','invoice_id','members_id', 'ref_no', 'amount', 'date', 'method', 'description'];
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 
     public function member(): BelongsTo
     {
@@ -27,6 +31,7 @@ class Payment extends Model
     {
         return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
     }
+<<<<<<< HEAD
 
     /**
      * Get the user that owns the Payment
@@ -47,4 +52,6 @@ class Payment extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 }

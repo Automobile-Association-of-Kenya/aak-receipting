@@ -16,6 +16,10 @@ return new class extends Migration
     {
         Schema::table('departments_products', function (Blueprint $table) {
             $table->string('vatable')->after('amount');
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         });
     }
 
@@ -28,7 +32,11 @@ return new class extends Migration
     {
         Schema::table('departments_products', function (Blueprint $table) {
             $table->dropColumn('vatable');
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
         });
     }
 };

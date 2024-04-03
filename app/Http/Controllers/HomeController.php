@@ -107,6 +107,7 @@ class HomeController extends Controller
 
     function getBranches()
     {
+<<<<<<< HEAD
         $branches = Branch::with('user')->latest()->get();
         return json_encode($branches);
     }
@@ -115,4 +116,9 @@ class HomeController extends Controller
         $users = User::latest()->get();
         return json_encode($users);
     }
+=======
+        $branches = Branch::latest()->get();
+        return json_encode($branches);
+    }
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 }

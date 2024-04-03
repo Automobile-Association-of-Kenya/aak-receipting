@@ -120,7 +120,11 @@ function clean($var)
                 <tr>
                     <td style="text-align: left">
                             <span><b>Receipt NO:</b> <b>{{$payment->receipt_no}}</b> </span><br>
+<<<<<<< HEAD
                         <span><b>Customer NO:</b> <b>{{$payment->member->MembershipNumber }}</b></span><br>
+=======
+                        <span><b>Customer NO:</b></span><br>
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                         <span><b>Customer:</b>
                             @if ($payment !== null && $payment->member !== null)
                                 {{ $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName }}

@@ -4,7 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Relations\HasMany;
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,6 +46,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+<<<<<<< HEAD
 
     /**
      * Get all of the payments for the User
@@ -53,4 +57,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
     }
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 }

@@ -47,7 +47,10 @@ Route::get('member-invoices/{id}', [MembersController::class,'getMemberinvoices'
 Route::resource('products', ProductController::class);
 
 Route::get('branches-data', [HomeController::class, 'getBranches']);
+<<<<<<< HEAD
 Route::get('users-data', [HomeController::class, 'getUsers']);
+=======
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 
 Route::resource('invoices', InvoiceController::class);
 // Route::get('invoices/{id}', [InvoiceController::class,'edit']);

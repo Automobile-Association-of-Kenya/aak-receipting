@@ -72,7 +72,11 @@
 
     <div class="modal fade" id="createInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="createInvoiceModal"
         aria-hidden="true">
+<<<<<<< HEAD
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+=======
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title">
@@ -88,6 +92,7 @@
                         @csrf
                         <div class="row">
 
+<<<<<<< HEAD
                             <div class="col-md-6">
                                 <div class="form-group" id="invoiceBranchDiv" style="font-size:14px">
                                     <label for="invoiceBranchID">Branch</label>
@@ -97,6 +102,18 @@
                             </div>
 
                             <div class="col-md-6">
+=======
+                            <div class="col-md-12">
+                                <div class="form-group" id="invoiceBranchDiv" style="font-size:14px">
+                                    <label for="invoiceBranchID">Branch</label>
+                                    <select name="branch_id" id="invoiceBranchID" class="form-control  form-control-sm"
+                                         required
+                                        style="width: 100%;"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                 <div class="form-group" id="membersInvoiceDiv" style="font-size:14px">
                                     <label for="memberID">Client</label>
                                     <select name="member_id" id="memberID" class="form-control  form-control-sm"
@@ -105,15 +122,23 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
                             <div class="col-md-6">
+=======
+                            <div class="col-md-12">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                 <div class="form-group" style="font-size:14px">
                                     <label for="departmentInvoiceId">Departments</label>
                                     <select name="department_id" id="departmentInvoiceId"
                                         class="form-control  form-control-sm"></select>
                                 </div>
                             </div>
+<<<<<<< HEAD
 
                             <div class="col-md-6">
+=======
+                            <div class="col-md-12">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                 <div class="form-group" style="font-size:14px">
                                     <label for="departmentProductID">Product</label>
                                     <select name="product_id" id="departmentProductID"
@@ -122,6 +147,7 @@
                             </div>
 
                             <div class="col-md-12">
+<<<<<<< HEAD
                                 <hr>
                                 <table class="table table-bordered table-hover table-sm">
                                     <thead>
@@ -148,6 +174,16 @@
                             </div>
 
                             <div class="col-md-6">
+=======
+                                <div class="form-group" style="font-size:14px">
+                                    <label for="invoiceAmount">Amount</label>
+                                    <input type="number" class="form-control form-control-sm" id="invoiceAmount"
+                                        name="invoice_amount" value="{{ old('invoice_amount') }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                 <div class="form-group" style="font-size:14px">
                                     <label for="invoiceDate">Date</label>
                                     <input type="date" class="form-control form-control-sm" id="invoiceDate"
@@ -203,16 +239,24 @@
                                     <label for="mpesaPaymentMemberID">Client</label>
                                     <select name="mpesa_payment_member_id" id="mpesaPaymentMemberID"
                                         class="form-control form-control-sm" data-control="select2"
+<<<<<<< HEAD
                                         data-dropdown-parent="#mpesaMembersDIv" required style="width: 100%;"
                                         required></select>
+=======
+                                        data-dropdown-parent="#mpesaMembersDIv" required style="width: 100%;" required></select>
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group" style="font-size:14px">
                                     <label for="mpesaPaymentInvoiceID">Invoice</label>
+<<<<<<< HEAD
                                     <select name="mpesaPaymentInvoiceID" id="mpesaPaymentInvoiceID"
                                         class="form-control form-control-sm">
+=======
+                                    <select name="mpesaPaymentInvoiceID" id="mpesaPaymentInvoiceID" class="form-control form-control-sm">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                     </select>
                                 </div>
                             </div>
@@ -229,7 +273,11 @@
                                 <div class="form-group">
                                     <label for="paymentAmount">Amount</label>
                                     <input type="number" class="form-control form-control-sm" id="mpesaPaymentAmount"
+<<<<<<< HEAD
                                         name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}" required readonly>
+=======
+                                        name="mpesa_payment_amount" value="{{ old('mpesa_payment_amount') }}" required>
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                 </div>
                             </div>
                             <div id="mpesaPaymentFeedback"></div>
@@ -260,8 +308,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group" style="font-size:14px">
                                         <label for="paymentInvoiceID">Invoice</label>
+<<<<<<< HEAD
                                         <select name="paymentInvoiceID" id="paymentInvoiceID"
                                             class="form-control form-control-sm">
+=======
+                                        <select name="paymentInvoiceID" id="paymentInvoiceID" class="form-control form-control-sm">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                         </select>
                                     </div>
                                 </div>
@@ -284,7 +336,11 @@
                                     <div class="form-group">
                                         <label for="paymentAmount">Amount</label>
                                         <input type="number" class="form-control form-control-sm" id="paymentAmount"
+<<<<<<< HEAD
                                             name="payment_amount" value="{{ old('payment_amount') }}" readonly>
+=======
+                                            name="payment_amount" value="{{ old('payment_amount') }}">
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
                                     </div>
                                 </div>
 
@@ -329,6 +385,10 @@
     </div>
 @endsection
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ca1795e5d40cf2e63222e9b256f4797b59d89d6
 @section('footer_scripts')
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
