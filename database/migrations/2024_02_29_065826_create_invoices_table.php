@@ -19,7 +19,6 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(members::class);
-            $table->foreignIdFor(Departments_products::class);
             $table->string('amount');
             $table->string('date');
             $table->timestamps();
