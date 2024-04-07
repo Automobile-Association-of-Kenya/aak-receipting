@@ -74,7 +74,7 @@
                     value.emailAddress
                 }</small></td></tr>`;
             });
-            let table = `<table class="table table-bordered table-hover table-sm" id="mambersTable"><thead><th>#</th><th>REF</th><th>Name</th><th>ID</th><th>Phone</th><th>Email</th></thead><tbody>${tr}</tbody></table>`;
+            let table = `<table class="table table-bordered table-hover table-sm" id="mambersTable"><thead><th>#</th><th>Customer Number</th><th>Name</th><th>ID</th><th>Phone</th><th>Email</th></thead><tbody>${tr}</tbody></table>`;
             customersTableSection.html(table);
             $("#mambersTable").DataTable();
         });
