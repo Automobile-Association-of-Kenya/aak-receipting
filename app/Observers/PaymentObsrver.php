@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentObsrver
 {
+    // function creating(Payment $payment) {
+    //     $payment->user_id = auth()->user()->id;
+    // }
     /**
      * Handle the Payment "created" event.
      *
@@ -18,7 +21,7 @@ class PaymentObsrver
     {
         $data = [
             
-            'IDNO' => $payment->member->idNo,
+            'IDNo' => $payment->member->idNo,
             'InvoiceNo' => $payment->invoice->invoice_no,
             'GL1' => null,
             'CustomerName' => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,

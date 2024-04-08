@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentsController extends Controller
 {
+
     function __construct()
     {
         $this->middleware('auth')->except('callback');
@@ -75,7 +76,7 @@ class PaymentsController extends Controller
             'phone' => $validated["phone"],
             'amount' => 1,
             'description' => 'Payment for test app.',
-            'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
+            'callBackUrl' => 'http://aak-receipting.aakenya.co.ke/api/callback'
         ]);
 
         $data = json_decode($paymentRequest);
@@ -88,6 +89,7 @@ class PaymentsController extends Controller
                 'description' => 'Payment for test app.',
                 'checkoutid' => $data->checkoutID,
                 'status' => 'pending',
+                'user_id'=>auth()->id(),
             ]);
             return json_encode(['status' => 'success', 'message' => 'Payment initiated successfully, please check your phone and complete the transaction.']);
         } else {
@@ -115,7 +117,7 @@ class PaymentsController extends Controller
                     'amount' => $payment->amount,
                     'date' => date('Y-m-d'),
                     'description' => $payment->description,
-                    'user_id'=>auth()->user()->id
+                    'user_id'=>$payment->user_id
                 ]);
                 Log::alert($rpayment);
             } else {
@@ -124,6 +126,33 @@ class PaymentsController extends Controller
         } else {
             return $data;
         }
+    }
+
+    function apitest($payment_id) {
+        $payment = $this->payment->find($payment_id);
+        
+        $data = json_encode(['data'=>[
+            'IDNo' => $payment->member->idNo,
+            'InvoiceNo' => $payment->invoice->invoice_no,
+            'GL1' =>5337,
+            'CustomerName' => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,
+            'CustomerEmail' => $payment->member->emailAddress,
+            'PhoneNo' => $payment->member->mobilePhoneNumber,
+            'ReceiptAmount' => $payment->amount,
+            'Branch' => $payment->invoice->branch->name,
+            'ReceiptNo' => $payment->receipt_no,
+            'Narration' => $payment->description,
+            'PostedBy' => $payment->user->name,
+            'ExternalDocNo' => 245345646,
+            'GLAmount' => $payment->invoice->amount,
+            'InvoiceDate' => $payment->invoice->date,
+            'ReceiptDate' => $payment->date,
+            'Paymode' => $payment->method,
+        ]]);
+       
+        $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')
+            ->post("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM", $data);
+        return $response;
     }
 
 }

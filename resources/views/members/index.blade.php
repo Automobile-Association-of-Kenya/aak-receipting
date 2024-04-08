@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    <title>Members - AAK </title>
+    <title>Payments - AAK </title>
 @endsection
 
 @section('header_styles')

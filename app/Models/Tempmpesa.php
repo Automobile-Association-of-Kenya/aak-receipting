@@ -17,5 +17,6 @@ class Tempmpesa extends Model
         'checkoutid',
         'mpesareference',
         'status',
+        'user_id'
     ];
 }

@@ -67,6 +67,7 @@ Route::get('/payments-local', [PaymentsController::class, 'getlocalpayments']);
 Route::post('/payments/mpesa', [PaymentsController::class, 'mpesa']);
 Route::get('/payment-print/{id}', [PaymentsController::class, 'print']);
 Route::post('/payment-mpesa', [PaymentsController::class, 'mpesa'])->name('payment.mpesa');
+Route::get('/apitest/{id}', [PaymentsController::class, 'apitest']);
 
 Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions');
 
@@ -84,6 +85,7 @@ Route::middleware('auth')->group(function () {
 Route::get('settings', [HomeController::class, 'settings'])->name('settings');
 Route::resource('users',UserController::class)->middleware('admin');
 Route::resource('branches',BranchController::class)->middleware('admin');
+
 
 Route::resource('corporates', CorporateController::class)->middleware('admin');
 
