@@ -53,7 +53,7 @@ class PaymentsController extends Controller
             'method' => ['required', 'max:30'],
             'description' => ['nullable', 'max:255'],
         ]);
-        Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no, 'user_id'=>auth()->id()]);
+        Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no, 'user_id' => auth()->id()]);
         return json_encode(['status' => 'success', 'message' => 'Payment saved successfully']);
     }
 
@@ -76,7 +76,7 @@ class PaymentsController extends Controller
             'phone' => $validated["phone"],
             'amount' => 1,
             'description' => 'Payment for test app.',
-            'callBackUrl' => 'http://aak-receipting.aakenya.co.ke/api/callback'
+            'callBackUrl' => 'https://ff96-2c0f-fe38-2186-3ae5-5c83-fdc8-f5a4-5ff.ngrok-free.app/api/callback'
         ]);
 
         $data = json_decode($paymentRequest);
@@ -89,7 +89,7 @@ class PaymentsController extends Controller
                 'description' => 'Payment for test app.',
                 'checkoutid' => $data->checkoutID,
                 'status' => 'pending',
-                'user_id'=>auth()->id(),
+                'user_id' => auth()->id(),
             ]);
             return json_encode(['status' => 'success', 'message' => 'Payment initiated successfully, please check your phone and complete the transaction.']);
         } else {
@@ -112,12 +112,12 @@ class PaymentsController extends Controller
                     'receipt_no' => $receiptno[0]->result,
                     'members_id' => $payment->members_id,
                     'ref_no' => $payment->mpesareference,
-                    'method'=>'Mpesa',
+                    'method' => 'Mpesa',
                     'invoice_id' => $payment->invoice_id,
                     'amount' => $payment->amount,
                     'date' => date('Y-m-d'),
                     'description' => $payment->description,
-                    'user_id'=>$payment->user_id
+                    'user_id' => $payment->user_id
                 ]);
                 Log::alert($rpayment);
             } else {
@@ -128,13 +128,13 @@ class PaymentsController extends Controller
         }
     }
 
-    function apitest($payment_id) {
+    function apitest($payment_id)
+    {
         $payment = $this->payment->find($payment_id);
-        
-        $data = json_encode(['data'=>[
+        $data = [
             'IDNo' => $payment->member->idNo,
             'InvoiceNo' => $payment->invoice->invoice_no,
-            'GL1' =>5337,
+            'GL1' => null,
             'CustomerName' => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,
             'CustomerEmail' => $payment->member->emailAddress,
             'PhoneNo' => $payment->member->mobilePhoneNumber,
@@ -143,16 +143,34 @@ class PaymentsController extends Controller
             'ReceiptNo' => $payment->receipt_no,
             'Narration' => $payment->description,
             'PostedBy' => $payment->user->name,
-            'ExternalDocNo' => 245345646,
-            'GLAmount' => $payment->invoice->amount,
+            'ExternalDocNo' => $payment->ref_no,
+            'GLAmount1' => $payment->invoice->amount,
             'InvoiceDate' => $payment->invoice->date,
             'ReceiptDate' => $payment->date,
             'Paymode' => $payment->method,
-        ]]);
-       
-        $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')
-            ->post("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM", $data);
+            ];
+            $ch = curl_init();
+            $url = "http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM";
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_USERPWD, 'integration:ieceePhaeshie9yo');
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Connection: Keep-Alive',
+            'Accept: application/json',
+            'Content-Type: application/json; charset=utf-8',
+            "Accept: /"
+        ]);
+
+        $jsonDataEncoded = json_encode($data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        $response = curl_exec($ch);
+        var_dump($response);
+        die();
         return $response;
     }
-
 }
+

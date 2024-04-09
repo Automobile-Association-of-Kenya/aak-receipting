@@ -2,6 +2,7 @@
 
 @section('title')
     <title>Dashboard</title>
+    
 @endsection
 
 @section('header_styles')

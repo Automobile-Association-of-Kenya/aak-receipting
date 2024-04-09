@@ -14,7 +14,7 @@ class MembersController extends Controller
     function __construct()
     {
         $this->middleware(['auth']);
-        // $this->middleware('admin')->except('getMemberinvoices','index', 'getmembers', 'get');
+        $this->middleware('admin')->except('getMemberinvoices','index', 'getmembers', 'get');
     }
 
     public function index()

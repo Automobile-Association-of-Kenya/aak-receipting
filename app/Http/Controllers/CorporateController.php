@@ -58,7 +58,7 @@ class CorporateController extends Controller
                 'mobilePhoneNumber' => $request->phone_number,
                 'expiryDate' => $request->member_expiry_date
             ]);
-            return json_encode(['status' => 'success', 'message' => 'Member created successfully']);
+            return json_encode(['status' => 'success', 'message' => 'Client created successfully']);
         } catch (Exception $e) {
             return json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
