@@ -76,7 +76,7 @@ class PaymentsController extends Controller
             'phone' => $validated["phone"],
             'amount' => 1,
             'description' => 'Payment for test app.',
-            'callBackUrl' => 'https://ff96-2c0f-fe38-2186-3ae5-5c83-fdc8-f5a4-5ff.ngrok-free.app/api/callback'
+            'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
         ]);
 
         $data = json_decode($paymentRequest);
