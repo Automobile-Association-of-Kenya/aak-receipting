@@ -183,12 +183,12 @@
                 <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100 active" data-toggle="tab" data-target="#mpesaTab" type="button"
-                            role="tab" aria-controls="home" aria-selected="true">Mpesa</button>
+                            role="tab" aria-controls="home" aria-selected="true">Mpesa Express</button>
                     </li>
 
                     <li class="nav-item flex-fill" role="presentation">
                         <button class="nav-link w-100" data-toggle="tab" data-target="#manualTab" type="button"
-                            role="tab" aria-controls="profile" aria-selected="false">Mpesa And Other</button>
+                            role="tab" aria-controls="profile" aria-selected="false">Other Payment Modes</button>
                     </li>
 
                 </ul>
