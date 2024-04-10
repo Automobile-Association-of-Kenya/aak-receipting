@@ -148,8 +148,11 @@
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('js/members.js') }}"></script>
 <script>
+    
     (function() {
         $('#dataTable').DataTable();
     })()
+
+
 </script>
 @endsection

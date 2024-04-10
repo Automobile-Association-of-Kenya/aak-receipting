@@ -48,16 +48,18 @@
             </li>
 
             <li class="nav-item active">
+                <a class="nav-link" href="{{ route('members.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Clients</span></a>
+            </li>
+
+            <li class="nav-item active">
                 <a class="nav-link" href="{{ route('transactions') }}">
                     <i class="fa fa-credit-card" aria-hidden="true"></i>
                     <span>Transactions</span></a>
             </li>
 
-            <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('members.index') }}">
-                        <i class="fas fa-users"></i>
-                        <span>Clients</span></a>
-                </li>
+    
 
             @if (auth()->user()->role == 'admin')
                 

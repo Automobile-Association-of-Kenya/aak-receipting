@@ -22,7 +22,7 @@
             </div>
 
             <div class="card-body">
-                <div class="table-responsive" id="productsTableSection">
+                <div class="table-responsive" style="font-size:14px" id="productsTableSection">
                     {{-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <th>#</th>
@@ -101,8 +101,8 @@
                             <div class="form-group">
                                 <label for="productVAT">Vatable</label>
                                 <select class="form-control" name="VAT" id="productVAT" name="vatable">
-                                        <option value="0">YES</option>
-                                        <option value="1">NO</option>
+                                        <option value="Yes">YES</option>
+                                        <option value="No">NO</option>
                                     </select>
                             </div>
                     </div>

@@ -62,7 +62,7 @@
                 tr += `<tr><td>${i++}</td><td>${
                     value.department?.name
                 }</td><td>${value.name}</td><td>${value.amount}</td><td>${
-                    value.name
+                    value.vatable
                 }</td><td>${value.GlNo}</td></tr>`;
             });
             let table = `<table class="table table-bordered table-hover table-sm" id="productsTable"><thead><th>#</th><th>Department</th><th>Product</th><th>Cost</th><th>Vatable</th><th>GL No</th></thead><tbody>${tr}</tbody></table>`;
