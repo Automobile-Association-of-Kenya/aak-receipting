@@ -52,7 +52,7 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role_id' => $request->role,
+            'role' => $request->role,
             'password' => Hash::make($request->password)
         ]);
         return json_encode(['status' => 'success', 'message' => 'User added successfully']);

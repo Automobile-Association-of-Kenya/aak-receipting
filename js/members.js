@@ -51,33 +51,4 @@
             });
     });
 
-
-    $.post("/members", data)
-            .done(function (params) {
-                console.log(params);
-                let result = JSON.parse(params);
-                if (result.status == "success") {
-                    $this.trigger("reset");
-                    showSuccess(result.message, "#memberFeedback");
-                } else {
-                    showError(
-                        "Error occured during processing",
-                        "#memberFeedback"
-                    );
-                }
-            })
-            .fail(function (error) {
-                if (error.status == 422) {
-                    showError(
-                        error.responseJSON.errors.join(","),
-                        "#memberFeedback"
-                    );
-                } else {
-                    showError(
-                        "Error occured during processing",
-                        "#memberFeedback"
-                    );
-                }
-            });
-
 })();

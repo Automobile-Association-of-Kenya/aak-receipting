@@ -17,7 +17,7 @@
 
             <div class="card-header py-3 d-flex justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Users</h6>
-                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#createProductModal"
+                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#createUserModal"
                     id="createClientToggle"><i class="fas fa-plus"></i>&nbsp;Add New</a>
             </div>
 
@@ -64,6 +64,9 @@
         </div>
 
     </div>
+
+
+
     <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModal"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

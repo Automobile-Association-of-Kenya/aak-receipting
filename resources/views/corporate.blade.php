@@ -18,122 +18,59 @@
                         {{session('exception')}}
                     </div>
                 @endif
-                <form class="user" action="{{route('corporates.store')}}" method="POST">
+                <form class="user" action="{{route('corporates.store')}}" method="POST" id="corporateCreateForm">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="number" class="form-control form-control-user" id="exampleInputEmail"
-                                    aria-describedby="emailHelp" placeholder="Enter Customer Number" name="id_number"
+                                <input type="number" class="form-control form-control-user" id="corporateIdNO"
+                                     placeholder="Enter Customer Number" name="id_number"
                                     value="{{ old('id_number') }}">
                             </div>
-                            @error('id_number')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="exampleInputPassword"
+                                <input type="text" class="form-control form-control-user" id="corporateFirstName"
                                     placeholder="First Name" name="first_name" value="{{ old('first_name') }}">
                             </div>
-                            @error('first_name')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
+
                         <div class="col-md-6">
-                            <label for="secondName">Second Name</label>
+                            <label for="corporateSecondName">Second Name</label>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" id="exampleInputPassword"
+                                <input type="text" class="form-control form-control-user" id="corporateSecondName"
                                     placeholder="N/A"  label="Second Name" name="second_name" value="{{ old('second_name') }}">
                             </div>
-                            @error('second_name')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="secondName">Last Name</label>
-                                <input type="text" class="form-control form-control-user" id="exampleInputPassword"
+                                <label for="corporateLastName">Last Name</label>
+                                <input type="text" class="form-control form-control-user" id="corporateLastName"
                                     placeholder="N/A" name="last_name" value="{{ old('last_name') }}">
                             </div>
-                            @error('last_name')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="secondName">Email</label>
-                                <input type="email" class="form-control form-control-user" id="exampleInputPassword"
+                                <label for="corporateEmail">Email</label>
+                                <input type="email" class="form-control form-control-user" id="corporateEmail"
                                     placeholder="Email" name="email" value="{{ old('email') }}">
                             </div>
-                            @error('email')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="secondName">Phone Number</label>
-                                <input type="number" class="form-control form-control-user border-box" id="exampleInputEmail"
+                                <label for="corporatePhoneNumber">Phone Number</label>
+                                <input type="number" class="form-control form-control-user border-box" id="corporatePhoneNumber"
                                     aria-describedby="emailHelp" placeholder="N/A" name="phone_number"
-                                    value="{{ old('phone_number') }}">
+                                    value="">
                             </div>
-                            @error('phone_number')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
                         </div>
-                        {{-- <div class="col-md-6">
-                            <div class="form-group">
-                                <select name="status" id="" class="form-control select"
-                                    style="border-radius: 10rem" name="status">
-                                    <option value="" selected>Select Status</option>
-                                    <option value="ACTIVE">ACTIVE</option>
-                                    <option value="EXPIRED">EXPIRED</option>
-                                    <option value="PENDING">PENDING</option>
-                                </select>
-                            </div>
-                            @error('status')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
-                        {{-- <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="number" class="form-control form-control-user" id="exampleInputPassword"
-                                    placeholder="Member Number" name="member_number" value="{{ old('member_number') }}">
-                            </div>
-                            @error('member_number')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="date" class="form-control form-control-user" id="exampleInputPassword"
-                                    placeholder="Member Expiry Date" name="member_expiry_date"
-                                    value="{{ old('member_expiry_date') }}">
-                            </div>
-                            @error('member_number')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> -->
+                        
                     </div>
-
+<div id="corporateFeedback"></div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
                         Submit
                     </button>

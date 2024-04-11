@@ -76,7 +76,7 @@ class PaymentsController extends Controller
             'phone' => $validated["phone"],
             'amount' => 1,
             'description' => 'Payment for test app.',
-            'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
+            'callBackUrl' => 'https://ff96-2c0f-fe38-2186-3ae5-5c83-fdc8-f5a4-5ff.ngrok-free.app/api/callback'
         ]);
 
         $data = json_decode($paymentRequest);
@@ -131,32 +131,78 @@ class PaymentsController extends Controller
     function apitest($payment_id)
     {
         $payment = $this->payment->find($payment_id);
-        $data = [
-            'IDNo' => $payment->member->idNo,
-            'InvoiceNo' => $payment->invoice->invoice_no,
-            'GL1' => null,
-            'CustomerName' => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,
-            'CustomerEmail' => $payment->member->emailAddress,
-            'PhoneNo' => $payment->member->mobilePhoneNumber,
-            'ReceiptAmount' => $payment->amount,
-            'Branch' => $payment->invoice->branch->name,
-            'ReceiptNo' => $payment->receipt_no,
-            'Narration' => $payment->description,
-            'PostedBy' => $payment->user->name,
-            'ExternalDocNo' => $payment->ref_no,
-            'GLAmount1' => $payment->invoice->amount,
-            'InvoiceDate' => $payment->invoice->date,
-            'ReceiptDate' => $payment->date,
-            'Paymode' => $payment->method,
-            ];
-            $ch = curl_init();
-            $url = "http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM";
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_USERPWD, 'integration:ieceePhaeshie9yo');
-            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        // $data = array(
+        //     // "@odata.etag" => "W/\"JzgwO1djTUFBQUY3TVFBeUFETUFOQUExQURZQU53QTRBQUFBQVh0SkFFNEFWZ0F0QURFQU1nQXpBRFFBQUFBQmV6QUFNUUF4QURFQUFBQUFBQT09OTsxMjYxNzk1MDIwOyc=\"",
+        //     'IDNo' => $payment->member->idNo,
+        //     'InvoiceNo' => $payment->invoice->invoice_no,
+        //     'GL1' => 509,
+        //     'CustomerName' => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,
+        //     'CustomerEmail' => $payment->member->emailAddress,
+        //     'PhoneNo' => $payment->member->mobilePhoneNumber,
+        //     'ReceiptAmount' => (float)$payment->amount,
+        //     'Branch' => $payment->invoice->branch->name,
+        //     'ReceiptNo' => $payment->receipt_no,
+        //     'Narration' => $payment->description,
+        //     'PostedBy' => $payment->user->name,
+        //     'ExternalDocNo' => $payment->ref_no,
+        //     'GLAmount1' => (float)$payment->invoice->amount,
+        //     'InvoiceDate' => $payment->invoice->date,
+        //     'ReceiptDate' => $payment->date,
+        //     'Paymode' => $payment->method,
+        //     // "ETag" => "80;WcMAAAF7MQAyADMANAA1ADYANwA4AAAAAXtJAE4AVgAtADEAMgAzADQAAAABezAAMQAxADEAAAAAAA==9;1261795020;"
+        // );
+
+
+        $data = array(
+            // "@odata.etag" => "W/\"JzgwO1djTUFBQUY3TVFBeUFETUFOQUExQURZQU53QTRBQUFBQVh0SkFFNEFWZ0F0QURFQU1nQXpBRFFBQUFBQmV6QUFNUUF4QURFQUFBQUFBQT09OTsxMjYxNzk1MDIwOyc=\"",
+            "IDNo" => $payment->member->idNo,
+            // "IDNo" => "5560949",
+            "InvoiceNo" => $payment->invoice->invoice_no,
+            // "InvoiceNo" => "INV0020",
+            "GL1" => "509",
+            // "GL1" => "null",
+            "CustomerName" => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,
+            // "CustomerName" => "Kipkoech Birgen Kipkoech",
+            "CustomerEmail" => $payment->member->emailAddress,
+            // "CustomerEmail" => "john@john.co.ke",
+            "PhoneNo" => $payment->member->mobilePhoneNumber,
+            // "PhoneNo" => "0715614272",
+            "ReceiptAmount" => (float)$payment->amount,
+            // "ReceiptAmount" => 1200,
+            "Branch" => $payment->invoice->branch->name,
+            // "Branch" => "SARIT",
+            "ReceiptNo" => $payment->receipt_no,
+            // "ReceiptNo" => "RC-006",
+            "Narration" => $payment->description,
+            // "Narration" => "Payment for IDP",
+            "PostedBy" => $payment->user->name,
+            // "PostedBy" => "GODFREY TEST TEST",
+            "ExternalDocNo" => $payment->ref_no,
+            // "ExternalDocNo" => "SD455TYR674",
+            "GLAmount1" => (float)$payment->invoice->amount,
+            // "GLAmount1" => 5600,
+            "InvoiceDate" => $payment->invoice->date,
+            // "InvoiceDate" => "04/04/2024",
+            "ReceiptDate" => $payment->date,
+            // "ReceiptDate" => "04/04/2024",
+            "Paymode" =>$payment->method 
+            // "Paymode" => "MPESA"
+
+            // "ETag" => "80;WcMAAAF7MQAyADMANAA1ADYANwA4AAAAAXtJAE4AVgAtADEAMgAzADQAAAABezAAMQAxADEAAAAAAA==9;1261795020;"
+        );
+
+
+        $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')->post("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM", $data);
+        return $response;
+        $ch = curl_init();
+        $url = "http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM";
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERPWD, 'integration:ieceePhaeshie9yo');
+        //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Connection: Keep-Alive',
             'Accept: application/json',
             'Content-Type: application/json; charset=utf-8',
@@ -166,11 +212,38 @@ class PaymentsController extends Controller
         $jsonDataEncoded = json_encode($data);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        
+
         $response = curl_exec($ch);
-        var_dump($response);
-        die();
+        if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
+        }
+        curl_close($ch);
+        if (isset($error_msg)) {
+            dd($error_msg);
+        }
+        dd($response);
+
         return $response;
+
+        // {
+        //     "@odata.etag": "W/\"JzgwO1djTUFBQUY3TVFBeUFETUFOQUExQURZQU53QTRBQUFBQVh0SkFFNEFWZ0F0QURFQU1nQXpBRFFBQUFBQmV6QUFNUUF4QURFQUFBQUFBQT09OTsxMjYxNzk1MDIwOyc=\"",
+        //     "IDNo": "12345678",
+        //     "InvoiceNo": "INV-1234",
+        //     "GL1": "0111",
+        //     "CustomerName": "ICT TEST1",
+        //     "CustomerEmail": "aait@aakenya.co.ke",
+        //     "PhoneNo": "0709933130",
+        //     "ReceiptAmount": 10,
+        //     "Branch": "RUAKA",
+        //     "ReceiptNo": "RC-1234",
+        //     "Narration": "IDP 3 MONTHS",
+        //     "PostedBy": "WENDY KANAIZA",
+        //     "ExternalDocNo": "SC12345678",
+        //     "GLAmount1": 10,
+        //     "InvoiceDate": "04/04/2024",
+        //     "ReceiptDate": "04/04/2024",
+        //     "Paymode": "PDQ",
+        //     "ETag": "80;WcMAAAF7MQAyADMANAA1ADYANwA4AAAAAXtJAE4AVgAtADEAMgAzADQAAAABezAAMQAxADEAAAAAAA==9;1261795020;"
+        //   },
     }
 }
-
