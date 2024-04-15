@@ -32,7 +32,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <div class="table-responsive" id="userTableSection">
+                <div class="table-responsive" style="font-size:14px" id="userTableSection">
                     {{-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <th>#</th>
