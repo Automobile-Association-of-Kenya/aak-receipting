@@ -7,6 +7,11 @@
 
         <title>Login - Receipting</title>
         <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css') }}">
+
+         <!-- Favicons -->
+         <link rel="icon" type="image/png" href="img/logo.png">
+         <!-- Apple Touch Icon -->
+         <link rel="apple-touch-icon" href="img/logo.png">
     </head>
     <body class="font-sans text-gray-900 antialiased">
         @yield('content')
