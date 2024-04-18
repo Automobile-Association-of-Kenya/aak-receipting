@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="number" class="form-control form-control-user" id="corporateIdNO"
+                                <input type="string" class="form-control form-control-user" id="corporateIdNO"
                                      placeholder="Enter Customer Number" name="id_number"
                                     value="{{ old('id_number') }}">
                             </div>
