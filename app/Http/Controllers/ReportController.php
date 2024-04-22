@@ -35,9 +35,9 @@ class ReportController extends Controller
             $request->branch_id)");
         $data = [];
         // return $payments;
-        array_push($data, ['NO', 'Receipt NO', 'Cust NO', 'Customer', 'Date', 'Method', 'Amount']);
+        array_push($data, ['NO', 'Receipt NO', 'Cust NO', 'Customer','Branch', 'Date', 'Method', 'Amount']);
         foreach ($payments as $key => $value) {
-            array_push($data, [$value->ref_no, $value->receipt_no, $value->MembershipNumber??"", $value->member_name??"", $value->payment_date, $value->method, $value->amount]);
+            array_push($data, [$value->ref_no, $value->receipt_no, $value->MembershipNumber??"", $value->member_name??"",$value->branch_name, $value->payment_date, $value->method, $value->amount]);
         }
         return Excel::download(new PaymentsExport($data), 'payments.xlsx');
         // return json_encode($payments);

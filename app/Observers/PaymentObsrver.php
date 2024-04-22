@@ -2,6 +2,9 @@
 
 namespace App\Observers;
 
+use App\Models\Departments_products;
+use App\Models\Invoice;
+use App\Models\InvoiceProduct;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -19,11 +22,12 @@ class PaymentObsrver
      */
     public function created(Payment $payment)
     {
+        $invoiceproduct = InvoiceProduct::where('invoice_id', $payment->invoice_id)->first();
+        $product = Departments_products::where('id',$invoiceproduct->departments_products_id)->first();
         $data = array(
-          
             "IDNo" => $payment->member->idNo,
             "InvoiceNo" => $payment->invoice->invoice_no,
-            "GL1" => "509",
+            "GL1" => $product->GlNo,
             "CustomerName" => $payment->member->firstName . ' ' . $payment->member->secondName . ' ' . $payment->member->surNameName,
             "CustomerEmail" => $payment->member->emailAddress,
             "PhoneNo" => $payment->member->mobilePhoneNumber,
@@ -36,9 +40,7 @@ class PaymentObsrver
             "GLAmount1" => (float)$payment->invoice->amount,
             "InvoiceDate" => $payment->invoice->date,
             "ReceiptDate" => $payment->date,
-            "Paymode" =>$payment->method 
-            
-
+            "Paymode" =>$payment->method
         );
         Log::info($data);
         $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')

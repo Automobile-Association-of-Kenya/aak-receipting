@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\members;
-use App\Http\Models\Departments_products;
 use App\Models\Payment;
 use App\Models\Tempmpesa;
 use Illuminate\Support\Str;
