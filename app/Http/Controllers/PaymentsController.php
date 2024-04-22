@@ -69,7 +69,7 @@ class PaymentsController extends Controller
 
         $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
             'phone' => $validated["phone"],
-            'amount' => 1,
+            'amount' => $validated["amount"],
             'description' => $validated['description'],
             'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
         ]);
