@@ -280,11 +280,12 @@
                                         <label for="paymentMethod">Method</label>
                                         <select name="payment_method" id="paymentMethod"
                                             class="form-control form-control-sm">
-                                            <option value="Mpesa">Mpesa</option>
-                                            <option value="Cash">Bank Slip</option>
-                                            <option value="Cash">Chaque</option>
+                                            <option value="MPESA">MPESA</option>
+                                            <option value="Cash">BANK</option>
+                                            <option value="Cash">CHEQUE</option>
                                             <option value="Cash">EFT</option>
-                                            <option value="Cash">PDQ</option>
+                                            <option value="Cash">RTGS</option>
+                                            <option value="Cash">CREDITCARD</option>
                                         </select>
                                     </div>
                                 </div>

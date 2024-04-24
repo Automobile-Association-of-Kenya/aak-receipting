@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Departments_products;
 use App\Models\Invoice;
+use App\Models\Departments;
 use App\Models\InvoiceProduct;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Http;
@@ -23,7 +24,8 @@ class PaymentObsrver
     public function created(Payment $payment)
     {
         $invoiceproduct = InvoiceProduct::where('invoice_id', $payment->invoice_id)->first();
-        $product = Departments_products::where('id',$invoiceproduct->departments_products_id)->first();
+        $product = Departments_products::where('id', $invoiceproduct->departments_products_id)->first();
+        $department = Departments::find($product->departments_id);
         $data = array(
             "IDNo" => $payment->member->idNo,
             "InvoiceNo" => $payment->invoice->invoice_no,
@@ -40,7 +42,9 @@ class PaymentObsrver
             "GLAmount1" => (float)$payment->invoice->amount,
             "InvoiceDate" => $payment->invoice->date,
             "ReceiptDate" => $payment->date,
-            "Paymode" =>$payment->method
+            "Tax" => $product->vatable == 0 ? False : True,
+            "Paymode" => $payment->method,
+            'Department' => $department->name
         );
         Log::info($data);
         $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')

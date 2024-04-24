@@ -69,7 +69,7 @@ class PaymentsController extends Controller
 
         $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
             'phone' => $validated["phone"],
-            'amount' => $validated["amount"],
+            'amount' => 1,
             'description' => $validated['description'],
             'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
         ]);
@@ -106,7 +106,7 @@ class PaymentsController extends Controller
                     'receipt_no' => $receiptno[0]->result,
                     'members_id' => $payment->members_id,
                     'ref_no' => $payment->mpesareference,
-                    'method' => 'Mpesa',
+                    'method' => 'MPESA',
                     'invoice_id' => $payment->invoice_id,
                     'amount' => $payment->amount,
                     'date' => date('Y-m-d'),
