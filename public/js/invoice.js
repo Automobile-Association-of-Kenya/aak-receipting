@@ -183,7 +183,7 @@
                 $.each(invoices, function (key, value) {
                     tr += `<tr><td><small>${i++}</small></td><td><small>${
                         value.invoice_no
-                    }</small></td><td>${value.branch?.name}</td><td><small>${
+                    }</small></td><td><small>${value.branch?.name}</small></td><td><small>${
                         value.member.idNo +
                         " " +
                         value.member.firstName +
