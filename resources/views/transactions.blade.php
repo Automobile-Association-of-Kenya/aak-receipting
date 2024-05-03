@@ -121,6 +121,20 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-6">
+                                <div class="form-group" style="font-size: 14px">
+                                    <label for="salescodeID">Sales Code</label>
+                                    <select id="salescodeID" name="sales1" required class="form-control form-control-sm">
+                                        <option value="">Choose Sales Code</option>
+                                        @foreach ($sales as $sale)
+                                            <option value="{{ $sale->id }}">{{ $sale->sales_code }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
+
+
                             <div class="col-md-12">
                                 <hr>
                                 <table class="table table-bordered table-hover table-sm">

@@ -60,8 +60,8 @@
             </li>
 
 
-
-            @if (auth()->user()->role == 'admin')
+{{-- 
+            @if (auth()->user()->role == 'admin') --}}
 
 
                 <li class="nav-item active">
@@ -87,14 +87,25 @@
                         <i class="fas fa-users" aria-hidden="true"></i>
                         <span>User Management</span></a>
                 </li>
+               
+                
 
-            @endif
+            {{-- @endif --}}
+
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('salescode') }}">
+                    <i class="fas fa-chart-line" aria-hidden="true"></i> <!-- Replace with the sales icon class -->
+                    <span>Sales Code</span>
+                </a>
+            </li>
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('reports') }}">
                     <i class="far fa-folder-open" aria-hidden="true"></i>
                     <span>Reports</span></a>
             </li>
+
+            
 
             <hr class="sidebar-divider d-none d-md-block">
         </ul>
