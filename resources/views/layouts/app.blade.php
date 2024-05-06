@@ -83,6 +83,13 @@
                 </li>
 
                 <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('salescode') }}">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i> <!-- Replace with the sales icon class -->
+                        <span>Sales Code</span>
+                    </a>
+                </li>
+
+                <li class="nav-item active">
                     <a class="nav-link" href="{{ route('users.index') }}">
                         <i class="fas fa-users" aria-hidden="true"></i>
                         <span>User Management</span></a>
@@ -91,13 +98,6 @@
                 
 
             {{-- @endif --}}
-
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('salescode') }}">
-                    <i class="fas fa-chart-line" aria-hidden="true"></i> <!-- Replace with the sales icon class -->
-                    <span>Sales Code</span>
-                </a>
-            </li>
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('reports') }}">

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sales_code', function (Blueprint $table) {
+        Schema::create('sales_codes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('sales_code')->unique(); // Add unique constraint
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales_code');
+        Schema::dropIfExists('sales_codes');
     }
 };

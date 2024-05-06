@@ -41,11 +41,17 @@
                             @enderror
                         </div>
                         <div class="col-md-12">
-                            <div class="col-md-4 offset-md-4">
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Submit
-                                </button>
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 text-center">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+                            
+                            
                         </div>
                     </div>
                 </form>
