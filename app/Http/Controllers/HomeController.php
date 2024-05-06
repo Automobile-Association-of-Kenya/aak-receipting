@@ -10,6 +10,7 @@ use App\Models\Invoice;
 use App\Models\members;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\SalesCode;
 use App\Models\User;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Http;
@@ -38,6 +39,7 @@ class HomeController extends Controller
         $total_invoices = Invoice::count();
         $total_payments = Payment::sum('amount');
         $total_users = User::count();
+
         return view('home', compact('total_customers', 'total_invoices', 'total_payments', 'total_users'));
     }
 
@@ -48,7 +50,14 @@ class HomeController extends Controller
 
     function transactions()
     {
-        return view('transactions');
+        $sales = SalesCode::all();
+        return view('transactions',compact('sales'));
+    }
+
+    
+    function salescode()
+    {
+        return view('salescode');
     }
 
     public function show()
@@ -115,4 +124,10 @@ class HomeController extends Controller
         $users = User::latest()->get();
         return json_encode($users);
     }
+
+    // function getSalesCode(){
+    //     $sales = Salescode::find();
+    //     return json_encode($sales);
+
+    // }
 }

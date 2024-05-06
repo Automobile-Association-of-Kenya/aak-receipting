@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalesCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,8 @@ Route::get('/apitest/{id}', [PaymentsController::class, 'apitest']);
 
 Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions');
 
+Route::get('salescode', [HomeController::class, 'salescode'])->name('salescode');
+Route::post('/salescodes', [SalesCodeController::class, 'store'])->name('salescodes.store');
 Route::get('department-services/{dptid}', [HomeController::class, 'getdepartmentservices']);
 
 Route::get('/dashboard', function () {
