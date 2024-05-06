@@ -12,7 +12,7 @@
         <!-- Content Row -->
         <div class="row">
             <div class="col-lg-12">
-                <h6 class="m-0 font-weight-bold text-primary fas fa-user-plus">Sales Codes</h6>                
+                <h6 class="m-0 font-weight-bold text-primary fas fa-user-plus">Sales Code</h6>                
                 <form class="user" action="{{ route('salescodes.store') }}" method="POST" id="salescodeForm">
                     @csrf
                     <div class="row">
