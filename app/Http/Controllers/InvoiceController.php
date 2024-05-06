@@ -54,11 +54,12 @@ class InvoiceController extends Controller
             'members_id' => ['required', 'exists:members,id'],
             'amount' => ['required'],
             'date' => ['nullable'],
+            'sales_code' => ['required'],
         ]);
         // return $request->products;
         // Example using raw SQL query
         $invoiceno = DB::select(DB::raw('SELECT fn_generateInvoiceNumber() AS result'));
-            $invoice = Invoice::create($validated + ['invoice_no' => $invoiceno[0]->result, 'status' => 'pending']);
+        $invoice = Invoice::create($validated + ['invoice_no' => $invoiceno[0]->result, 'status' => 'pending', 'sales_code' => $request->sales_code]);
             foreach ($request->products as $key => $value) {
                 InvoiceProduct::create([
                     'invoice_id' => $invoice->id,

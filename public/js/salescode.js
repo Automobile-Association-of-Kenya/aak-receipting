@@ -9,12 +9,25 @@ $(document).ready(function() {
             'sales_code': $(this).find("input[name='sales_code']").val()
         };
 
+        $(document).ready(function() {
+            // Fetch sales codes and names from the server
+            $.get("/salescodes", function(data) {
+                // Populate the table with sales code data
+                $.each(data, function(index, item) {
+                    $("#salesCodeTableBody").append(
+                        "<tr><td>" + item.name + "</td><td>" + item.sales_code + "</td></tr>"
+                    );
+                });
+            });
+        });
+        
+
         // Sending AJAX POST request
         $.post($(this).attr('action'), formData)
             .done(function(response) {
                 console.log(response);
                 // Handling success response
-                alert('Sales code added successfully!');
+                // alert('Sales code added successfully!');
                 // Displaying success message with success background and slider
                 var successMessage = $('<div>').addClass('success-message').text('Sales code added successfully!');
                 successMessage.css({

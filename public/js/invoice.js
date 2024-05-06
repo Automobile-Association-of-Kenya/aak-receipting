@@ -1,4 +1,32 @@
 (function () {
+    // function fetchSalesCodes() {
+    //     $.get("/salescodes", function(data) {
+    //         // Populate the sales code dropdown
+    //         data.forEach(function(item) {
+    //             $('#salescodeID').append($('<option>', {
+    //                 value: item.sales_code,
+    //                 text: item.name + ' - ' + item.sales_code
+    //             }));
+    //         });
+    //     });
+    // }
+
+    // // Call the function to fetch sales codes on page load
+    // fetchSalesCodes();
+
+    // // Function to filter sales codes based on user input
+    // function filterSalesCodes() {
+    //     var searchValue = $('#salescodeSearch').val().toLowerCase();
+    //     $('#salescodeID option').each(function() {
+    //         var text = $(this).text().toLowerCase();
+    //         $(this).toggle(text.indexOf(searchValue) > -1);
+    //     });
+    // }
+
+    // // Event listener for the sales code search input
+    // $('#salescodeSearch').on('input', function() {
+    //     filterSalesCodes();
+    // });
     productOptions("#departmentProductID");
     membersOption("#memberID");
     branchesOption("#invoiceBranchID");
@@ -108,13 +136,15 @@
             });
         });
         const data = {
-            _token: $this.find("input[name='_token']").val(),
-            branch_id: invoiceBranchID.val(),
-            members_id: memberID.val(),
-            amount: invoiceAmount.val(),
-            date: invoiceDate.val(),
-            products: products,
-        };
+    _token: $this.find("input[name='_token']").val(),
+    branch_id: invoiceBranchID.val(),
+    members_id: memberID.val(),
+    amount: invoiceAmount.val(),
+    date: invoiceDate.val(),
+    sales_code: $("#salescodeID").val(), // Include sales_code value here
+    products: products,
+};
+
         if (data.products.length <= 0) {
             errors.push("Products are required");
         }
@@ -174,6 +204,12 @@
             showError(errors.join(", "), "#invoiceFeedback");
         }
     });
+    // $(document).ready(function() {
+    //     $('#salescodeID').select2({
+    //         placeholder: 'Search for a sales code...',
+    //         allowClear: true // Optionally enable the "clear" button
+    //     });
+    // });
 
     function getInvoices() {
         $.getJSON("/invoices-data", function (invoices) {

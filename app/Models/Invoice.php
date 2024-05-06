@@ -11,7 +11,7 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['invoice_no','branch_id','members_id', 'amount', 'date'];
+    protected $fillable = ['invoice_no','branch_id','members_id', 'amount', 'date','sales_code'];
 
     /**
      * Get the member that owns the Invoice

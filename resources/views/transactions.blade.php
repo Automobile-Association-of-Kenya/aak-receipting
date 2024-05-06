@@ -124,14 +124,20 @@
                             <div class="col-md-6">
                                 <div class="form-group" style="font-size: 14px">
                                     <label for="salescodeID">Sales Code</label>
-                                    <select id="salescodeID" name="sales1" required class="form-control form-control-sm">
-                                        <option value="">Choose Sales Code</option>
+                                    <select id="salescodeID" name="sales_code" required class="form-control form-control-sm">
+                                        <option value="">Select Sales Code</option>
                                         @foreach ($sales as $sale)
-                                            <option value="{{ $sale->id }}">{{ $sale->sales_code }}</option>
+                                            <option value="{{ $sale->sales_code }}">{{ $sale->name }} - {{ $sale->sales_code }}</option>
                                         @endforeach
                                     </select>
+                                   
                                 </div>
                             </div>
+                            
+                            
+                            
+                            
+                            
                             
 
 
@@ -357,6 +363,15 @@
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <!-- Select2 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <script src="{{ asset('js/invoice.js') }}"></script>
     <script src="{{ asset('js/payment.js') }}"></script>
 @endsection
