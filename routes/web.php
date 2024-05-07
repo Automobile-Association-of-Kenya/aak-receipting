@@ -74,8 +74,7 @@ Route::get('/apitest/{id}', [PaymentsController::class, 'apitest']);
 Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions');
 
 Route::get('salescode', [HomeController::class, 'salescode'])->name('salescode');
-Route::post('/salescodes', [SalesCodeController::class, 'store'])->name('salescodes.store');
-Route::get('department-services/{dptid}', [HomeController::class, 'getdepartmentservices']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -95,5 +94,9 @@ Route::resource('corporates', CorporateController::class)->middleware('admin');
 
 Route::get('reports', [ReportController::class, 'index'])->name('reports');
 rOUTE::post('reports-generete', [ReportController::class, 'generate'])->name('reports.generete');
+
+
+Route::post('/salescodes', [SalesCodeController::class, 'store'])->name('salescodes.store');
+Route::get('department-services/{dptid}', [HomeController::class, 'getdepartmentservices']);
 
 require __DIR__ . '/auth.php';

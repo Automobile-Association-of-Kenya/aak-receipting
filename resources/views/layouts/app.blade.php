@@ -60,8 +60,8 @@
             </li>
 
 
-{{-- 
-            @if (auth()->user()->role == 'admin') --}}
+
+            @if (auth()->user()->role == 'admin')
 
 
                 <li class="nav-item active">
@@ -97,7 +97,7 @@
                
                 
 
-            {{-- @endif --}}
+            @endif
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('reports') }}">
