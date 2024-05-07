@@ -44,7 +44,8 @@ class PaymentObsrver
             "ReceiptDate" => $payment->date,
             "Tax" => $product->vatable == 0 ? False : True,
             "Paymode" => $payment->method,
-            'Department' => $department->name
+            'Department' => $department->name,
+            'Salesperson' => $payment->invoice->sales_code
         );
         Log::info($data);
         $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')
