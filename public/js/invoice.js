@@ -221,7 +221,7 @@
                                 : value.date;
                     tr += `<tr><td><small>${i++}</small></td><td><small>${
                         value.invoice_no
-                    }</small></td><td>${branch}</td><td><small>${
+                    }</small></td><td><small>${branch}</td></small><td><small>${
                         idNo +
                         " " +
                         firstName +
