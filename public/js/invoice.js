@@ -235,28 +235,28 @@
                 });
                 let table = `<table class="table table-bordered table-hover table-sm" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Member</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
                 invoicesTableSection.html(table);
-                // if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
-                //     $("#invoicesDataTable").DataTable().destroy();
-                //     $("#invoicesDataTable").DataTable({
-                //         // dom: "Bfrtip",
-                //         // buttons: [
-                //         //     "copyHtml5",
-                //         //     "excelHtml5",
-                //         //     "csvHtml5",
-                //         //     "pdfHtml5",
-                //         // ],
-                //     });
-                // } else {
-                //     $("#invoicesDataTable").DataTable({
-                //         // dom: "Bfrtip",
-                //         // buttons: [
-                //         //     "copyHtml5",
-                //         //     "excelHtml5",
-                //         //     "csvHtml5",
-                //         //     "pdfHtml5",
-                //         // ],
-                //     });
-                // }
+                if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
+                    $("#invoicesDataTable").DataTable().destroy();
+                    $("#invoicesDataTable").DataTable({
+                        // dom: "Bfrtip",
+                        // buttons: [
+                        //     "copyHtml5",
+                        //     "excelHtml5",
+                        //     "csvHtml5",
+                        //     "pdfHtml5",
+                        // ],
+                    });
+                } else {
+                    $("#invoicesDataTable").DataTable({
+                        // dom: "Bfrtip",
+                        // buttons: [
+                        //     "copyHtml5",
+                        //     "excelHtml5",
+                        //     "csvHtml5",
+                        //     "pdfHtml5",
+                        // ],
+                    });
+                }
             } else {
                 invoicesTableSection.html(
                     '<div class="text-center"><h3 class="text-danger">No data available to display</h3></div>'

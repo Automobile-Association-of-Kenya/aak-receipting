@@ -92,6 +92,6 @@ Route::resource('branches', BranchController::class)->middleware('admin');
 Route::resource('corporates', CorporateController::class)->middleware('admin');
 Route::resource('salescodes', SalesCodeController::class);
 Route::get('reports', [ReportController::class, 'index'])->name('reports');
-rOUTE::post('reports-generete', [ReportController::class, 'generate'])->name('reports.generete');
-
+Route::post('reports-generete', [ReportController::class, 'generate'])->name('reports.generete');
+Route::get('invoices-payments-summary/{year}', [InvoiceController::class, 'invoicesSummary']);
 require __DIR__ . '/auth.php';

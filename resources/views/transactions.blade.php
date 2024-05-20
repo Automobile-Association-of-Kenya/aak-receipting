@@ -52,7 +52,6 @@
                             New</a>
                     </div>
                     <div class="table-responsive" id="invoicesTableSection">
-
                     </div>
                 </div>
 
@@ -300,7 +299,7 @@
                                             <option value="CREDITCARD">CREDITCARD</option>
                                             <option value="RTGS">RTGS</option>
                                         </select>
-                                    </div>                                    
+                                    </div>
                                 </div>
 
                                 <div class="col-md-12">

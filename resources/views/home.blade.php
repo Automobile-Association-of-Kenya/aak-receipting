@@ -2,7 +2,6 @@
 
 @section('title')
     <title>Dashboard</title>
-    
 @endsection
 
 @section('header_styles')
@@ -76,8 +75,7 @@
                 <div class="col-lg-12">
                     <div class="row">
 
-
-                    <div class="col-xxl-4 col-md-4">
+                        <div class="col-md-3 col-md-3">
                             <div class="card info-card customers-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Customers | <span class="text-warning"
@@ -89,14 +87,14 @@
                                         </div>
                                         <div class="pl-3" id="customerSummary1">
                                             <h6 id="customersCount1"></h6>
+                                            <span class="text-success small pt-1 fw-bold" id="todayCustomerCount"></span> <span class="text-muted small pt-2 ps-1">Today</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-                        <div class="col-xxl-4 col-md-4">
+                        <div class="col-md-3 col-md-3">
                             <div class="card info-card customers-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Invoices | <span class="text-warning"
@@ -114,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xxl-4 col-md-4">
+                        <div class="col-md-3 col-md-3">
                             <div class="card info-card revenue-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Payments | <span class="text-warning" id="todayPaymentsCount"
@@ -132,7 +130,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xxl-4 col-md-4">
+                        <div class="col-md-3 col-md-3">
                             <div class="card info-card customers-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Users | <span class="text-warning"
@@ -143,13 +141,25 @@
                                             <i class="fas fa-users"></i>
                                         </div>
                                         <div class="pl-3" id="usersSummary1">
-                                            {{-- <h6 id="totalCustomersCount1">{{$total_users}}</h6> --}}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 card">
+                            <div class="card-header bg-white">
+                                <b class="text-left font-weight-bold">Transactions Summary</b>
+                                {{-- <input type="date" class="float-right" name="traffic" id="trafficDate"
+                                        value="{{ date('Y-m-d') }}"> --}}
+                            </div>
+                            <div class="card-body" style="width: 100%;height: auto;">
+                                <canvas id="transactionsSummary"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -159,5 +169,6 @@
 @endsection
 
 @section('footer_scripts')
+    <script src="{{ asset('js/chart.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection

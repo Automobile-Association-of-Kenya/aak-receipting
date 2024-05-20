@@ -19,7 +19,8 @@ class SalesCodeController extends Controller
      */
     public function index()
     {
-        return view('salescode');
+        $salescodes = SalesCode::latest()->get();
+        return view('salescode',compact('salescodes'));
     }
 
     /**
@@ -59,7 +60,7 @@ class SalesCodeController extends Controller
             'sales_code' => $request->sales_code,
         ]);
 
-        return redirect()->back()->with('success', 'Sales code added successfully!');
+        return json_encode(['status'=>'success','message'=> 'Sales code added successfully!']);
     }
 
     /**
