@@ -12,7 +12,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SalesCodeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CreditController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +36,13 @@ Route::get('/', [MembersController::class, 'index']);
 Route::get('/flights', function () {
     return view('flight');
 });
+
+Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+
+
+
+
 
 Route::resource('members', MembersController::class);
 Route::get('members-data', [MembersController::class, 'getmembers']);
@@ -90,6 +97,12 @@ Route::resource('branches', BranchController::class)->middleware('admin');
 
 
 Route::resource('corporates', CorporateController::class)->middleware('admin');
+// Route::get('/credits', 'CreditController@index')->name('credit.index');
+
+
+Route::get('/credits', [CreditController::class, 'index'])->name('credits.index');
+Route::post('/credits', [CreditController::class, 'store'])->name('credits.store');
+
 Route::resource('salescodes', SalesCodeController::class);
 Route::get('reports', [ReportController::class, 'index'])->name('reports');
 Route::post('reports-generete', [ReportController::class, 'generate'])->name('reports.generete');

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\SalesCode;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->string('sales_code')->after('date');
+        Schema::create('credits', function (Blueprint $table) {
+            $table->id();
+            $table->string('credit_no');
+            $table->string('customer_no');
+            $table->string('customer_name');
+            $table->decimal('amount', 8, 2);
+            $table->text('reasons');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn('sales_code_id');
-        });
+        Schema::dropIfExists('credits');
     }
 };

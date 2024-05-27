@@ -8,10 +8,11 @@ use Illuminate\Validation\ValidationException;
 
 class SalesCodeController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +20,11 @@ class SalesCodeController extends Controller
      */
     public function index()
     {
-        $salescodes = SalesCode::latest()->get();
-        return view('salescode',compact('salescodes'));
+        // Fetch sales codes data from the database and paginate
+        $salescodes = SalesCode::orderBy('created_at', 'desc')->get();
+        return view('salescode', compact('salescodes'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -30,14 +33,14 @@ class SalesCodeController extends Controller
      */
     public function create()
     {
-        //
+        // Handle form creation if needed
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -45,24 +48,21 @@ class SalesCodeController extends Controller
             'name' => 'required',
             'sales_code' => 'required|unique:sales_codes',
         ]);
-
+    
         // Check if the sales code already exists in the database
         $existingSalesCode = SalesCode::where('sales_code', $request->sales_code)->first();
         if ($existingSalesCode) {
-            throw ValidationException::withMessages([
-                'sales_code' => ['The sales code already exists. Please try with a different sales code.'],
-            ]);
+            return redirect()->back()->withErrors(['sales_code' => 'The sales code already exists. Please try with a different sales code.'])->withInput();
         }
-
+    
         // If the sales code is unique, proceed to store it
         SalesCode::create([
             'name' => $request->name,
             'sales_code' => $request->sales_code,
         ]);
-
-        return json_encode(['status'=>'success','message'=> 'Sales code added successfully!']);
+    
+        return redirect()->back()->with('success', 'Sales code added successfully!');
     }
-
     /**
      * Display the specified resource.
      *
@@ -71,7 +71,7 @@ class SalesCodeController extends Controller
      */
     public function show($id)
     {
-        //
+        // Handle showing a specific resource if needed
     }
 
     /**
@@ -82,7 +82,7 @@ class SalesCodeController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Handle form editing if needed
     }
 
     /**
@@ -94,7 +94,7 @@ class SalesCodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Handle updating a resource if needed
     }
 
     /**
@@ -105,6 +105,6 @@ class SalesCodeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Handle deleting a resource if needed
     }
 }

@@ -49,8 +49,8 @@ class HomeController extends Controller
 
     function transactions()
     {
-        $sales = SalesCode::all();
-        return view('transactions',compact('sales'));
+        // $sales = SalesCode::all();
+        // return view('transactions',compact('sales'));
     }
 
     public function show()
@@ -100,6 +100,10 @@ class HomeController extends Controller
     {
         $departments = Departments::get();
         return json_encode($departments);
+    }
+    function credits()
+    {
+        return view('credit');
     }
 
     function settings()
