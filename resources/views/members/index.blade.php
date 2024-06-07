@@ -5,7 +5,6 @@
 @endsection
 
 @section('header_styles')
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.css') }}"></script>
 @endsection
 
 @section('content')
@@ -22,8 +21,6 @@
             </div>
 
             <div class="card-body">
-
-
 
                 <div class="table-responsive" style="font-size:16px" id="customersTableSection">
                     {{-- <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

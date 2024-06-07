@@ -5,8 +5,6 @@
 @endsection
 
 @section('header_styles')
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap.min.css') }}"></script>
-
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
     <style>
         #confirmPayment {
@@ -89,15 +87,15 @@
                         <div class="row">
 
                             <div class="col-md-6">
-                                <div class="form-group" id="invoiceBranchDiv" style="font-size:14px">
+                                <div class="form-group" id="invoiceBranchDiv">
                                     <label for="invoiceBranchID">Branch</label>
                                     <select name="branch_id" id="invoiceBranchID" class="form-control  form-control-sm"
-                                        required style="width: 100%;"></select>
+                                     data-control="select2" data-dropdown-parent="#invoiceBranchDiv" required style="width: 100%;"></select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" id="membersInvoiceDiv" style="font-size:14px">
+                                <div class="form-group" id="membersInvoiceDiv">
                                     <label for="memberID">Client</label>
                                     <select name="member_id" id="memberID" class="form-control  form-control-sm"
                                         data-control="select2" data-dropdown-parent="#membersInvoiceDiv" required
@@ -106,25 +104,25 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" style="font-size:14px">
+                                <div class="form-group" id="departmentSection">
                                     <label for="departmentInvoiceId">Departments</label>
                                     <select name="department_id" id="departmentInvoiceId"
-                                        class="form-control  form-control-sm"></select>
+                                        class="form-control  form-control-sm" data-control="select2" data-dropdown-parent="#departmentSection" style="width: 100%;"></select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" style="font-size:14px">
+                                <div class="form-group" id="productSection">
                                     <label for="departmentProductID">Product</label>
                                     <select name="product_id" id="departmentProductID"
-                                        class="form-control  form-control-sm"></select>
+                                        class="form-control  form-control-sm" data-control="select2" data-dropdown-parent="#productSection" style="width: 100%;"></select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" style="font-size: 14px">
+                                <div class="form-group" id="salesCodeSection">
                                     <label for="salescodeID">Sales Code</label>
-                                    <select id="salescodeID" name="sales_code" required class="form-control form-control-sm">
+                                    <select id="salescodeID" name="sales_code" required class="form-control form-control-sm"  data-control="select2" data-dropdown-parent="#salesCodeSection" style="width: 100%;">
                                         <option value="">Select Sales Code</option>
                                         @foreach ($sales as $sale)
                                             <option value="{{ $sale->sales_code }}">{{ $sale->name }} - {{ $sale->sales_code }}</option>
@@ -357,19 +355,21 @@
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/invoice.js') }}"></script>
     <script src="{{ asset('js/payment.js') }}"></script>
-@endsection
-<script>
-     $(document).ready(function() {
-        $('#salesSearch').on('keyup', function() {
-            var searchText = $(this).val().toLowerCase();
-            $('#salescodeID option').each(function() {
-                var optionText = $(this).text().toLowerCase();
-                if (optionText.indexOf(searchText) !== -1) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-    });
+    <script>
+     (function() {
+        $('#salescodeID').select2({
+            dropDownParent:'#salesCodeSection',
+        })
+                    // $('#invoiceBranchID').select2({
+                    // })
+        $('#departmentInvoiceId').select2({
+            dropDownParent:'#departmentSection',
+        })
+        $('#departmentProductID').select2({
+            dropDownParent:'#productSection',
+        })
+
+    })();
     </script>
+@endsection
+

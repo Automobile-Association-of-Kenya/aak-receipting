@@ -4,7 +4,6 @@
     <title>Add Corporate Client</title>
 @endsection
 @section('header_styles')
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.css') }}"></script>
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -68,7 +67,7 @@
                                     value="">
                             </div>
                         </div>
-                        
+
                     </div>
 <div id="corporateFeedback"></div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
@@ -85,7 +84,7 @@
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('js/members.js') }}"></script>
 <script>
-    
+
     (function() {
         $('#dataTable').DataTable();
     })()

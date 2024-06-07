@@ -5,7 +5,6 @@
 @endsection
 
 @section('header_styles')
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.css') }}"></script>
 @endsection
 
 @section('content')
@@ -112,7 +111,7 @@
                                   <input type="text" class="form-control" id="productGL" name="name"
                                     value="{{ old('name') }}">
                                 </div>
-                        </div>     
+                        </div>
                 </div>
              </div>
                 <div id="productFeedback"></div>

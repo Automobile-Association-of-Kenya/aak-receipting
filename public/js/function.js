@@ -22,14 +22,34 @@ function membersOption(target) {
     $.getJSON("/members-data", function (members) {
         let option = `<option value="NULL">Select Client</option>`;
         $.each(members, function (key, value) {
+            let firstName =
+                value.firstName == null ||
+                    value.firstName == undefined
+                    ? ""
+                    : value.firstName,
+                secondName =
+                    value.secondName == null ||
+                        value.secondName == undefined
+                        ? ""
+                        : value.secondName,
+                idNo =
+                    value.idNo == null ||
+                        value.idNo == undefined
+                        ? ""
+                        : value.idNo,
+                surNameName =
+                    value.surNameName == null ||
+                        value.surNameName == undefined
+                        ? ""
+                        : value.surNameName;
             option += `<option value="${value.id}">${
-                value.idNo +
+                idNo +
                 " " +
-                value.firstName +
+                firstName +
                 " " +
-                value.secondName +
+                secondName +
                 " " +
-                value.surNameName
+                surNameName
             }</option>`;
         });
         $(target).html(option);

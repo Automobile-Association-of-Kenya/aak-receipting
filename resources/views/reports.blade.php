@@ -5,7 +5,6 @@
 @endsection
 
 @section('header_styles')
-    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.css') }}"></script>
 @endsection
 
 @section('content')

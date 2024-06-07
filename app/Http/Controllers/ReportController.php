@@ -10,6 +10,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,21 +32,27 @@ class ReportController extends Controller
      */
     public function generate(Request $request)
     {
+        $start_date = $request->start_date . ' 00:00:00';
+        $end_date = $request->end_date . ' 23:59:59';
         $payments = DB::select("CALL sp_generatereport(
             $request->department_id,
             $request->product_id,
-            $request->start_date,
-            $request->end_date,
+            '$start_date',
+            '$end_date',
             $request->branch_id)");
+            // return$payments;
         $data = [];
-        // return $payments;
-        array_push($data, ['Branch', "Department", 'Date paid', 'Customer NO', 'Name', 'Invoice NO', 'Product/Service',  'Invoiced','Payment','Balance']);
+        array_push($data, ['Branch', "Department", "Sales Person", 'Date paid', 'Customer NO', 'Name', 'Invoice NO', 'Product/Service',  'Invoiced', 'Payment', 'Balance']);
         foreach ($payments as $key => $value) {
             $balance = floatval($value->invoice_amount) - floatval(@$value?->payment_amount ?? 0);
-            array_push($data, [$value->branch_name, $value->department, $value->payment_date, $value->MembershipNumber ?? "", $value->member_name ?? "", $value->invoice_no, $value->product_name, $value->invoice_amount, @$value->payment_amount??0, $balance]);
+            $surNameName = $value->surNameName==null?"":$value->surNameName;
+            $firstName = $value->firstName==null?"":$value->firstName;
+            $secondName = $value->secondName==null?"":$value->secondName;
+            $MembershipNumber = $value->MembershipNumber==null?"":$value->MembershipNumber;
+            $member_name = $surNameName. " " . $firstName. " " . $secondName;
+            array_push($data, [$value->branch_name, $value->department, $value->sales_code, $value->payment_date, $MembershipNumber, $member_name, $value->invoice_no, $value->product_name, $value->invoice_amount, @$value->payment_amount ?? 0, $balance]);
         }
         return Excel::download(new PaymentsExport($data), 'payments.xlsx');
-        // return json_encode($payments);
     }
 
     /**

@@ -12,7 +12,6 @@
             branch_code: branchCode.val(),
             _token: $this.find("input[name='_token']").val(),
         };
-        console.log('here there');
         $.post("/branches", data)
             .done(function (params) {
                 let result = JSON.parse(params);
@@ -50,15 +49,37 @@
             let tr = "",
                 i = 1;
             $.each(branches, function (key, value) {
-                tr += `<tr><td>${i++}</td><td><small>${value.name}</small></td>
-                    <td><small>${value.branch_code}</small></td>
+                tr += `<tr><td>${i++}</td><td><small>${value?.name}</small></td>
+                    <td><small>${value?.branch_code}</small></td>
                     <td><small>${
-                        value.user.name
+                        value?.user.name
                     }</small></td></tr>`;
             });
             let table = `<table class="table table-bordered table-hover table-sm" id="branchesTable"><thead><th>#</th><th>Code</th><th>Name</th><th>Added by</th></thead><tbody>${tr}</tbody></table>`;
             branchesTableSection.html(table);
-            $("#mambersTable").DataTable();
+            // $("#branchesTable").DataTable();
+            if ($.fn.DataTable.isDataTable("#branchesTable")) {
+                $("#branchesTable").DataTable().destroy();
+                $("#branchesTable").DataTable({
+                    // dom: "Bfrtip",
+                    // buttons: [
+                    //     "copyHtml5",
+                    //     "excelHtml5",
+                    //     "csvHtml5",
+                    //     "pdfHtml5",
+                    // ],
+                });
+            } else {
+                $("#branchesTable").DataTable({
+                    // dom: "Bfrtip",
+                    // buttons: [
+                    //     "copyHtml5",
+                    //     "excelHtml5",
+                    //     "csvHtml5",
+                    //     "pdfHtml5",
+                    // ],
+                });
+            }
         });
     }
     getBranches();

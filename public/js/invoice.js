@@ -6,6 +6,9 @@
     $("#memberID").select2({
         dropdownParent: "#membersInvoiceDiv",
     });
+    $("#invoiceBranchID").select2({
+        dropDownParent: '#invoiceBranchDiv',
+    });
 
     const createInvoiceFOrm = $("#createInvoiceFOrm"),
         memberID = $("#memberID"),
@@ -33,51 +36,113 @@
         );
     });
 
+    // departmentProductID.on("change", function (event) {
+    //     let product_id = $(this).val();
+
+    //     if (product_id == "NULL") {
+    //         invoiceAmount.val("");
+    //     } else {
+    //         if ($("#invoiceProductsTbody > tr").length > 0) {
+    //             $("#invoiceProductsTbody > tr").each(function (key, row) {
+    //                 if (
+    //                     parseInt($(row).data("id")) ===
+    //                     parseInt(product_id)
+    //                 ) {
+    //                     console.log('here we are');
+    //                 } else {
+    //                     $.getJSON("/products/" + product_id, function (product) {
+    //                         invoiceAmount.val(product.amount);
+    //                         let tr = `<tr data-id="${product.id}"><td>${product.name}</td><td><input id="invoiceProductQuantity" value="1" readonly></td><td class="invoiceProductAmount">${product.amount}</td><td><i class="fa fa-trash text-danger" id="removeInvoiceProduct"></i></td></tr>`;
+    //                         calcuteTotal();
+    //                         invoiceProductsTbody.prepend(tr);
+    //                     });
+    //                 }
+    //             });
+    //         } else {
+    //             $.getJSON("/products/" + product_id, function (product) {
+    //                 invoiceAmount.val(product.amount);
+    //                 let tr = `<tr data-id="${product.id}"><td>${product.name}</td><td><input id="invoiceProductQuantity" value="1" readonly></td><td class="invoiceProductAmount">${product.amount}</td><td><i class="fa fa-trash text-danger" id="removeInvoiceProduct"></i></td></tr>`;
+    //                 calcuteTotal();
+    //                 invoiceProductsTbody.prepend(tr);
+    //             });
+    //         }
+    //     }
+    // });
+
+    // departmentProductID.on("change", function (event) {
+    //     let product_id = $(this).val();
+    //     let productFound = false;
+    //     $("#invoiceProductsTbody > tr").each(function (key, row) {
+    //         let rowProductId = parseInt($(row).data("id"));
+    //         console.log(`Row Product ID: ${rowProductId}, Selected Product ID: ${product_id}`);
+    //         if (rowProductId === parseInt(product_id)) {
+    //             console.log('Product already in the list');
+    //             productFound = true;
+
+    //             return false;  // Exit the loop
+    //         }
+    //     });
+    //     if (!productFound) {
+    //         $.getJSON("/products/" + product_id, function (product) {
+    //             invoiceAmount.val(product.amount);
+    //             let tr = `<tr data-id="${product.id}"><td>${product.name}</td><td><input id="invoiceProductQuantity" value="1" readonly></td><td class="invoiceProductAmount">${product.amount}</td><td><i class="fa fa-trash text-danger" id="removeInvoiceProduct"></i></td></tr>`;
+    //             calcuteTotal();
+    //             invoiceProductsTbody.prepend(tr);
+    //         });
+    //     }
+    // });
+
     departmentProductID.on("change", function (event) {
         let product_id = $(this).val();
         if (product_id == "NULL") {
             invoiceAmount.val("");
         } else {
-            $.getJSON("/products/" + product_id, function (product) {
-                invoiceAmount.val(product.amount);
-                let tr = `<tr data-id="${product.id}"><td>${product.name}</td><td><input id="invoiceProductQuantity" value="1" readonly></td><td class="invoiceProductAmount">${product.amount}</td><td><i class="fa fa-trash text-danger" id="removeInvoiceProduct"></i></td></tr>`;
-                if ($("#invoiceProductsTbody > tr").length > 0) {
-                    $("#invoiceProductsTbody > tr").each(function (key, value) {
-                        if (
-                            parseInt($(value).data("id")) ===
-                            parseInt(product.id)
-                        ) {
-                            let cQTY = parseInt(
-                                    $(value)
-                                        .find("#invoiceProductQuantity")
-                                        .val()
-                                ),
-                                nQTY = cQTY + 1,
-                                cAmount = parseFloat(
-                                    $(value)
-                                        .find(".invoiceProductAmount")
-                                        .text()
-                                ),
-                                nAmount =
-                                    parseFloat(cAmount) +
-                                    parseFloat(product.amount);
-                            $(value).find(".invoiceProductQuantity").val(nQTY);
-                            $(value)
-                                .find(".invoiceProductAmount")
-                                .text(nAmount);
-                            calcuteTotal();
-                        } else {
-                            invoiceProductsTbody.prepend(tr);
-                            calcuteTotal();
-                        }
-                    });
-                } else {
-                    invoiceProductsTbody.prepend(tr);
+            let productFound = false;
+            $("#invoiceProductsTbody > tr").each(function (key, row) {
+                let rowProductId = parseInt($(row).data("id"));
+                console.log(`Row Product ID: ${rowProductId}, Selected Product ID: ${product_id}`);
+                if (rowProductId === parseInt(product_id)) {
+                    console.log('Product already in the list');
+                    productFound = true;
+                    let quantityInput = $(row).find("#invoiceProductQuantity");
+                    let currentQuantity = parseInt(quantityInput.val());
+                    let newQuantity = currentQuantity + 1;
+                    quantityInput.val(newQuantity);
+                    let unitAmount = parseFloat($(row).find(".invoiceProductAmount").data("unit-amount"));
+                    let newAmount = unitAmount * newQuantity;
+                    $(row).find(".invoiceProductAmount").text(newAmount.toFixed(2));
                     calcuteTotal();
+                    return false;
                 }
             });
+            if (!productFound) {
+                $.getJSON("/products/" + product_id, function (product) {
+                    invoiceAmount.val(product.amount);
+                    let tr = `<tr data-id="${product.id}">
+                            <td>${product.name}</td>
+                            <td><input id="invoiceProductQuantity" value="1"></td>
+                            <td class="invoiceProductAmount" data-unit-amount="${product.amount}">${product.amount}</td>
+                            <td><i class="fa fa-trash text-danger" id="removeInvoiceProduct"></i></td>
+                          </tr>`;
+                    invoiceProductsTbody.prepend(tr);
+                    calcuteTotal();
+                });
+            }
         }
     });
+
+    $('body').on("input", "#invoiceProductQuantity", function () {
+        let quantityInput = $(this);
+        let row = quantityInput.closest("tr");
+        let unitAmount = parseFloat(row.find(".invoiceProductAmount").data("unit-amount"));
+        let newQuantity = parseInt(quantityInput.val());
+        if (!isNaN(newQuantity) && newQuantity > 0) {
+            let newAmount = unitAmount * newQuantity;
+            row.find(".invoiceProductAmount").text(newAmount.toFixed(2));
+            calcuteTotal();
+        }
+    });
+
 
     $("body").on("click", "#removeInvoiceProduct", function () {
         $(this).closest("tr").remove();
@@ -187,28 +252,28 @@
             if (invoices.length > 0) {
                 $.each(invoices, function (key, value) {
                     let firstName =
-                            value.member.firstName == null ||
+                        value.member.firstName == null ||
                             value.member.firstName == undefined
-                                ? ""
-                                : value.member.firstName,
+                            ? ""
+                            : value.member.firstName,
                         secondName =
                             value.member.secondName == null ||
-                            value.member.secondName == undefined
+                                value.member.secondName == undefined
                                 ? ""
                                 : value.member.secondName,
                         idNo =
                             value.member.idNo == null ||
-                            value.member.idNo == undefined
+                                value.member.idNo == undefined
                                 ? ""
                                 : value.member.idNo,
                         surNameName =
                             value.member.surNameName == null ||
-                            value.member.surNameName == undefined
+                                value.member.surNameName == undefined
                                 ? ""
                                 : value.member.surNameName,
                         branch =
                             value.branch?.name == undefined ||
-                            value.branch?.name == null
+                                value.branch?.name == null
                                 ? ""
                                 : value.branch?.name,
                         amount =
@@ -219,19 +284,16 @@
                             value.date == null || value.date == undefined
                                 ? ""
                                 : value.date;
-                    tr += `<tr><td><small>${i++}</small></td><td><small>${
-                        value.invoice_no
-                    }</small></td><td><small>${branch}</td></small><td><small>${
-                        idNo +
+                    tr += `<tr><td><small>${i++}</small></td><td><small>${value.invoice_no
+                        }</small></td><td><small>${branch}</td></small><td><small>${idNo +
                         " " +
                         firstName +
                         " " +
                         secondName +
                         " " +
                         surNameName
-                    }</small></td><td><small>${amount}</small></td><td><small>${date}</small></td><td><small><a href="/invoice-print/${
-                        value.id
-                    }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
+                        }</small></td><td><small>${amount}</small></td><td><small>${date}</small></td><td><small><a href="/invoice-print/${value.id
+                        }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
                 });
                 let table = `<table class="table table-bordered table-hover table-sm" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Member</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
                 invoicesTableSection.html(table);
