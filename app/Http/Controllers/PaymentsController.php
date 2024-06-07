@@ -69,9 +69,9 @@ class PaymentsController extends Controller
 
         $paymentRequest = Http::post('https://payments.aakenya.co.ke/api/stk/v2/makePayment', [
             'phone' => $validated["phone"],
-            'amount' => 1,
+            'amount' => $validated['amount'],
             'description' => $validated['description'],
-            'callBackUrl' => 'https://3ea2-41-90-176-121.ngrok-free.app/api/callback'
+            'callBackUrl' => 'https://aak-receipting.aakenya.co.ke/api/callback'
         ]);
         $data = json_decode($paymentRequest);
         if (isset($data->checkoutID) && !is_null($data->checkoutID)) {
