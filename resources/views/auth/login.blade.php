@@ -98,7 +98,7 @@
             <div class="row w-100 p-b-5">
                 <div class="col-md-4 left-half">
                     <h1 class="center" style="font-weight:800; color:rgba(2, 79, 49, 0.85);">Login</h1>
-                    <h6 class="signup-link"><a href="{{ route('register') }}">Do not have an account? Signup</a></h6>
+                    <h6 class="signup-link">Do not have an account? Login</a></h6>
                 </div>
                 <div class="col-md-8 right-half">
                     <div class="form-container col-md-7">
@@ -129,7 +129,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <div class="form-check">
