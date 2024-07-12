@@ -43,7 +43,7 @@ Route::get('/flights', function () {
     return view('flight');
 });
 
-Route::resource('members', MembersController::class)->middleware(['admin', 'cea']);
+Route::resource('members', MembersController::class);
 Route::get('members-data', [MembersController::class, 'getmembers']);
 Route::get('products-data', [HomeController::class, 'getproducts']);
 Route::get('products/{id}', [HomeController::class, 'getproductbyid']);
@@ -66,7 +66,7 @@ Route::resource('products', ProductController::class)->middleware('admin');
 Route::get('branches-data', [HomeController::class, 'getBranches']);
 Route::get('users-data', [HomeController::class, 'getUsers']);
 
-Route::resource('invoices', InvoiceController::class)->middleware(['admin', 'cea']);
+Route::resource('invoices', InvoiceController::class);
 // Route::get('invoices/{id}', [InvoiceController::class,'edit']);
 Route::get('invoices-data', [InvoiceController::class, 'invoices']);
 Route::get('invoice-print/{id}', [InvoiceController::class, 'print']);
@@ -79,7 +79,7 @@ Route::get('/create', [HomeController::class, 'fetch'])->name('amount');
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('payments', PaymentsController::class)->middleware(['admin', 'cea']);
+Route::resource('payments', PaymentsController::class);
 Route::get('/payments-data', [PaymentsController::class, 'payments']);
 Route::get('/payments-local', [PaymentsController::class, 'getlocalpayments']);
 Route::post('/payments/mpesa', [PaymentsController::class, 'mpesa']);
@@ -87,7 +87,7 @@ Route::get('/payment-print/{id}', [PaymentsController::class, 'print']);
 Route::post('/payment-mpesa', [PaymentsController::class, 'mpesa'])->name('payment.mpesa');
 Route::get('/apitest/{id}', [PaymentsController::class, 'apitest']);
 
-Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions')->middleware(['admin', 'cea']);
+Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions');
 
 Route::get('department-services/{dptid}', [HomeController::class, 'getdepartmentservices']);
 
@@ -106,7 +106,7 @@ Route::resource('users', UserController::class)->middleware('admin');
 Route::resource('branches', BranchController::class)->middleware('admin');
 
 
-Route::resource('corporates', CorporateController::class)->middleware('admin');
+Route::resource('corporates', CorporateController::class);
 Route::resource('salescodes', SalesCodeController::class);
 Route::get('reports', [ReportController::class, 'index'])->name('reports');
 Route::post('reports-generete', [ReportController::class, 'generate'])->name('reports.generete');
