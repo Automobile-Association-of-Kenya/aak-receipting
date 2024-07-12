@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(members::class);
             $table->string('amount');
             $table->string('date');
+            $table->string('sales_code');
             $table->timestamps();
         });
     }

@@ -73,7 +73,7 @@ class InvoiceController extends Controller
 
     function invoices()
     {
-        $invoices = Invoice::with(['member:id,idNo,surNameName,firstName,secondName', 'branch:id,name'])->latest()->get();
+        $invoices = Invoice::with(['member:id,idNo,surNameName,firstName,secondName', 'branch:id,name','user:id,name'])->latest()->get();
         return json_encode($invoices);
     }
 

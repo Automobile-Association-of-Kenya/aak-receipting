@@ -189,12 +189,12 @@
                         description
                     }</small></td><td><small>${
                         invoice_no
-                    }</small></td><td><small><a href="/payment-print/${
+                    }</small></td><td>${value.user?.name}</td><td><small><a href="/payment-print/${
                         value.id
                     }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
                 });
                 let table =
-                    '<table class="table table-bordered table-sm" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Description</th><th>Invoice</th><th>Action</th></thead><tbody>' +
+                    '<table class="table table-bordered table-sm" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Description</th><th>Invoice</th><th>Added By</th><th>Action</th></thead><tbody>' +
                     tr +
                     "</tbody></table>";
 

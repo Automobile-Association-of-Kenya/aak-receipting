@@ -25,7 +25,8 @@ class PaymentsController extends Controller
 
     function payments()
     {
-        $transactions = Payment::with(['member:id,idNo,mobilePhoneNumber,firstName,secondName,surNameName', 'invoice:id,invoice_no'])->latest()->get();
+        $transactions = Payment::with(['member:id,idNo,mobilePhoneNumber,firstName,secondName,surNameName','invoice:id,invoice_no', 'user:id,name'])
+                        ->latest()->get();
         return $transactions;
     }
 
@@ -44,7 +45,7 @@ class PaymentsController extends Controller
             'amount' => ['required'],
             'date' => ['nullable', 'max:30'],
             'method' => ['required', 'max:30'],
-            'description' => ['nullable', 'max:255'],
+            'description' => ['required', 'max:255'],
         ]);
         Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no, 'user_id' => auth()->id()]);
         return json_encode(['status' => 'success', 'message' => 'Payment saved successfully']);

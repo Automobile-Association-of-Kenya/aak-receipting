@@ -87,7 +87,7 @@
                         <div class="row">
 
                             <div class="col-md-6">
-                                <div class="form-group" id="invoiceBranchDiv">
+                                <div class="form-group" id="invoiceBranchDiv" style="font-size:14px">
                                     <label for="invoiceBranchID">Branch</label>
                                     <select name="branch_id" id="invoiceBranchID" class="form-control  form-control-sm"
                                      data-control="select2" data-dropdown-parent="#invoiceBranchDiv" required style="width: 100%;"></select>
@@ -95,7 +95,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" id="membersInvoiceDiv">
+                                <div class="form-group" id="membersInvoiceDiv" style="font-size:14px">
                                     <label for="memberID">Client</label>
                                     <select name="member_id" id="memberID" class="form-control  form-control-sm"
                                         data-control="select2" data-dropdown-parent="#membersInvoiceDiv" required
@@ -104,7 +104,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" id="departmentSection">
+                                <div class="form-group" id="departmentSection" style="font-size:14px">
                                     <label for="departmentInvoiceId">Departments</label>
                                     <select name="department_id" id="departmentInvoiceId"
                                         class="form-control  form-control-sm" data-control="select2" data-dropdown-parent="#departmentSection" style="width: 100%;"></select>
@@ -112,7 +112,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" id="productSection">
+                                <div class="form-group" id="productSection" style="font-size:14px">
                                     <label for="departmentProductID">Product</label>
                                     <select name="product_id" id="departmentProductID"
                                         class="form-control  form-control-sm" data-control="select2" data-dropdown-parent="#productSection" style="width: 100%;"></select>
@@ -120,7 +120,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-group" id="salesCodeSection">
+                                <div class="form-group" id="salesCodeSection" style="font-size:14px">
                                     <label for="salescodeID">Sales Code</label>
                                     <select id="salescodeID" name="sales_code" required class="form-control form-control-sm"  data-control="select2" data-dropdown-parent="#salesCodeSection" style="width: 100%;">
                                         <option value="">Select Sales Code</option>
@@ -290,11 +290,11 @@
                                         <label for="paymentMethod">Method</label>
                                         <select name="payment_method" id="paymentMethod" class="form-control form-control-sm">
                                             <option value="">Select Payment Mode</option>
-                                            <option value="MPESA">MPESA</option>
                                             <option value="BANK">BANK DEPOSIT</option>
                                             <option value="CHEQUE">CHEQUE</option>
                                             <option value="EFT">EFT</option>
                                             <option value="CREDITCARD">CREDITCARD</option>
+                                            <option value="MPESA">MPESA</option>
                                             <option value="RTGS">RTGS</option>
                                         </select>
                                     </div>

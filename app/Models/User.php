@@ -20,6 +20,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'sales_code',
         'email',
         'password',
         'role'
@@ -52,5 +53,15 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get all of the invoices for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'user_id', 'id');
     }
 }

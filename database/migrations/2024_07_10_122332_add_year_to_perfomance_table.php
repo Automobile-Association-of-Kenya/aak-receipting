@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('invoice_count');
-            $table->string('customer_count');
-            $table->string('payments_count');
-            $table->timestamps();
+        Schema::table('performance', function (Blueprint $table) {
+            $table->string('year')->nullable()->after('overall_target');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::table('performance', function (Blueprint $table) {
+            $table->dropColumn('overall_target');
+        });
     }
 };

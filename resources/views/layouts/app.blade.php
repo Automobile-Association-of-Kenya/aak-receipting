@@ -55,12 +55,9 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('transactions') }}">
-                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                    <i class="fab fa-cc-amazon-pay" aria-hidden="true"></i>
                     <span>Transactions</span></a>
             </li>
-
-
-
             @if (auth()->user()->role == 'admin')
 
 
@@ -81,6 +78,12 @@
                         <i class="fas fa-building" aria-hidden="true"></i>
                         <span>Branches</span></a>
                 </li>
+
+                {{-- <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('creditnote') }}">
+                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                        <span>Credit Notes</span></a>
+                </li> --}}
 
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('salescodes.index') }}">

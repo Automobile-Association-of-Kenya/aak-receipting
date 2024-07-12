@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\SalesCode;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class SalesCodeController extends Controller
@@ -19,7 +21,7 @@ class SalesCodeController extends Controller
      */
     public function index()
     {
-        $salescodes = SalesCode::latest()->get();
+        $salescodes = User::where('role','sale')->latest()->get();
         return view('salescode',compact('salescodes'));
     }
 
@@ -45,19 +47,15 @@ class SalesCodeController extends Controller
             'name' => 'required',
             'sales_code' => 'required|unique:sales_codes',
         ]);
-
-        // Check if the sales code already exists in the database
-        $existingSalesCode = SalesCode::where('sales_code', $request->sales_code)->first();
+        $existingSalesCode = User::where('sales_code', $request->sales_code)->first();
         if ($existingSalesCode) {
-            throw ValidationException::withMessages([
-                'sales_code' => ['The sales code already exists. Please try with a different sales code.'],
-            ]);
+            return json_encode(['status'=>'error',"message" =>'The sales code already exists. Please try with a different sales code.']);
         }
-
-        // If the sales code is unique, proceed to store it
-        SalesCode::create([
+        User::create([
             'name' => $request->name,
             'sales_code' => $request->sales_code,
+            'password'=>Hash::make('123456789'),
+            'role'=>'sale',
         ]);
 
         return json_encode(['status'=>'success','message'=> 'Sales code added successfully!']);

@@ -44,13 +44,16 @@ class HomeController extends Controller
 
     function overview()
     {
+        if (auth()->user()->role === "sale") {
+            return redirect('sales');
+        }
         return view('home');
     }
 
     function transactions()
     {
-        $sales = SalesCode::all();
-        return view('transactions',compact('sales'));
+        $sales = User::where('role', 'sale')->get();
+        return view('transactions', compact('sales'));
     }
 
     public function show()
@@ -63,9 +66,9 @@ class HomeController extends Controller
     public function summary()
     {
         $payments = Payment::get();
-        $todaypayments = $payments->where('date_created', date('Y-m-d'));
-        $todaypaymentscount = $todaypayments->count();
-        $todaypaymentstotal = $todaypayments->sum('amount');
+        $todaypayments = Payment::where('date', date('Y-m-d'))->sum('amount');
+        $todaypaymentscount = Payment::whereDate('date', date('Y-m-d'))->count();
+        $todaypaymentstotal = Payment::whereDate('date', date('Y-m-d'))->sum('amount');
         $totalpayments = $payments->sum("amount");
         $members = members::count();
         $todaymembers = members::whereDate('created_at', date('Y-m-d'))->count();
@@ -113,7 +116,8 @@ class HomeController extends Controller
         return json_encode($branches);
     }
 
-    function getUsers() {
+    function getUsers()
+    {
         $users = User::latest()->get();
         return json_encode($users);
     }

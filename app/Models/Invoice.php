@@ -11,7 +11,7 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['invoice_no','branch_id','members_id', 'amount', 'date', 'sales_code'];
+    protected $fillable = ['invoice_no','branch_id','members_id', 'amount', 'date', 'sales_code','user_id'];
 
     /**
      * Get the member that owns the Invoice
@@ -51,5 +51,15 @@ class Invoice extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'invoice_id', 'id');
+    }
+
+    /**
+     * Get the user that owns the Invoice
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

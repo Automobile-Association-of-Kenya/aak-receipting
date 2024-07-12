@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->string('sales_code')->after('date');
+        Schema::create('performance', function (Blueprint $table) {
+            $table->id();
+            $table->string('sales_code');
+            $table->string('overall_target');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('performance');
     }
 };

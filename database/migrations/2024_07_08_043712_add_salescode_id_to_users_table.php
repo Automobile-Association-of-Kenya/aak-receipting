@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\SalesCode;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sales_codes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('sales_code')->unique(); // Add unique constraint
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('sales_code')->after('name')->nullable();
+            // $table->string('email')->nullable()->change();
         });
     }
 
@@ -28,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales_codes');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('sales_code');
+        });
     }
 };

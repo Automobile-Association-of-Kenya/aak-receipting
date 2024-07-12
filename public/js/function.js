@@ -85,3 +85,8 @@ function branchesOption(target) {
         $(target).html(option);
     });
 }
+
+function salesCodeOptions(target) {
+    
+}
+

@@ -1,6 +1,12 @@
-@extends('layouts.guest')
-
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipting - Sales Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,7 +60,7 @@
             align-items: center;
             width: 100%;
             height: 100%;
-            padding-bottom: 30px;
+            padding-bottom: 40px;
         }
 
         .left-half {
@@ -82,6 +88,7 @@
         h6 a:hover {
             color: rgba(2, 79, 49, 0.7);
         }
+
         footer {
             background: rgba(2, 79, 49, 0.85);
             color: #fff;
@@ -90,37 +97,28 @@
             width: 100%;
         }
     </style>
+</head>
+<body>
     <div class="container">
         <header class="text-center">
             <img src="{{ asset('img/logo.png') }}" alt="AA LOGO" class="logo">
         </header>
         <main class="content-wrapper mt-5">
-            <div class="row w-100">
-                <div class="col-md-5 left-half">
-                    <h1 class="center" style="font-weight:600; color:rgba(2, 79, 49, 0.85);">Create Account</h1>
-                    <h6 class="signup-link"><a href="{{ route('login') }}">Already have an account? Login</a></h6>
+            <div class="row w-100 p-b-5">
+                <div class="col-md-4 left-half">
+                    <h1 class="center" style="font-weight:800; color:rgba(2, 79, 49, 0.85);">Login</h1>
+                    <h6 class="signup-link"><a href="{{ route('signupSalescode') }}">Do not have an account? Signup</a></h6>
                 </div>
-                <div class="col-md-7 right-half">
+                <div class="col-md-8 right-half">
                     <div class="form-container col-md-7">
-                        <h2 class="center">Register</h2>
-                        <form action="{{ route('register') }}" method="POST">
+                        <h2 class="center">Login</h2>
+                        <form action="{{ route('salesCode') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="name" class="col-form-label text-md-right">{{ __('Name') }}</label>
+                                <label for="email" class="col-form-label text-md-right">{{ __('Sales Code') }}</label>
                                 <div class="col-md-12">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-                                <div class="col-md-12">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                                    @error('email')
+                                    <input id="salesCode" type="text" class="form-control @error('salesCode') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    @error('salesCode')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -130,7 +128,7 @@
                             <div class="form-group">
                                 <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
                                 <div class="col-md-12">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -138,19 +136,27 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="password-confirmation" class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input id="password-confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                    @error('password_confirmation')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Your Password?') }}
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-custom btn-block">
-                                {{ __('Register') }}
+                                {{ __('Login') }}
                             </button>
                         </form>
                     </div>
@@ -159,6 +165,7 @@
         </main>
         <footer>
             Copyright &copy; 2024
-          </footer>
+        </footer>
     </div>
-@endsection
+</body>
+</html>

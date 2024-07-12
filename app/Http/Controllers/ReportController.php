@@ -6,7 +6,10 @@ use App\Exports\PaymentsExport;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class ReportController extends Controller
 {
@@ -45,14 +48,22 @@ class ReportController extends Controller
         array_push($data, ['Branch', "Department", "Sales Person", 'Date paid', 'Customer NO', 'Name', 'Invoice NO', 'Product/Service',  'Invoiced', 'Payment', 'Balance']);
         foreach ($payments as $key => $value) {
             $balance = floatval($value->invoice_amount) - floatval(@$value?->payment_amount ?? 0);
-            $surNameName = $value->surNameName==null?"":$value->surNameName;
-            $firstName = $value->firstName==null?"":$value->firstName;
-            $secondName = $value->secondName==null?"":$value->secondName;
-            $MembershipNumber = $value->MembershipNumber==null?"":$value->MembershipNumber;
+            $surNameName = @$value->surNameName==null?"":@$value->surNameName;
+            $firstName = @$value->firstName==null?"":@$value->firstName;
+            // return $value;
+            $secondName = @$value->secondName==null?"":@$value->secondName;
+            $MembershipNumber = @$value->MembershipNumber==null?"":@$value->MembershipNumber;
             $member_name = $surNameName. " " . $firstName. " " . $secondName;
             array_push($data, [$value->branch_name, $value->department, $value->sales_code, $value->payment_date, $MembershipNumber, $member_name, $value->invoice_no, $value->product_name, $value->invoice_amount, @$value->payment_amount ?? 0, $balance]);
         }
-        return Excel::download(new PaymentsExport($data), 'payments.xlsx');
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->fromArray($data, NULL, 'A1');
+        $writer = new Xlsx($spreadsheet);
+        $tempFile = tempnam(sys_get_temp_dir(), 'phpspreadsheet');
+        $writer->save($tempFile);
+        return response()->download($tempFile, 'payments.xlsx')->deleteFileAfterSend(true);
     }
 
     /**

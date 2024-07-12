@@ -4,14 +4,14 @@
     <title>Credit Note</title>
     <!-- Include Bootstrap CSS for styling the modal -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token">
 </head>
 <body>
 <div class="container mt-5">
     <h2>Credit Note</h2>
     <!-- Button to Open the Modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-        Credit Note
+        Open Modal
     </button>
 
     <!-- The Modal -->
@@ -21,7 +21,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Enter Details</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">&times;"></button>
                 </div>
                 <!-- Modal Body -->
                 <div class="modal-body">
@@ -62,37 +62,7 @@
 <!-- Include jQuery and Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script>
-$(document).ready(function(){
-    $("#modalForm").on('submit', function(event){
-        event.preventDefault();
-
-        var formData = {
-            creditNumber: $("#creditNumber").val(),
-            customerNumber: $("#customerNumber").val(),
-            customerName: $("#customerName").val(),
-            amount: $("#amount").val(),
-            reason: $("#reason").val(),
-        };
-
-        $.ajax({
-            url: "{{ route('creditnote') }}",
-            method: "POST",
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response){
-                alert("Form submitted successfully!");
-                $('#myModal').modal('hide');
-            },
-            error: function(xhr){
-                alert("An error occurred: " + xhr.status + " " + xhr.statusText);
-            }
-        });
-    });
-});
-</script>
+<!-- Include the custom JS file -->
+<script src="{{ asset('js/creditnote.js') }}"></script>
 </body>
 </html>

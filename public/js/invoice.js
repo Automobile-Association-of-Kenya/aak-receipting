@@ -2,6 +2,7 @@
     productOptions("#departmentProductID");
     membersOption("#memberID");
     branchesOption("#invoiceBranchID");
+    // salesCodeOptions('#salescodeID');
 
     $("#memberID").select2({
         dropdownParent: "#membersInvoiceDiv",

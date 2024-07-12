@@ -14,6 +14,7 @@
 
     function getSummary() {
         $.getJSON("/summary", function (summary) {
+            console.log(summary);
             customersCount1.text(summary.members);
             todaysCustomerCount.text(summary.todaymembers + " Today");
             todayCustomerCount.text(summary.todaymembers);
@@ -47,7 +48,6 @@
             if (Chart.getChart(ctx) !== undefined) {
                 Chart.getChart(ctx).destroy();
             }
-
             let invoicetotal = 0;
             let paymenttotal = 0;
             $.each(data, function (key, value) {

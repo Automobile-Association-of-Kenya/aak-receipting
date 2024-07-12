@@ -11,6 +11,7 @@ $(document).ready(function () {
 
         $.post($(this).attr("action"), formData)
             .done(function (response) {
+                console.log(response);
                 let result = JSON.parse(response);
                 if (result.status == "success") {
                     $this.trigger("reset");
@@ -26,6 +27,7 @@ $(document).ready(function () {
                 }
             })
             .fail(function (error) {
+                console.log(error);
                 if (error.status == 422) {
                     var errors = "";
                     $.each(error.responseJSON.errors, function (key, value) {
