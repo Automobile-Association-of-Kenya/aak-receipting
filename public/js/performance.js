@@ -11,7 +11,7 @@
         $.getJSON('/sales-person', function (params) {
             console.log(params);
             let target = params?.overall_target == null ? 0 : params?.overall_target;
-            totalTarget.text(parseFloat(target).toFixed(2))
+            totalTarget.text("Ksh. "+parseFloat(target).toFixed(0))
         });
     }
     fetchTotalTarget();
@@ -28,7 +28,7 @@
             end_date = actualEndDate.val();
         $.post('/sales-filter', { _token: filterSalesForm.find("input[name='_token']").val(), start_date: start_date, end_date: end_date }).done(function (params) {
             let data = JSON.parse(params);
-            totalAchieved.text(data.value[0].Amounts)
+            totalAchieved.text("Ksh. "+data.value[0].Amounts)
         })
     }
     fetchSalesByRange();

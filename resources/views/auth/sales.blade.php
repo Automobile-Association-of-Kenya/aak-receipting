@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="stats-block">
-                    <div class="highlight">Actual</div>
+                    <div class="highlight">Achieved</div>
 
                     <form action="{{ url('sales-filter') }}" id="filterSalesForm">
                         @csrf
