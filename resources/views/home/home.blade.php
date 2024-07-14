@@ -99,8 +99,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="card-custom">
-                        {{-- <a href="{{ route('login') }}" class="btn btn-custom">Sales Campaign</a> --}}
-                        <a class="btn btn-custom">Sales Campaign</a>
+                        <a href="{{ route('login') }}" class="btn btn-custom">Sales Campaign</a>
                         <div class="mt-2">
                             <i class="bi bi-graph-up card-icon" style="color: rgba(2, 79, 49, 0.85);"></i>
                         </div>

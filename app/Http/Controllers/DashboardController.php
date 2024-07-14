@@ -89,7 +89,7 @@ class DashboardController extends Controller
         $start_date = date("m", strtotime($request->start_date)) . date("d", strtotime($request->start_date)) . date("y", strtotime($request->start_date)) . "D";
         $end_date = date("m", strtotime($request->end_date)) . date("d", strtotime($request->end_date)) . date("y", strtotime($request->end_date)) . "D";
         $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')
-            ->get("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/SalespersonRRM?\$filter=Code eq 'AASC000453' and Date_Filter gt '" . $start_date . "' and Date_Filter lt '" . $end_date . "'");
+            ->get("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/SalespersonRRM?\$filter=Code eq '".auth()->user()->sales_code."' and Date_Filter gt '" . $start_date . "' and Date_Filter lt '" . $end_date . "'");
         return $response;
     }
 
@@ -108,7 +108,7 @@ class DashboardController extends Controller
             $start_date = date("m", strtotime($startTime)) . date("d", strtotime($startTime)) . date("y", strtotime($startTime)) . "D";
             $end_date = date("m", strtotime($endTime)) . date("d", strtotime($endTime)) . date("y", strtotime($endTime)) . "D";
             $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')
-                ->get("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/SalespersonRRM?\$filter=Code eq 'AASC000453' and Date_Filter gt '" . $start_date . "' and Date_Filter lt '" . $end_date . "'");
+                ->get("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/SalespersonRRM?\$filter=Code eq '" . auth()->user()->sales_code . "' and Date_Filter gt '" . $start_date . "' and Date_Filter lt '" . $end_date . "'");
             $value = json_decode($response);
             array_push($data, ['month' => date('M Y', strtotime($month)), 'amount' => $value->value[0]->Amounts]);
         }
