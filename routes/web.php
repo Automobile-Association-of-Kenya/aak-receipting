@@ -14,6 +14,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controller\CreditNoteController;
+use App\Http\Controllers\NewTransReferencesController;
 use App\Http\Controller\PerformanceController;
 use Illuminate\Support\Facades\Route;
 
@@ -77,7 +78,10 @@ Route::get('summary', [HomeController::class, 'summary']);
 Route::get('/create', [App\Http\Controllers\HomeController::class, 'show'])->name('service');
 Route::get('/create', [HomeController::class, 'fetch'])->name('amount');
 
-// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// In routes/web.php
+
+Route::get('fetch-trans-details', [PaymentsController::class, 'fetchTransDetails'])->name('fetch.trans.details');
+
 
 Route::resource('payments', PaymentsController::class);
 Route::get('/payments-data', [PaymentsController::class, 'payments']);
@@ -88,6 +92,7 @@ Route::post('/payment-mpesa', [PaymentsController::class, 'mpesa'])->name('payme
 Route::get('/apitest/{id}', [PaymentsController::class, 'apitest']);
 
 Route::get('transactions', [HomeController::class, 'transactions'])->name('transactions');
+Route::get('/getTransDetails', [NewTransReferencesController::class, 'getTransDetails'])->name('getTransDetails');
 
 Route::get('department-services/{dptid}', [HomeController::class, 'getdepartmentservices']);
 

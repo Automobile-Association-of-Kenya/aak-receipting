@@ -83,7 +83,7 @@
             _token: $this.find("input[name='_token']").val(),
             invoice_id: paymentInvoiceID.val(),
             members_id: paymentMemberID.val(),
-            transact_no: paymentReference.val(),
+            ref_no: paymentReference.val(),
             amount: paymentAmount.val(),
             date: paymentDate.val(),
             method: paymentMethod.val(),
@@ -140,23 +140,23 @@
                     i = 1;
                 $.each(payments, function (key, value) {
                     let firstName =
-                            value.member.firstName == null ||
+                        value.member.firstName == null ||
                             value.member.firstName == undefined
-                                ? ""
-                                : value.member.firstName,
+                            ? ""
+                            : value.member.firstName,
                         secondName =
                             value.member.secondName == null ||
-                            value.member.secondName == undefined
+                                value.member.secondName == undefined
                                 ? ""
                                 : value.member.secondName,
                         surNameName =
                             value.member.surNameName == null ||
-                            value.member.surNameName == undefined
+                                value.member.surNameName == undefined
                                 ? ""
                                 : value.member.surNameName,
                         mobilePhoneNumber =
                             value.member.mobilePhoneNumber == null ||
-                            value.member.mobilePhoneNumber == undefined
+                                value.member.mobilePhoneNumber == undefined
                                 ? ""
                                 : value.member.mobilePhoneNumber,
                         amount =
@@ -171,27 +171,21 @@
                             value.invoice?.invoice_no == null || value.invoice?.invoice_no == undefined
                                 ? ""
                                 : value.invoice?.invoice_no;
-                    tr += `<tr><td><small>${i++}</small></td><td><small>${
-                        value.receipt_no
-                    }</small></td><td><small>${
-                        value.member.idNo +
+                    tr += `<tr><td><small>${i++}</small></td><td><small>${value.receipt_no
+                        }</small></td><td><small>${value.member.idNo +
                         " " +
                         firstName +
                         " " +
                         secondName +
                         " " +
                         surNameName
-                    }</small></td><td><small>${
-                        mobilePhoneNumber
-                    }</small></td><td><small>${numberFormat(
-                        amount
-                    )}</small></td><td><small>${
-                        description
-                    }</small></td><td><small>${
-                        invoice_no
-                    }</small></td><td>${value.user?.name}</td><td><small><a href="/payment-print/${
-                        value.id
-                    }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
+                        }</small></td><td><small>${mobilePhoneNumber
+                        }</small></td><td><small>${numberFormat(
+                            amount
+                        )}</small></td><td><small>${description
+                        }</small></td><td><small>${invoice_no
+                        }</small></td><td><small>${value.user?.name}</small></td><td><small><a href="/payment-print/${value.id
+                        }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
                 });
                 let table =
                     '<table class="table table-bordered table-sm" id="paymentsDataTable" width="100%" cellspacing="0"><thead><th>#</th><th>NO</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Description</th><th>Invoice</th><th>Added By</th><th>Action</th></thead><tbody>' +
@@ -279,4 +273,55 @@
                 }
             });
     });
+
+    $('#paymentMethod').change(function () {
+        const selectedMethod = $(this).val();
+        if (selectedMethod === 'MPESA') {
+            $('#mpesaCodeGroup').show();
+            populateMpesaCodes();
+        } else {
+            $('#mpesaCodeGroup').hide();
+            $('#paymentReference').val('');
+        }
+    });
+
+//     async function populateMpesaCodes() {
+//         const apiUrl = 'https://payments.aakenya.co.ke/api/payments/getAllReferences?take=1000&skip=&keyword=&=';
+//         try {
+//             const response = await fetch(apiUrl);
+//             if (!response.ok) {
+//                 throw new Error(`Network response was not ok: ${response.statusText}`);
+//             }
+//             const data = await response.json();
+//             console.log(data);
+//             if (!Array.isArray(data.data)) {
+//                 throw new Error('Unexpected response structure: no "codes" array found');
+//             }
+
+//             let selectElement = $('#mpesaCode'),
+//                 option = '<option value="">Select Mpesa Code</option>';
+
+//             data.data.forEach(code => {
+//                 if (code.mpesaReference !== null) {
+//                     option += `<option value="${code.mpesaReference}" style="font-size: 11px;">${code.mpesaReference}</option>`;
+
+//                 }
+//             });
+
+//             selectElement.html(option);
+
+//             $("#mpesaCode").select2({
+//                 dropdownParent: "#mpesaCodesSection",
+//             });
+
+//             document.getElementById('mpesaCodeGroup').style.display = 'block';
+//         } catch (error) {
+//             console.error('Error fetching Mpesa codes:', error);
+//         }
+//     }
+
+//     $("#mpesaCode").on('change', function (event) {
+//         paymentReference.val($(this).val());
+//     });
+
 })();

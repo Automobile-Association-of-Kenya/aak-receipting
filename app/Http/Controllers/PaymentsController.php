@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\members;
 use App\Models\Payment;
 use App\Models\Tempmpesa;
+use App\Models\trans_references;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -36,6 +37,15 @@ class PaymentsController extends Controller
         return json_encode($transactions);
     }
 
+    public function fetchTransDetails()
+    {
+        $transactions = trans_references::select('TransID', 'TransAmount')
+            ->orderBy('TransID', 'desc')
+            ->get();
+        return response()->json($transactions);
+    }
+
+
     function store(Request $request)
     {
         $receiptno = DB::select(DB::raw('SELECT fn_generateReceiptNumber() AS result'));
@@ -46,8 +56,9 @@ class PaymentsController extends Controller
             'date' => ['nullable', 'max:30'],
             'method' => ['required', 'max:30'],
             'description' => ['required', 'max:255'],
+            'ref_no'=>['required','unique:payments,ref_no']
         ]);
-        Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->transact_no, 'user_id' => auth()->id()]);
+        Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->ref_no, 'user_id' => auth()->id()]);
         return json_encode(['status' => 'success', 'message' => 'Payment saved successfully']);
     }
 

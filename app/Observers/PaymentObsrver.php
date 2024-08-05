@@ -48,6 +48,7 @@ class PaymentObsrver
             "Salesperson"=> $payment->invoice->sales_code
         );
         Log::info($data);
+
         $response = Http::withBasicAuth('integration', 'ieceePhaeshie9yo')
             ->post("http://197.248.13.206:7048/DynamicsNAV100/ODataV4/Company('AAKENYA%20LTD')/RRM", $data);
         Log::alert($response);

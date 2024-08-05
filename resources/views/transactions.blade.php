@@ -6,6 +6,7 @@
 
 @section('header_styles')
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
     <style>
         #confirmPayment {
             display: none;
@@ -90,7 +91,8 @@
                                 <div class="form-group" id="invoiceBranchDiv" style="font-size:14px">
                                     <label for="invoiceBranchID">Branch</label>
                                     <select name="branch_id" id="invoiceBranchID" class="form-control  form-control-sm"
-                                     data-control="select2" data-dropdown-parent="#invoiceBranchDiv" required style="width: 100%;"></select>
+                                        data-control="select2" data-dropdown-parent="#invoiceBranchDiv" required
+                                        style="width: 100%;"></select>
                                 </div>
                             </div>
 
@@ -107,7 +109,8 @@
                                 <div class="form-group" id="departmentSection" style="font-size:14px">
                                     <label for="departmentInvoiceId">Departments</label>
                                     <select name="department_id" id="departmentInvoiceId"
-                                        class="form-control  form-control-sm" data-control="select2" data-dropdown-parent="#departmentSection" style="width: 100%;"></select>
+                                        class="form-control  form-control-sm" data-control="select2"
+                                        data-dropdown-parent="#departmentSection" style="width: 100%;"></select>
                                 </div>
                             </div>
 
@@ -115,17 +118,21 @@
                                 <div class="form-group" id="productSection" style="font-size:14px">
                                     <label for="departmentProductID">Product</label>
                                     <select name="product_id" id="departmentProductID"
-                                        class="form-control  form-control-sm" data-control="select2" data-dropdown-parent="#productSection" style="width: 100%;"></select>
+                                        class="form-control  form-control-sm" data-control="select2"
+                                        data-dropdown-parent="#productSection" style="width: 100%;"></select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group" id="salesCodeSection" style="font-size:14px">
                                     <label for="salescodeID">Sales Code</label>
-                                    <select id="salescodeID" name="sales_code" required class="form-control form-control-sm"  data-control="select2" data-dropdown-parent="#salesCodeSection" style="width: 100%;">
+                                    <select id="salescodeID" name="sales_code" required
+                                        class="form-control form-control-sm" data-control="select2"
+                                        data-dropdown-parent="#salesCodeSection" style="width: 100%;">
                                         <option value="">Select Sales Code</option>
                                         @foreach ($sales as $sale)
-                                            <option value="{{ $sale->sales_code }}">{{ $sale->name }} - {{ $sale->sales_code }}</option>
+                                            <option value="{{ $sale->sales_code }}">{{ $sale->name }} -
+                                                {{ $sale->sales_code }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -170,7 +177,7 @@
 
                     <div id="invoiceFeedback"></div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-md btn-success">Submit</button>
+                        <button type="submit" class="btn btn-md btn-success" id="invoiceSubmit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -286,9 +293,10 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div class="form-group" style="font-size:14px">
+                                    <div class="form-group" style="font-size:12px">
                                         <label for="paymentMethod">Method</label>
-                                        <select name="payment_method" id="paymentMethod" class="form-control form-control-sm">
+                                        <select name="payment_method" id="paymentMethod"
+                                            class="form-control form-control-sm">
                                             <option value="">Select Payment Mode</option>
                                             <option value="BANK">BANK DEPOSIT</option>
                                             <option value="CHEQUE">CHEQUE</option>
@@ -296,6 +304,15 @@
                                             <option value="CREDITCARD">CREDITCARD</option>
                                             <option value="MPESA">MPESA</option>
                                             <option value="RTGS">RTGS</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" id="mpesaCodeGroup" style="display: none; font-size: 14px;">
+                                    <div class="form-group" id="mpesaCodesSection">
+                                        <label for="mpesaCode">Mpesa Code</label>
+                                        <select name="mpesa_code" id="mpesaCode" class="form-control form-control-sm" data-dropdown-parent="#mpesaCodesSection">
+                                            <option value="">Select Mpesa Code</option>
                                         </select>
                                     </div>
                                 </div>
@@ -312,7 +329,7 @@
                                     <div class="form-group">
                                         <label for="paymentReference">Transaction Reference</label>
                                         <input type="text" class="form-control form-control-sm" id="paymentReference"
-                                            name="ref_no" value="{{ old('ref_no') }}">
+                                            name="ref_no" value="{{ old('ref_no') }}" readonly>
                                     </div>
                                 </div>
 
@@ -350,26 +367,37 @@
 @endsection
 
 @section('footer_scripts')
-    <script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/invoice.js') }}"></script>
     <script src="{{ asset('js/payment.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/select2.min.js') }}"></script> --}}
     <script>
-     (function() {
-        $('#salescodeID').select2({
-            dropDownParent:'#salesCodeSection',
-        })
-                    // $('#invoiceBranchID').select2({
-                    // })
-        $('#departmentInvoiceId').select2({
-            dropDownParent:'#departmentSection',
-        })
-        $('#departmentProductID').select2({
-            dropDownParent:'#productSection',
-        })
+        var fetchTransDetailsRoute = "{{ route('fetch.trans.details') }}";
+    </script>
+    <script src="{{ asset('js/transDetails.js') }}"></script>
+    <script>
+        (function() {
 
-    })();
+            $(document).ready(function() {
+                let previousSelection = null;
+            });
+
+            $('#salescodeID').select2({
+                dropDownParent: '#salesCodeSection',
+            })
+             $('#invoiceBranchID').select2({
+            })
+            $('#departmentInvoiceId').select2({
+                dropDownParent: '#departmentSection',
+            })
+            $('#departmentProductID').select2({
+                dropDownParent: '#productSection',
+            })
+
+
+        })();
     </script>
 @endsection
-

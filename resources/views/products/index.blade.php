@@ -100,8 +100,8 @@
                             <div class="form-group">
                                 <label for="productVAT">Vatable</label>
                                 <select class="form-control" name="VAT" id="productVAT" name="vatable">
-                                        <option value="Yes">YES</option>
-                                        <option value="No">NO</option>
+                                        <option value="1">YES</option>
+                                        <option value="0">NO</option>
                                     </select>
                             </div>
                     </div>

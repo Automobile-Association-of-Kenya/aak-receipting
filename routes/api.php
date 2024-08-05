@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\FlightsController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\ReferenceCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::post('callback', [PaymentsController::class,'callback']);
 Route::post('callbacktest', [PaymentsController::class,'callbacktest']);
 
 Route::get("payments" , [PaymentsController::class, 'payments']);
+
+Route::post('/referenceCodes', [ReferenceCodeController::class, 'add']);
 
 
 

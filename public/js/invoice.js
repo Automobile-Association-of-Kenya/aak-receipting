@@ -21,7 +21,8 @@
         invoiceBranchID = $("#invoiceBranchID"),
         invoiceProductsTbody = $("#invoiceProductsTbody"),
         salescodeID = $("#salescodeID"),
-        invoiceProductsTfoot = $("#invoiceProductsTfoot");
+        invoiceProductsTfoot = $("#invoiceProductsTfoot"),
+        invoiceSubmit = $('#invoiceSubmit');
 
     departmentInvoiceId.on("change", function (event) {
         let department_id = $(this).val();
@@ -166,6 +167,7 @@
         const $this = $(this),
             errors = [],
             products = [];
+        invoiceSubmit.prop('disabled', true);
         $("#invoiceProductsTbody > tr").each(function (key, value) {
             products.push({
                 product_id: $(value).data("id"),
@@ -201,13 +203,13 @@
         if (errors.length <= 0) {
             $.post("/invoices", data)
                 .done(function (params) {
-                    console.log(params);
                     let result = JSON.parse(params);
                     if (result.status == "success") {
                         $this.trigger("reset");
                         showSuccess(result.message, "#invoiceFeedback");
                         window.setTimeout(function () {
                             $("#createInvoiceModal").modal("hide");
+                            invoiceSubmit.prop('disabled', false);
                         }, 3000);
                         getInvoices();
                         $("#invoiceProductsTbody > tr").each(function (
@@ -225,6 +227,8 @@
                 })
                 .fail(function (error) {
                     console.error(error);
+                    invoiceSubmit.prop('disabled', false);
+
                     if (error.status == 422) {
                         var errors = "";
                         $.each(
@@ -293,10 +297,10 @@
                         secondName +
                         " " +
                         surNameName
-                        }</small></td><td><small>${amount}</small></td><td><small>${date}</small></td><td><small><a href="/invoice-print/${value.id
+                        }</small></td><td><small>${amount}</small></td><td><small>${date}</small><td><small>${value.user?.name}</small></td></td><td><small><a href="/invoice-print/${value.id
                         }" class="btn btn-sm btn-primary" target="__blank"><i class="fa fa-print"></i></a></small></td></tr>`;
                 });
-                let table = `<table class="table table-bordered table-hover table-sm" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Member</th><th>Amount</th><th>Date</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
+                let table = `<table class="table table-bordered table-hover table-sm" id="invoicesDataTable"><thead><th>#</th><th>NO</th><th>Branch</th><th>Customer</th><th>Amount</th><th>Date</th><th>Invoiced By</th><th>Action</th></thead><tbody>${tr}</tbody></table>`;
                 invoicesTableSection.html(table);
                 if ($.fn.DataTable.isDataTable("#invoicesDataTable")) {
                     $("#invoicesDataTable").DataTable().destroy();
