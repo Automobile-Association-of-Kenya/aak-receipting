@@ -12,18 +12,16 @@ class ReferenceCodeController extends Controller
     public function add(Request $req)
     {
         $validatedData = $req->validate([
-            'MSISDN' => 'required|numeric',
-            'TransID' => 'required|string|max:255',
-            'TransAmount' => 'required|numeric',
-            'BillRefNumber' => 'required|string|max:255',
-
+            'MSISDN' => 'nullable|numeric',
+            'TransID' => 'nullable|string|max:255',
+            'TransAmount' => 'nullable|numeric',
+            'BillRefNumber' => 'nullable|string|max:255',
         ]);
 
         if (strpos($validatedData['BillRefNumber'], 'AAK') !== false) {
 
             return response()->json(["error" => "BillRefNumber contains forbidden substring"], 400);
         }
-
         $existingReference = trans_references::where('MSISDN', $validatedData['TransID'])->first();
 
         if ($existingReference) {
