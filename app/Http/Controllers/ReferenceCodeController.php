@@ -20,7 +20,7 @@ class ReferenceCodeController extends Controller
 
 
 if (strpos($validatedData['BillRefNumber'], 'AAK') !== false) {
-    if ($validatedData['TransAmount'] < 1000) {
+    if ($validatedData['TransAmount'] > 1000) {
 
         return response()->json(["message" => "BillRefNumber contains forbidden substring but amount is valid"], 200);
     } else {
