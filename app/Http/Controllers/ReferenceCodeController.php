@@ -18,16 +18,10 @@ class ReferenceCodeController extends Controller
             'BillRefNumber' => 'nullable|string|max:255',
         ]);
 
+        if (strpos($validatedData['BillRefNumber'], 'AAK') !== false) {
 
-if (strpos($validatedData['BillRefNumber'], 'AAK') !== false) {
-    if ($validatedData['TransAmount'] > 1000) {
-
-        return response()->json(["message" => "BillRefNumber contains forbidden substring but amount is valid"], 200);
-    } else {
-
-        return response()->json(["error" => "BillRefNumber contains forbidden substring and amount is too high"], 400);
-    }
-}
+            return response()->json(["error" => "BillRefNumber contains forbidden substring"], 400);
+        }
         $existingReference = trans_references::where('MSISDN', $validatedData['TransID'])->first();
 
         if ($existingReference) {
