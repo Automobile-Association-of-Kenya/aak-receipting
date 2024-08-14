@@ -55,7 +55,7 @@ class PaymentsController extends Controller
             'amount' => ['required'],
             'date' => ['nullable', 'max:30'],
             'method' => ['required', 'max:30'],
-            'description' => ['required', 'max:255'],
+            'description' => ['required', 'max:50'],
             'ref_no'=>['required','unique:payments,ref_no']
         ]);
         Payment::create($validated + ['invoice_id' => $request->invoice_id, 'receipt_no' => $receiptno[0]->result, 'ref_no' => $request->ref_no, 'user_id' => auth()->id()]);
