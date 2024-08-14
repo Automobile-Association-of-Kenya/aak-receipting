@@ -118,7 +118,7 @@ class PaymentsController extends Controller
                     'receipt_no' => $receiptno[0]->result,
                     'members_id' => $payment->members_id,
                     'ref_no' => $payment->mpesareference,
-                    'method' => 'Mpesa',
+                    'method' => 'MPESA',
                     'invoice_id' => $payment->invoice_id,
                     'amount' => $payment->amount,
                     'date' => date('Y-m-d'),
